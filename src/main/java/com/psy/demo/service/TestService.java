@@ -1,5 +1,6 @@
 package com.psy.demo.service;
 
 
-interface TestService {
+public interface TestService {
+    String test();
 }
