@@ -1,8 +1,12 @@
 package com.psy.demo.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.vo.res.RoleContent;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
+import okhttp3.WebSocket;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -22,7 +26,7 @@ public class CommonUtils {
         try {
             url = new URL(hostUrl);
         } catch (MalformedURLException e) {
-            log.error("url error:"+e.getMessage()+e);
+            log.error("url error:"+e.getMessage(),e);
         }
         // 时间
         SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
@@ -69,6 +73,63 @@ public class CommonUtils {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public static void sendMsg(WebSocket webSocket, String appid, List<RoleContent> historyList,
+                               String NewQuestion, boolean wsCloseFlag) {
+        try {
+            JSONObject requestJson = new JSONObject();
+
+            JSONObject header = new JSONObject();  // header参数
+            header.put("app_id", appid);
+            header.put("uid", UUID.randomUUID().toString().substring(0, 10));
+
+            JSONObject parameter = new JSONObject(); // parameter参数
+            JSONObject chat = new JSONObject();
+            chat.put("domain", "generalv2");
+            chat.put("temperature", 0.5);
+            chat.put("max_tokens", 4096);
+            parameter.put("chat", chat);
+
+            JSONObject payload = new JSONObject(); // payload参数
+            JSONObject message = new JSONObject();
+            JSONArray text = new JSONArray();
+
+            // 历史问题获取
+            if (historyList.size() > 0) {
+                for (RoleContent tempRoleContent : historyList) {
+                    text.add(JSON.toJSON(tempRoleContent));
+                }
+            }
+
+            // 最新问题
+            RoleContent roleContent = new RoleContent();
+            roleContent.setRole("user");
+            roleContent.setContent(NewQuestion);
+            text.add(JSON.toJSON(roleContent));
+            historyList.add(roleContent);
+
+            message.put("text", text);
+            payload.put("message", message);
+
+            requestJson.put("header", header);
+            requestJson.put("parameter", parameter);
+            requestJson.put("payload", payload);
+            // System.err.println(requestJson); // 可以打印看每次的传参明细
+            webSocket.send(requestJson.toString());
+            // 等待服务端返回完毕后关闭
+            while (true) {
+                // System.err.println(wsCloseFlag + "---");
+                Thread.sleep(200);
+                if (wsCloseFlag) {
+                    break;
+                }
+            }
+            webSocket.close(1000, "");
+        } catch (Exception e) {
+            log.error(e.getMessage() , e);
+            e.printStackTrace();
         }
     }
 }

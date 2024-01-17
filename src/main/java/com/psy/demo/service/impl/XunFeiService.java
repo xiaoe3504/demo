@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 @Service
@@ -49,22 +47,21 @@ public class XunFeiService extends WebSocketListener {
     private String userId;
     private Boolean wsCloseFlag = false;
 
-    private ReentrantLock lock;
-    private Condition condition;
+    public void setWsCloseFlag(Boolean wsCloseFlag) {
+        this.wsCloseFlag = wsCloseFlag;
+    }
 
-    public void setLockAndCondition(ReentrantLock lock, Condition condition) {
-        this.lock = lock;
-        this.condition = condition;
+    public Boolean getWsCloseFlag() {
+        return wsCloseFlag;
     }
 
     public String getTotalAnswer() {
-        log.info("totalAnswer:" + totalAnswer);
         return totalAnswer;
     }
 
 
     //send函数
-    public void newWebSocket(String text) {
+    public void createWebSocket(String text) {
         // 个性化参数入口，如果是并发使用，可以在这里模拟
         NewQuestion = text;
         // 构建鉴权url
@@ -72,7 +69,7 @@ public class XunFeiService extends WebSocketListener {
         try {
             authUrl = CommonUtils.getAuthUrl(hostUrl, apiKey, apiSecret);
         } catch (Exception e) {
-            log.error("xunfei auth error:" + e.getMessage() + e);
+            log.error("xunfei auth error:" + e.getMessage() , e);
         }
         OkHttpClient client = new OkHttpClient.Builder().build();
         String url = Objects.requireNonNull(authUrl)
@@ -83,17 +80,14 @@ public class XunFeiService extends WebSocketListener {
         log.info("new webSocket:" + webSocket.toString());
     }
 
-    @Override
-    public void onClosed(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
-        super.onClosed(webSocket, code, reason);
 
-    }
 
 
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
         super.onOpen(webSocket, response);
         log.info("大模型开启:" + webSocket.toString());
+
         SendThread sendThread = new SendThread(webSocket, appid, historyList, NewQuestion, wsCloseFlag);
         sendThread.start();
     }
@@ -134,8 +128,7 @@ public class XunFeiService extends WebSocketListener {
             }
             wsCloseFlag = true;
         }
-        condition.signal();
-        log.info("threadId child:"+Thread.currentThread().getId()+"");
+
     }
 
     @Override
@@ -153,7 +146,7 @@ public class XunFeiService extends WebSocketListener {
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            log.error("xunfei onFailure error:" + e.getMessage() + e);
+            log.error("xunfei onFailure error:" + e.getMessage() , e);
         }
     }
 

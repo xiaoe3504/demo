@@ -73,6 +73,15 @@ public class XunFeiWebSocketDemo extends WebSocketListener {
         }
     }
 
+    @Override
+    public void onClosed(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
+        super.onClosed(webSocket, code, reason);
+    }
+
+    @Override
+    public void onClosing(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
+        super.onClosing(webSocket, code, reason);
+    }
 
     @Override
     public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {

@@ -31,58 +31,9 @@ public class SendThread extends Thread {
     }
 
     public void run() {
-        try {
-            JSONObject requestJson = new JSONObject();
-
-            JSONObject header = new JSONObject();  // header参数
-            header.put("app_id", appid);
-            header.put("uid", UUID.randomUUID().toString().substring(0, 10));
-
-            JSONObject parameter = new JSONObject(); // parameter参数
-            JSONObject chat = new JSONObject();
-            chat.put("domain", "generalv2");
-            chat.put("temperature", 0.5);
-            chat.put("max_tokens", 4096);
-            parameter.put("chat", chat);
-
-            JSONObject payload = new JSONObject(); // payload参数
-            JSONObject message = new JSONObject();
-            JSONArray text = new JSONArray();
-
-            // 历史问题获取
-            if (historyList.size() > 0) {
-                for (RoleContent tempRoleContent : historyList) {
-                    text.add(JSON.toJSON(tempRoleContent));
-                }
-            }
-
-            // 最新问题
-            RoleContent roleContent = new RoleContent();
-            roleContent.setRole("user");
-            roleContent.setContent(NewQuestion);
-            text.add(JSON.toJSON(roleContent));
-            historyList.add(roleContent);
-
-            message.put("text", text);
-            payload.put("message", message);
-
-            requestJson.put("header", header);
-            requestJson.put("parameter", parameter);
-            requestJson.put("payload", payload);
-            // System.err.println(requestJson); // 可以打印看每次的传参明细
-            webSocket.send(requestJson.toString());
-            // 等待服务端返回完毕后关闭
-            while (true) {
-                // System.err.println(wsCloseFlag + "---");
-                Thread.sleep(200);
-                if (wsCloseFlag) {
-                    break;
-                }
-            }
-            webSocket.close(1000, "");
-        } catch (Exception e) {
-            log.error(e.getMessage() + e);
-            e.printStackTrace();
-        }
+        CommonUtils.sendMsg(webSocket, appid, historyList,
+                NewQuestion, wsCloseFlag);
     }
+
+
 }
