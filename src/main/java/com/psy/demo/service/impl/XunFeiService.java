@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Service
@@ -45,13 +46,13 @@ public class XunFeiService extends WebSocketListener {
 
     // 个性化参数
     private String userId;
-    private Boolean wsCloseFlag = false;
+    private boolean wsCloseFlag;
 
-    public void setWsCloseFlag(Boolean wsCloseFlag) {
+    public void setWsCloseFlag(boolean wsCloseFlag) {
         this.wsCloseFlag = wsCloseFlag;
     }
 
-    public Boolean getWsCloseFlag() {
+    public boolean getWsCloseFlag() {
         return wsCloseFlag;
     }
 
@@ -69,7 +70,7 @@ public class XunFeiService extends WebSocketListener {
         try {
             authUrl = CommonUtils.getAuthUrl(hostUrl, apiKey, apiSecret);
         } catch (Exception e) {
-            log.error("xunfei auth error:" + e.getMessage() , e);
+            log.error("xunfei auth error:" + e.getMessage(), e);
         }
         OkHttpClient client = new OkHttpClient.Builder().build();
         String url = Objects.requireNonNull(authUrl)
@@ -79,8 +80,6 @@ public class XunFeiService extends WebSocketListener {
         WebSocket webSocket = client.newWebSocket(request, this);
         log.info("new webSocket:" + webSocket.toString());
     }
-
-
 
 
     @Override
@@ -146,7 +145,7 @@ public class XunFeiService extends WebSocketListener {
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            log.error("xunfei onFailure error:" + e.getMessage() , e);
+            log.error("xunfei onFailure error:" + e.getMessage(), e);
         }
     }
 

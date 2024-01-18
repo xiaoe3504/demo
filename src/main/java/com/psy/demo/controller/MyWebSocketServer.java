@@ -9,7 +9,6 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,7 +71,7 @@ public class MyWebSocketServer {
         try {
             this.session.close();
         } catch (IOException e) {
-            log.error("onClose err:" + e.getMessage() , e);
+            log.error("onClose err:" + e.getMessage(), e);
         } finally {
             connections.remove(this);
         }
@@ -80,7 +79,7 @@ public class MyWebSocketServer {
 
     @OnError
     public void error(Throwable t) {
-        log.error("client: error" + number + t.getMessage() , t);
+        log.error("client: error" + number + t.getMessage(), t);
     }
 
 
@@ -96,16 +95,18 @@ public class MyWebSocketServer {
         xunFeiService.createWebSocket(msg);
         log.info("threadId main await:" + Thread.currentThread().getId() + "");
         //需xunFeiService通知可以拿answer
-        String totalAnswer = "";
-
+        String totalAnswer;
+        log.info("outer WsCloseFlag:" + xunFeiService.getWsCloseFlag());
+        xunFeiService.setWsCloseFlag(false);
         while (!xunFeiService.getWsCloseFlag()) {
+            log.info("inner WsCloseFlag:" + xunFeiService.getWsCloseFlag());
             try {
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {
-                log.error("thread sleep error:" + e.getMessage() , e);
+                log.error("thread sleep error:" + e.getMessage(), e);
             }
-            totalAnswer = xunFeiService.getTotalAnswer();
         }
+        totalAnswer = xunFeiService.getTotalAnswer();
         log.info("totalAnswer:" + totalAnswer);
         return totalAnswer;
     }

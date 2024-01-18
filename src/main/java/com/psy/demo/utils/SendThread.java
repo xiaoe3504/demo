@@ -1,14 +1,10 @@
 package com.psy.demo.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.vo.res.RoleContent;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.WebSocket;
 
 import java.util.List;
-import java.util.UUID;
 
 // 线程来发送音频与参数
 @Slf4j
