@@ -92,10 +92,21 @@
     <build>
         <finalName>${artifactId}</finalName>
         <resources>
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--                <filtering>true</filtering>-->
+<!--            </resource>-->
+            <resource>
+                <directory>src/main/resources/static/music</directory>
+                <targetPath>META-INF/resources/static/music</targetPath>
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <excludes>
+                    <exclude>templates/**</exclude>
+                </excludes>
             </resource>
+
             <resource>
                 <directory>${project.basedir}/lib</directory>
                 <targetPath>BOOT-INF/lib/</targetPath>
