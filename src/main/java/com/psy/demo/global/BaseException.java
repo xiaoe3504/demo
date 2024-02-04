@@ -4,12 +4,13 @@ import com.psy.demo.enums.BaseErrorEnum;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Data
 @Setter
 @Getter
-
+@Slf4j
 public class BaseException extends RuntimeException {
     /**
      * 默认错误码
@@ -34,6 +35,13 @@ public class BaseException extends RuntimeException {
     public BaseException(BaseErrorEnum baseErrorEnum) {
         this.errorCode = baseErrorEnum.getErrorCode();
         this.errorMsg = baseErrorEnum.getErrorMsg();
+    }
+
+    public BaseException(Exception e) {
+        log.error("base error:" + e.getMessage(), e);
+        this.errorCode = BaseErrorEnum.SYSTEM_ERROR.getErrorCode();
+        this.errorMsg = BaseErrorEnum.SYSTEM_ERROR.getErrorMsg();
+
     }
 
 }
