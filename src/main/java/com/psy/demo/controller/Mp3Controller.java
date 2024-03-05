@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * 直接用云文件不用这个了
  */
 @RestController
-@Deprecated()
+@Deprecated
 public class Mp3Controller {
 
     @Value("classpath*:/static/music/*")
