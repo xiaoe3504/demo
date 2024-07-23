@@ -1,17 +1,17 @@
 package com.psy.demo.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.service.LoginService;
-import com.psy.demo.service.TestService;
 import com.psy.demo.utils.TrustAllCerts;
+import com.psy.demo.utils.WeChatDecoder;
+import com.psy.demo.vo.res.FinalUserInfo;
 import com.psy.demo.vo.res.LoginRes;
+import com.psy.demo.vo.res.UserInfoRes;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +60,12 @@ public class LoginServiceImpl implements LoginService {
             log.error("okhttp error:" + e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    public FinalUserInfo decodeUserInfo(UserInfoRes res) {
+        String decode = WeChatDecoder.decode(res.getSessionKey(), res.getEncryptedData(), res.getIv());
+        FinalUserInfo finalUserInfo = JSONObject.parseObject(decode, FinalUserInfo.class);
+        return finalUserInfo;
     }
 }

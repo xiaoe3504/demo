@@ -3,6 +3,7 @@ package com.psy.demo.controller;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.global.NotGlobalControllerAdvice;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 @RestController
 @Deprecated
 public class Mp3Controller {
+GenericBeanDefinition bd;
 
     @Value("classpath*:/static/music/*")
     private Resource[] mp3Resources;
