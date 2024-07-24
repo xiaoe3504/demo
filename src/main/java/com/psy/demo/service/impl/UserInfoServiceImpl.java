@@ -19,15 +19,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public int saveUser(UserInfoDTO userInfoDTO) {
-        if (StringUtils.isEmpty(userInfoDTO.getOpenId())){
+        if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
             throw new BaseException("openId不能为空");
         }
-        if (StringUtils.isEmpty(userInfoDTO.getNickName())){
+        if (StringUtils.isEmpty(userInfoDTO.getNickName())) {
             throw new BaseException("nickName不能为空");
         }
-        if (StringUtils.isEmpty(userInfoDTO.getAvatarUrl())){
+        if (StringUtils.isEmpty(userInfoDTO.getAvatarUrl())) {
             throw new BaseException("avatarUrl不能为空");
         }
-        return userInfoMapper.insert(userInfoDTO);
+        int res;
+        try {
+            res = userInfoMapper.insert(userInfoDTO);
+        } catch (Exception e) {
+            log.error("insert error:" + e.getMessage(), e);
+            throw new BaseException("insert error: " + e.getMessage());
+        }
+
+        return res;
     }
 }

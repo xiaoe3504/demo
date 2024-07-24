@@ -31,9 +31,4 @@ public class BaseRes<T> implements Serializable {
         return new BaseRes<>(e.getErrorCode(), e.getErrorMsg(), null);
     }
 
-    public static BaseRes<String> ofCommonFail(Exception e) {
-        return new BaseRes<>(BaseErrorEnum.SYSTEM_ERROR.getErrorCode(),
-                BaseErrorEnum.SYSTEM_ERROR.getErrorMsg(), e.getMessage());
-    }
-
 }

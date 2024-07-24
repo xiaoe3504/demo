@@ -27,11 +27,12 @@ public class LoginController {
     }
 
     @PostMapping(path = "decodeAndSave")
-    public int decodeUserInfo(@RequestBody UserInfoRes userInfoRes) {
+    public UserInfoDTO decodeUserInfo(@RequestBody UserInfoRes userInfoRes) {
         log.info("userInfoRes:" + JSON.toJSONString(userInfoRes));
         FinalUserInfo finalUserInfo = loginService.decodeUserInfo(userInfoRes);
         UserInfoDTO userInfoDTO = CommonUtils.genUserInfoDTO(finalUserInfo);
-        return userInfoService.saveUser(userInfoDTO);
+        userInfoService.saveUser(userInfoDTO);
+        return userInfoDTO;
 
     }
 
