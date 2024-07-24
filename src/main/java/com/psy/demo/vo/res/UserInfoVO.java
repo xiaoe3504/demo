@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
+public class UserInfoVO {
     private String avatarUrl;
     private String city;
     private String country;

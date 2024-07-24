@@ -2,13 +2,10 @@ package com.psy.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.psy.demo.service.LoginService;
-import com.psy.demo.service.TestService;
 import com.psy.demo.vo.res.FinalUserInfo;
 import com.psy.demo.vo.res.LoginRes;
-import com.psy.demo.vo.res.UserInfo;
 import com.psy.demo.vo.res.UserInfoRes;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

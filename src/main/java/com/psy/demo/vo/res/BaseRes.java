@@ -23,12 +23,12 @@ public class BaseRes<T> implements Serializable {
     }
 
     public static <T> BaseRes<T> ofFail() {
-        return new BaseRes<>(BaseErrorEnum.SUC.getErrorCode(),
-                BaseErrorEnum.SUC.getErrorMsg(), null);
+        return new BaseRes<>(BaseErrorEnum.SYSTEM_ERROR.getErrorCode(),
+                BaseErrorEnum.SYSTEM_ERROR.getErrorMsg(), null);
     }
 
     public static BaseRes<String> ofFail(BaseException e) {
-        return new BaseRes<>(e.getErrorCode(), e.getErrorMsg(), e.getErrorMsg());
+        return new BaseRes<>(e.getErrorCode(), e.getErrorMsg(), null);
     }
 
     public static BaseRes<String> ofCommonFail(Exception e) {

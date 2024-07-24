@@ -12,6 +12,6 @@ public class UserInfoRes {
     private String sessionKey;
     private String encryptedData;
     private String iv;
-    private UserInfo userInfo;
+    private UserInfoVO userInfoVO;
     private String signature;
 }
