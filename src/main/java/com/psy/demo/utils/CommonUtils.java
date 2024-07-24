@@ -3,6 +3,8 @@ package com.psy.demo.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.psy.demo.dto.UserInfoDTO;
+import com.psy.demo.vo.res.FinalUserInfo;
 import com.psy.demo.vo.res.RoleContent;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
@@ -131,5 +133,13 @@ public class CommonUtils {
             log.error(e.getMessage() , e);
             e.printStackTrace();
         }
+    }
+
+    public static UserInfoDTO genUserInfoDTO(FinalUserInfo finalUserInfo){
+        UserInfoDTO dto=new UserInfoDTO();
+        dto.setOpenId(finalUserInfo.getOpenId());
+        dto.setAvatarUrl(finalUserInfo.getAvatarUrl());
+        dto.setNickName(finalUserInfo.getNickName());
+        return dto;
     }
 }
