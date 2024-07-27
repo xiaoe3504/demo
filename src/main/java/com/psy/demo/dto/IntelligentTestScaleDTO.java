@@ -46,6 +46,16 @@ public class IntelligentTestScaleDTO {
     private String avatarUrl;
 
     /**
+     * path里的sid
+     */
+    private String sid;
+
+    /**
+     * path里的hash
+     */
+    private String hash;
+
+    /**
      * 查看人数
      */
     private Long cnt;

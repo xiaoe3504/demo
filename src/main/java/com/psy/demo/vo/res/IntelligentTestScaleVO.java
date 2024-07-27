@@ -16,6 +16,8 @@ public class IntelligentTestScaleVO {
     private String name;
     private String title;
     private String textCnt;
+    private String sid;
+    private String hash;
     @JsonProperty("isFree")
     private boolean isFree;
 
@@ -25,6 +27,8 @@ public class IntelligentTestScaleVO {
         vo.setId(dto.getId());
         vo.setName(dto.getName());
         vo.setTitle(dto.getTitle());
+        vo.setSid(dto.getSid());
+        vo.setHash(dto.getHash());
         vo.setTextCnt(dto.getCnt() +"人参与");
         String isFreeStr = dto.getIsFree().trim();
         vo.setFree(StringUtils.isNotEmpty(isFreeStr) && isFreeStr.equals("免费"));

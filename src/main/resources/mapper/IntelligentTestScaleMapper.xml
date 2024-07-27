@@ -10,6 +10,8 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="is_free" jdbcType="VARCHAR" property="isFree"/>
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
+        <result column="sid" jdbcType="VARCHAR" property="sid"/>
+        <result column="hash" jdbcType="VARCHAR" property="hash"/>
         <result column="cnt" jdbcType="BIGINT" property="cnt"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -25,6 +27,8 @@
                `title`,
                `is_free`,
                `avatar_url`,
+               `sid`,
+               `hash`,
                `cnt`,
                `create_time`,
                `update_time`
