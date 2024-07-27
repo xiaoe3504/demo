@@ -1,9 +1,9 @@
 package com.psy.demo.dto;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 /**
     * 智能测评量表
@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class IntelligentTestScaleDTO {
     /**
     * id
@@ -35,6 +37,7 @@ public class IntelligentTestScaleDTO {
     /**
     * 是否收费
     */
+    @JsonProperty("isFree")
     private String isFree;
 
     /**

@@ -1,20 +1,22 @@
 package com.psy.demo.vo.res;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class IntelligentTestScaleVO {
     private long id;
     private String name;
     private String title;
     private String textCnt;
+    @JsonProperty("isFree")
     private boolean isFree;
 
 
@@ -23,7 +25,7 @@ public class IntelligentTestScaleVO {
         vo.setId(dto.getId());
         vo.setName(dto.getName());
         vo.setTitle(dto.getTitle());
-        vo.setTextCnt(String.valueOf(dto.getCnt()));
+        vo.setTextCnt(dto.getCnt() +"人参与");
         String isFreeStr = dto.getIsFree().trim();
         vo.setFree(StringUtils.isNotEmpty(isFreeStr) && isFreeStr.equals("免费"));
         return vo;

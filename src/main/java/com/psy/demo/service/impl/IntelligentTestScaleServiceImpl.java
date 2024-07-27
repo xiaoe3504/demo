@@ -26,19 +26,15 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
         List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select();
         Map<String, List<IntelligentTestScaleDTO>> res = getMapAndSort(list);
 
-
-        List<IntelligentTestScaleTypeResVO> listFinal = res.entrySet().stream().map(e -> {
+        return res.entrySet().stream().map(e -> {
             String type = e.getKey();
-            List<IntelligentTestScaleVO> listInner = e.getValue().stream().map(IntelligentTestScaleVO::genVOByDTO).collect(Collectors.toList());
+            List<IntelligentTestScaleVO> listInner = e.getValue().stream()
+                    .map(IntelligentTestScaleVO::genVOByDTO).collect(Collectors.toList());
             IntelligentTestScaleTypeResVO vo = new IntelligentTestScaleTypeResVO();
             vo.setType(type);
             vo.setDataArr(listInner);
             return vo;
         }).collect(Collectors.toList());
-
-
-
-        return listFinal;
     }
 
     private Map<String, List<IntelligentTestScaleDTO>> getMapAndSort(List<IntelligentTestScaleDTO> list) {
@@ -51,12 +47,12 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
         return treeMap;
     }
 
-    private Map<String,Integer> genMapUseKeySort() {
-        Map<String,Integer> mapUseKeySort=new HashMap<>();
-        mapUseKeySort.put("情绪情感篇",1);
-        mapUseKeySort.put("人际关系篇",2);
-        mapUseKeySort.put("人格特质篇",3);
-        mapUseKeySort.put("认知思维篇",4);
+    private Map<String, Integer> genMapUseKeySort() {
+        Map<String, Integer> mapUseKeySort = new HashMap<>();
+        mapUseKeySort.put("情绪情感篇", 1);
+        mapUseKeySort.put("人际关系篇", 2);
+        mapUseKeySort.put("人格特质篇", 3);
+        mapUseKeySort.put("认知思维篇", 4);
         return mapUseKeySort;
     }
 }
