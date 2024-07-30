@@ -114,3 +114,16 @@ INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration
 INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	23	, '日常生活篇', '正念走路', '别着急赶路，试着去感受路', '9.8 原价 19.9', 	6	, '','正念行走',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	24	, '日常生活篇', '正念运动', '不一样的运动方式', '9.8 原价 19.9', 	5	, '','正念运动',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+
+CREATE TABLE `note3`  (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户open_id唯一的',
+    `mood` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '自动化负性观念',
+    `analysis_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '不合理认知分析类型',
+    `analysis` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '不合理认知分析类型名',
+    `analysis_detail` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '不合理认知分析详情',
+    `defend` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '我的理性回应',
+    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '三栏笔记' ROW_FORMAT = Dynamic;

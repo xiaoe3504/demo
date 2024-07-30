@@ -3,6 +3,7 @@ package com.psy.demo.controller;
 import com.psy.demo.dto.Note3DTO;
 import com.psy.demo.service.Note3Service;
 import com.psy.demo.service.TestService;
+import com.psy.demo.vo.res.Note3VO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class Note3Controller {
     }
 
     @GetMapping(path = "/selectByOpenId/{openId}")
-    public List<Note3DTO> selectByOpenId(@PathVariable String openId) {
+    public List<Note3VO> selectByOpenId(@PathVariable String openId) {
         return note3Service.selectByOpenId(openId);
     }
 
