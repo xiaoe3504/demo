@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.Note3Mapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.Note3DTO">
+        <!--@mbg.generated-->
+        <!--@Table note3-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="mood" jdbcType="VARCHAR" property="mood"/>
+        <result column="analysis_type" jdbcType="VARCHAR" property="analysisType"/>
+        <result column="analysis" jdbcType="VARCHAR" property="analysis"/>
+        <result column="analysis_detail" jdbcType="VARCHAR" property="analysisDetail"/>
+        <result column="defend" jdbcType="VARCHAR" property="defend"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, open_id, mood, analysis_type, analysis, analysis_detail, defend, create_time,
+        update_time
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.Note3DTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into note3 (open_id, mood, analysis_type,
+                           analysis, analysis_detail, defend)
+        values (#{openId,jdbcType=VARCHAR}, #{mood,jdbcType=VARCHAR}, #{analysisType,jdbcType=VARCHAR},
+                #{analysis,jdbcType=VARCHAR}, #{analysisDetail,jdbcType=VARCHAR}, #{defend,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from note3
+        <where>
+            open_id = #{openId,jdbcType=VARCHAR}
+        </where>
+    </select>
+</mapper>

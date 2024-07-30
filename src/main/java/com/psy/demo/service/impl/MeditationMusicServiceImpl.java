@@ -23,8 +23,18 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MeditationMusicServiceImpl implements MeditationMusicService {
 
+
     @Autowired
     MeditationMusicMapper meditationMusicMapper;
+    static Map<String, Integer> mapUseKeySort;
+    static {
+        mapUseKeySort = new HashMap<>();
+        mapUseKeySort.put("大自然篇", 1);
+        mapUseKeySort.put("身体扫描篇", 2);
+        mapUseKeySort.put("呼吸觉察篇", 3);
+        mapUseKeySort.put("职场篇", 4);
+        mapUseKeySort.put("日常生活篇", 5);
+    }
 
     @Override
     public List<MeditationMusicTypeResVO> select() {
@@ -43,7 +53,6 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
     }
 
     private Map<String, List<MeditationMusicDTO>> getMapAndSort(List<MeditationMusicDTO> list) {
-        Map<String, Integer> mapUseKeySort = genMapUseKeySort();
         Map<String, List<MeditationMusicDTO>> map = list.stream().collect(Collectors.groupingBy(MeditationMusicDTO::getType));
         // 将Map的entrySet转换为List
         Map<String, List<MeditationMusicDTO>> treeMap = new TreeMap<>(Comparator.comparing(mapUseKeySort::get));
@@ -52,16 +61,4 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
         return treeMap;
     }
 
-    private Map<String, Integer> genMapUseKeySort() {
-        Map<String, Integer> mapUseKeySort = new HashMap<>();
-        mapUseKeySort.put("大自然篇", 1);
-        mapUseKeySort.put("身体扫描篇", 2);
-        mapUseKeySort.put("呼吸觉察篇", 3);
-        mapUseKeySort.put("职场篇", 4);
-        mapUseKeySort.put("日常生活篇", 5);
-        return mapUseKeySort;
-
-    }
-
-    
 }
