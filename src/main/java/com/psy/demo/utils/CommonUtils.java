@@ -9,12 +9,14 @@ import com.psy.demo.vo.res.RoleContent;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.WebSocket;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -142,4 +144,65 @@ public class CommonUtils {
         dto.setNickName(finalUserInfo.getNickName());
         return dto;
     }
+
+    /**
+     * 从数据库里的字段 9.8 原价19.8 来获取真实价格 double
+     * @param isFreeStr
+     * @param isFree
+     * @return
+     */
+    public static double getPrice(String isFreeStr, boolean isFree) {
+        double price = 0;
+        if (!isFree && StringUtils.isNotEmpty(isFreeStr)) {
+            String[] arr = isFreeStr.split(" ");
+            if (StringUtils.isNotEmpty(arr[0])) {
+                try {
+                    price = Double.parseDouble(arr[0]);
+                } catch (NumberFormatException e) {
+                    log.error("price parse double err:" + e.getMessage(), e);
+                }
+            }
+        }
+        return price;
+    }
+
+    /**
+     * 生成一个随机的16位字符串
+     * @return 16位的随机字符串
+     */
+    public static String generateNonceStr() {
+        // 初始化SecureRandom实例
+        SecureRandom random = new SecureRandom();
+        // 生成8字节的随机字节数组
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+
+        // 将字节数组转换为十六进制字符串
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            // 将每个字节转换为两个十六进制字符
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                // 如果是单个字符，前面补0
+                sb.append('0');
+            }
+            sb.append(hex);
+        }
+
+        // 取前16个字符作为nonce_str
+        // 注意：由于生成的是16个十六进制字符，所以实际上覆盖了生成的全部随机字节
+        // 如果需要更短的nonce_str，可以在这里截取
+        String res = sb.toString().substring(0, 32);
+        String resFinal = res.toUpperCase();
+        log.info("nonceStr:"+resFinal);
+        return resFinal;
+
+    }
+
+    public static String generateUUIDString() {
+        return UUID.randomUUID().toString();
+    }
+
+
+
 }

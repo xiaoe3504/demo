@@ -69,3 +69,48 @@ INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `av
 INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `avatar_url`, `create_time`, `update_time`) VALUES (	40	, '认知思维篇', '职业延迟满足能力自评测（ODGS）', '为什么延迟满足使人更容易成功？', '9.8 原价 19.9', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `avatar_url`, `create_time`, `update_time`) VALUES (	41	, '认知思维篇', '你的职业心理年龄自评测', '你的职业心理年龄多大了？', '9.8 原价 19.9', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `avatar_url`, `create_time`, `update_time`) VALUES (	42	, '认知思维篇', 'IT企业员工工作成瘾自评测', '适合“知识型”职场打工人', '9.8 原价 19.9', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+
+CREATE TABLE `meditation_music`  (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '类别',
+   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '标语',
+   `is_free` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '是否收费',
+   `duration` tinyint(20)  DEFAULT 0 COMMENT '时长',
+   `avatar_url` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图片url',
+   `mp3_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'mp3名称',
+   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+   PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '冥想音乐' ROW_FORMAT = Dynamic;
+
+
+
+
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	1	, '大自然篇', '春雨绵绵', '淅淅沥沥，细雨如丝', '免费', 	4	, '','春雨绵绵',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	2	, '大自然篇', '乡村清晨', '鸡犬相闻', '免费', 	5	, '','乡村清晨',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	3	, '大自然篇', '童年仲夏夜', '回到那年的夏天', '免费', 	4	, '','童年仲夏夜',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	4	, '大自然篇', '悦耳鸟叫', '两个黄鹂鸣翠柳', '免费', 	2	, '','悦耳鸟叫',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	5	, '大自然篇', '潮涨潮落', '听海', '免费', 	3	, '','潮涨潮落',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	6	, '大自然篇', '空灵山谷', '秘境流水', '免费', 	10	, '','空灵山谷',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	7	, '大自然篇', '山间小溪', '清泉石上流', '免费', 	6	, '','山间小溪',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	8	, '大自然篇', '睡前颂钵', '安神助眠 神奇疗愈', '免费', 	10	, '','睡前颂钵',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	9	, '大自然篇', '围炉篝火', '木柴的叹息', '免费', 	4	, '','围炉篝火',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	10	, '大自然篇', '溪边鸟鸣', '鸟鸣山涧', '免费', 	2	, '','溪边鸟鸣',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	11	, '身体扫描篇', '身体扫描（基础）', '打开觉知，感受自我', '免费', 	4	, '','身体扫描（心芽之道·正念练习女声音频标准）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	12	, '身体扫描篇', '身体扫描（入门）', '打开觉知，感受自我', '免费', 	6	, '','身体扫描（心芽之道·正念练习女声音频入门）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	13	, '身体扫描篇', '身体扫描（进阶）', '打开觉知，感受自我', '免费', 	7	, '','身体扫描（心芽之道·正念练习女声音频进阶）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	14	, '呼吸觉察篇', '鼻腔呼吸法', '专注一呼一吸', '免费', 	4	, '','鼻式呼吸法（心芽之道·正念练习女声音频）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	15	, '呼吸觉察篇', '腹式呼吸法', '专注一呼一吸', '免费', 	6	, '','腹式呼吸法（心芽之道·正念练习女声音频）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	16	, '呼吸觉察篇', '无选择觉察', '无特定对象的开放式觉知', '9.8 原价 19.9', 	6	, '','无选择觉察（心芽之道·正念练习女声音频）',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	17	, '呼吸觉察篇', '全然抵达当下', '只是感受，就够了', '9.8 原价 19.9', 	7	, '','全然抵达当下',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	18	, '职场篇', '职场减压', '压力是个小问题', '9.8 原价 19.9', 	7	, '','职场减压',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	19	, '职场篇', '职场焦虑缓解', '拥抱焦虑，感受情绪', '9.8 原价 19.9', 	7	, '','职场焦虑缓解',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	20	, '职场篇', '摆脱抑郁情绪', '直面抑郁，感受情绪', '9.8 原价 19.9', 	6	, '','摆脱工作中的抑郁情绪',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	21	, '日常生活篇', '正念吃葡萄', '让饮食，有滋有味', '9.8 原价 19.9', 	6	, '','正念吃葡萄',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	22	, '日常生活篇', '正念做家务', '家务，原来如此有趣', '9.8 原价 19.9', 	7	, '','正念做家务',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	23	, '日常生活篇', '正念走路', '别着急赶路，试着去感受路', '9.8 原价 19.9', 	6	, '','正念行走',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	24	, '日常生活篇', '正念运动', '不一样的运动方式', '9.8 原价 19.9', 	5	, '','正念运动',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
