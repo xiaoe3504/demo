@@ -8,6 +8,7 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.psy.demo.enums.PayAttachTypeEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.service.HttpClientService;
 import com.psy.demo.utils.*;
@@ -16,6 +17,7 @@ import com.psy.demo.utils.*;
 import java.io.*;
 import java.net.URISyntaxException;
 
+import com.psy.demo.vo.req.Attach;
 import com.psy.demo.vo.req.PayReq;
 import com.psy.demo.vo.res.PayRes;
 import lombok.extern.slf4j.Slf4j;
@@ -63,9 +65,7 @@ public class HttpClientServiceImpl implements HttpClientService {
     public PayRes dealPay(PayReq payReq) {
         PayRes res;
         String prePayIdString;
-        String openId = payReq.getOpenId();
-        String description = payReq.getDescription();
-        String attach = payReq.getAttach();
+
         int amount = payReq.getAmount();
         String tradeNo = System.currentTimeMillis() + CommonUtils.generateNonceStr();
         try {
@@ -73,7 +73,7 @@ public class HttpClientServiceImpl implements HttpClientService {
             httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
             httpPost.addHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
             // 请求body参数
-            String body = genBody(openId, description, attach, amount, tradeNo);
+            String body = genBody(payReq, amount, tradeNo);
             log.info("req body:" + body);
             StringEntity entity = new StringEntity(body, ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
@@ -106,7 +106,10 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @NotNull
-    private String genBody(String openId, String description, String attach, int amount, String tradeNo) {
+    private String genBody(PayReq payReq, int amount, String tradeNo) {
+        String openId = payReq.getOpenId();
+        String description = payReq.getDescription();
+        String attach = payReq.getAttach();
         return "{"
                 + "\"amount\": {"
                 + "\"total\": " + amount + ","
