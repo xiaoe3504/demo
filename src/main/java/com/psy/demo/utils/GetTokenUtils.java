@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import java.util.UUID;
 
 @Slf4j
 public class GetTokenUtils {
@@ -28,8 +29,23 @@ public class GetTokenUtils {
 
 
     private static void testGet() {
-        HttpUrl httpurl = HttpUrl.parse("https://api.mch.weixin.qq.com/v3/certificates");
-        String res = getToken(HttpGet.METHOD_NAME, httpurl, "");
+        HttpUrl httpurl = HttpUrl.parse(MyConstantString.JSAPI_URL);
+        String res = getToken(HttpPost.METHOD_NAME, httpurl, "{\n" +
+                "    \"amount\": {\n" +
+                "        \"total\": 1,\n" +
+                "        \"currency\": \"CNY\"\n" +
+                "    },\n" +
+                "    \"mchid\": \"1666640344\",\n" +
+                "    \"attach\": \"attach\",\n" +
+                "    \"description\": \"心芽知道\",\n" +
+                "    \"notify_url\": \"https://www.weixin.qq.com/wxpay/pay.php\",\n" +
+                "    \"payer\": {\n" +
+                "        \"openid\": \"o0Ya06wusUU-L8btHwi2BIAcj12U\"\n" +
+                "    },\n" +
+                "    \"out_trade_no\": \"1722408138159641E3892F00EFADD\",\n" +
+                "    \"goods_tag\": \"WXG\",\n" +
+                "    \"appid\": \"wxb1cd5bc64dbc5980\"\n" +
+                "}");
         System.out.println("token:" + res);
     }
 
@@ -56,10 +72,10 @@ public class GetTokenUtils {
 
 
     public static String getToken(String method, HttpUrl url, String body) {
-//        String nonceStr = CommonUtils.generateUUIDString();
-        String nonceStr = "50da70fb-7efa-42f7-bf9a-3a6f49adc0de";
-//        long timestamp = System.currentTimeMillis() / 1000;
-        long timestamp = 1722272152L;
+        String nonceStr = UUID.randomUUID().toString();
+//        String nonceStr = "465b1797-74a9-450a-a4e6-2372fb57c37a";
+        long timestamp = System.currentTimeMillis() / 1000;
+//        long timestamp = 1722409630L;
         String message = buildMessage(method, url, timestamp, nonceStr, body);
         log.info("message:---------------");
         log.info(message);
@@ -69,10 +85,11 @@ public class GetTokenUtils {
         log.info("signature:" + signature);
         System.out.println("signature:" + signature);
         String res = "mchid=\"" + MyConstantString.MERCHANT_ID + "\","
-                + "nonce_str=\"" + nonceStr + "\","
-                + "signature=\"" + signature + "\","
+                + "serial_no=\"" + MyConstantString.MERCHANT_SERIAL_NUMBER + "\","
                 + "timestamp=\"" + timestamp + "\","
-                + "serial_no=\"" + MyConstantString.MERCHANT_SERIAL_NUMBER + "\"";
+                + "nonce_str=\"" + nonceStr + "\","
+                + "signature=\"" + signature + "\""
+               ;
         res = MyConstantString.SCHEMA + " " + res;
         log.info("token:" + res);
         return res;
@@ -111,16 +128,10 @@ public class GetTokenUtils {
         if (url.encodedQuery() != null) {
             canonicalUrl += "?" + url.encodedQuery();
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append(method).append("\n");
-        sb.append(canonicalUrl).append("\n");
-        sb.append(timestamp).append("\n");
-        sb.append(nonceStr).append("\n");
-        if (StringUtils.isNotEmpty(body)) {
-            sb.append(body).append("\n");
-        } else {
-            sb.append("\n");
-        }
-        return sb.toString();
+        return method + "\n"
+                + canonicalUrl + "\n"
+                + timestamp + "\n"
+                + nonceStr + "\n"
+                + body + "\n";
     }
 }
