@@ -136,8 +136,8 @@ public class GetTokenUtils {
     public static String dealSign(SignReq signReq) {
         String appIdStr = signReq.getAppId();
         String timestamp = signReq.getTimestamp();
-        String nonceStr = signReq.getNonceStr();
         String prepayIdStr = signReq.getPrepayIdStr();
+        String nonceStr = signReq.getNonceStr();
         String message = appIdStr + "\n"
                 + timestamp + "\n"
                 + nonceStr + "\n"

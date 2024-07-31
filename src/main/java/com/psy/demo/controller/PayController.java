@@ -9,6 +9,8 @@ import com.psy.demo.vo.res.SignRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/pay")
 public class PayController {
@@ -22,6 +24,8 @@ public class PayController {
 
     @PostMapping(path = "/dealSign")
     public SignRes dealPost(@RequestBody SignReq signReq) {
+        String nonceStr = UUID.randomUUID().toString();
+        signReq.setNonceStr(nonceStr);
         String sign = GetTokenUtils.dealSign(signReq);
         SignRes res = new SignRes();
         res.setSign(sign);
