@@ -1,6 +1,8 @@
 package com.psy.demo.controller;
 
+import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.service.HttpClientService;
+import com.psy.demo.service.PayInfoService;
 import com.psy.demo.utils.GetTokenUtils;
 import com.psy.demo.vo.req.PayReq;
 import com.psy.demo.vo.req.SignReq;
@@ -16,6 +18,8 @@ import java.util.UUID;
 public class PayController {
     @Autowired
     HttpClientService httpClientService;
+    @Autowired
+    PayInfoService payInfoService;
 
     @PostMapping(path = "/dealPay")
     public PayRes dealPost(@RequestBody PayReq payReq) {
@@ -29,13 +33,7 @@ public class PayController {
         String sign = GetTokenUtils.dealSign(signReq);
         SignRes res = new SignRes();
         res.setSign(sign);
-        SignRes.genSignRes(res,signReq);
+        SignRes.genSignRes(res, signReq);
         return res;
-    }
-
-
-    @GetMapping(path = "/dealGet")
-    public String dealGet() {
-        return httpClientService.dealGet();
     }
 }

@@ -8,7 +8,6 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.psy.demo.enums.PayAttachTypeEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.service.HttpClientService;
 import com.psy.demo.utils.*;
@@ -16,11 +15,8 @@ import com.psy.demo.utils.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 
-import com.psy.demo.vo.req.Attach;
 import com.psy.demo.vo.req.PayReq;
-import com.psy.demo.vo.req.SignReq;
 import com.psy.demo.vo.res.PayRes;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;

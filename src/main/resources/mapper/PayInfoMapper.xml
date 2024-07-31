@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.PayInfoMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.PayInfoDTO">
+        <!--@mbg.generated-->
+        <!--@Table pay_info-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="uni_id" jdbcType="VARCHAR" property="uniId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, open_id, category, uni_id, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from pay_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PayInfoDTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into pay_info (open_id, category, uni_id)
+        values (#{openId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR})
+    </insert>
+
+
+    <select id="selectByUk3" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pay_info
+        <where>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="category != null">
+                and category = #{category,jdbcType=VARCHAR}
+            </if>
+            <if test="uniId != null">
+                and uni_id = #{uniId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>
