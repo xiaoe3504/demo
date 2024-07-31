@@ -174,7 +174,7 @@ public class CommonUtils {
         // 初始化SecureRandom实例
         SecureRandom random = new SecureRandom();
         // 生成8字节的随机字节数组
-        byte[] bytes = new byte[16];
+        byte[] bytes = new byte[8];
         random.nextBytes(bytes);
 
         // 将字节数组转换为十六进制字符串
@@ -192,16 +192,12 @@ public class CommonUtils {
         // 取前16个字符作为nonce_str
         // 注意：由于生成的是16个十六进制字符，所以实际上覆盖了生成的全部随机字节
         // 如果需要更短的nonce_str，可以在这里截取
-        String res = sb.toString().substring(0, 32);
-        String resFinal = res.toUpperCase();
-        log.info("nonceStr:"+resFinal);
-        return resFinal;
+        String res = sb.toString().substring(0, 16);
+        return res.toUpperCase();
 
     }
 
-    public static String generateUUIDString() {
-        return UUID.randomUUID().toString();
-    }
+
 
 
 

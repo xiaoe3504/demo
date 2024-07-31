@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 
+import com.psy.demo.vo.req.PayReq;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -82,8 +83,13 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @Override
-    public String dealPost(String openId) {
+    public String dealPay(PayReq payReq) {
         String bodyAsString;
+        String openId = payReq.getOpenId();
+        String description = payReq.getDescription();
+        String attach = payReq.getAttach();
+        int amount = payReq.getAmount();
+        String tradeNo = System.currentTimeMillis() + CommonUtils.generateNonceStr();
         try {
             HttpPost httpPost = new HttpPost(MyConstantString.JSAPI_URL);
             httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
@@ -91,15 +97,16 @@ public class HttpClientServiceImpl implements HttpClientService {
             // 请求body参数
             String body = "{"
                     + "\"amount\": {"
-                    + "\"total\": 1,"
+                    + "\"total\": " + amount + ","
                     + "\"currency\": \"CNY\""
                     + "},"
                     + "\"mchid\": \"" + merchantId + "\","
-                    + "\"description\": \"Image形象店-深圳腾大-QQ公仔\","
+                    + "\"attach\": \"" + attach + "\","
+                    + "\"description\": \"" + description + "\","
                     + "\"notify_url\": \"https://www.weixin.qq.com/wxpay/pay.php\","
                     + "\"payer\": {"
                     + "\"openid\": \"" + openId + "\"" + "},"
-                    + "\"out_trade_no\": \"2024072912345678901234567890\","
+                    + "\"out_trade_no\": \"" + tradeNo + "\","
                     + "\"goods_tag\": \"WXG\","
                     + "\"appid\": \"" + appId + "\"" + "}";
             log.info("req body:" + body);
@@ -132,7 +139,7 @@ public class HttpClientServiceImpl implements HttpClientService {
             URIBuilder uriBuilder = new URIBuilder(MyConstantString.CER_URL);
             httpGet = new HttpGet(uriBuilder.build());
         } catch (URISyntaxException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new BaseException("dealGet error");
         }
         httpGet.addHeader(ACCEPT, APPLICATION_JSON.toString());
@@ -145,7 +152,7 @@ public class HttpClientServiceImpl implements HttpClientService {
         try {
             response = httpClient.execute(httpGet);
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new BaseException("dealGet error");
         }
         if (SC_OK != response.getStatusLine().getStatusCode()) {
@@ -160,13 +167,13 @@ public class HttpClientServiceImpl implements HttpClientService {
             log.info(entity.toString());
             EntityUtils.consume(entity);
         } catch (IOException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new BaseException("dealGet error");
         } finally {
             try {
                 response.close();
             } catch (IOException e) {
-                log.error(e.getMessage(),e);
+                log.error(e.getMessage(), e);
                 throw new BaseException("dealGet error");
             }
         }
