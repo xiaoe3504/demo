@@ -25,6 +25,7 @@ public class PayController {
         String sign = GetTokenUtils.dealSign(signReq);
         SignRes res = new SignRes();
         res.setSign(sign);
+        SignRes.genSignRes(res,signReq);
         return res;
     }
 
