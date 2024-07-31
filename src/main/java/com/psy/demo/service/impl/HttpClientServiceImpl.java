@@ -16,9 +16,11 @@ import com.psy.demo.utils.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 
 import com.psy.demo.vo.req.Attach;
 import com.psy.demo.vo.req.PayReq;
+import com.psy.demo.vo.req.SignReq;
 import com.psy.demo.vo.res.PayRes;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
@@ -172,5 +174,7 @@ public class HttpClientServiceImpl implements HttpClientService {
         }
         return null;
     }
+
+
 
 }

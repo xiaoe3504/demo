@@ -1,5 +1,6 @@
 package com.psy.demo.utils;
 
+import com.psy.demo.vo.req.SignReq;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import org.apache.commons.lang3.StringUtils;
@@ -22,9 +23,7 @@ public class GetTokenUtils {
 
     public static void main(String[] args) throws Exception {
 //        testPost();
-        testGet();
 //        System.out.println(System.currentTimeMillis()/100);
-
     }
 
 
@@ -88,8 +87,7 @@ public class GetTokenUtils {
                 + "serial_no=\"" + MyConstantString.MERCHANT_SERIAL_NUMBER + "\","
                 + "timestamp=\"" + timestamp + "\","
                 + "nonce_str=\"" + nonceStr + "\","
-                + "signature=\"" + signature + "\""
-               ;
+                + "signature=\"" + signature + "\"";
         res = MyConstantString.SCHEMA + " " + res;
         log.info("token:" + res);
         return res;
@@ -134,4 +132,17 @@ public class GetTokenUtils {
                 + nonceStr + "\n"
                 + body + "\n";
     }
+
+    public static String dealSign(SignReq signReq) {
+        String appIdStr = signReq.getAppId();
+        String timestamp = signReq.getTimestamp();
+        String nonceStr = signReq.getNonceStr();
+        String prepayIdStr = signReq.getPrepayIdStr();
+        String message = appIdStr + "\n"
+                + timestamp + "\n"
+                + nonceStr + "\n"
+                + prepayIdStr + "\n";
+        return GetTokenUtils.sign(message.getBytes(StandardCharsets.UTF_8));
+    }
+
 }
