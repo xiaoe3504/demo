@@ -8,6 +8,9 @@ import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.service.HttpClientService;
 import com.psy.demo.utils.*;
@@ -15,12 +18,16 @@ import com.psy.demo.utils.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 import com.psy.demo.vo.req.PayReq;
+import com.psy.demo.vo.res.BaseRes;
+import com.psy.demo.vo.res.PayCallbackRes;
 import com.psy.demo.vo.res.PayRes;
+import com.psy.demo.vo.res.WeChatCerRes;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -30,7 +37,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.http.HttpHost;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +52,20 @@ public class HttpClientServiceImpl implements HttpClientService {
     private static final String appId = MyConstantString.APPID; // 商户号
     private CloseableHttpClient httpClient;
 
-    private static final HttpHost proxy = null;
+    private final LoadingCache<String, WeChatCerRes> cache = CacheBuilder.newBuilder()
+            .maximumSize(10) // 最多缓存100个键值对
+            .expireAfterWrite(10, TimeUnit.DAYS) // 写入后10天过期
+            .build(
+                    new CacheLoader<String, WeChatCerRes>() {
+                        @NotNull
+                        public WeChatCerRes load(@NotNull String key) {
+                            if (key.equals(MyConstantString.CER_TEXT)) {
+                                return dealCer();
+                            }
+                            return null;
+                        }
+                    }
+            );
 
     @PostConstruct
     public void init() {
@@ -125,8 +144,9 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @Override
-    public String dealGet() {
-        HttpGet httpGet = null;
+    public WeChatCerRes dealCer() {
+        WeChatCerRes res;
+        HttpGet httpGet;
         try {
             URIBuilder uriBuilder = new URIBuilder(MyConstantString.CER_URL);
             httpGet = new HttpGet(uriBuilder.build());
@@ -137,10 +157,10 @@ public class HttpClientServiceImpl implements HttpClientService {
         httpGet.addHeader(ACCEPT, APPLICATION_JSON.toString());
         httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
         HttpUrl httpurl = HttpUrl.parse(MyConstantString.CER_URL);
-        String token = GetTokenUtils.getToken(HttpGet.METHOD_NAME, httpurl, null);
+        String token = GetTokenUtils.getToken(HttpGet.METHOD_NAME, httpurl, "");
         //拼装http头的Authorization内容
         httpGet.addHeader(AUTHORIZATION, token);
-        CloseableHttpResponse response = null;
+        CloseableHttpResponse response;
         try {
             response = httpClient.execute(httpGet);
         } catch (IOException e) {
@@ -152,11 +172,11 @@ public class HttpClientServiceImpl implements HttpClientService {
             return null;
         }
         try {
-            HttpEntity entity = response.getEntity();
             // do something useful with the response body
             // and ensure it is fully consumed
-            log.info(entity.toString());
-            EntityUtils.consume(entity);
+            String resString = EntityUtils.toString(response.getEntity());
+            res = JSONObject.parseObject(resString, WeChatCerRes.class);
+            log.info("cer res:" + res);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new BaseException("dealGet error");
@@ -168,9 +188,20 @@ public class HttpClientServiceImpl implements HttpClientService {
                 throw new BaseException("dealGet error");
             }
         }
-        return null;
+        return res;
     }
 
+    @SneakyThrows
+    @Override
+    public WeChatCerRes getCerText() {
+        return cache.get(MyConstantString.CER_TEXT);
+    }
+
+    @Override
+    public BaseRes dealCallback(PayCallbackRes payCallbackRes) {
+        log.info("payCallbackRes:" + JSONObject.toJSONString(payCallbackRes));
+        return BaseRes.ofSuccess("payCallbackRes suc");
+    }
 
 
 }

@@ -70,6 +70,7 @@ INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `av
 INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `avatar_url`, `create_time`, `update_time`) VALUES (	41	, '认知思维篇', '你的职业心理年龄自评测', '你的职业心理年龄多大了？', '9.8 原价 19.9', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO intelligent_test_scale(`id`, `type`, `name`, `title`, `is_free`, `avatar_url`, `create_time`, `update_time`) VALUES (	42	, '认知思维篇', 'IT企业员工工作成瘾自评测', '适合“知识型”职场打工人', '9.8 原价 19.9', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+update intelligent_test_scale set is_free='5.25 原价 19.8' where is_free <> '免费';
 
 
 CREATE TABLE `meditation_music`  (
@@ -113,6 +114,8 @@ INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration
 INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	22	, '日常生活篇', '正念做家务', '家务，原来如此有趣', '9.8 原价 19.9', 	7	, '','正念做家务',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	23	, '日常生活篇', '正念走路', '别着急赶路，试着去感受路', '9.8 原价 19.9', 	6	, '','正念行走',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO meditation_music(`id`, `type`, `name`, `title`, `is_free`, `duration`, `avatar_url`,`mp3_name`, `create_time`, `update_time`) VALUES (	24	, '日常生活篇', '正念运动', '不一样的运动方式', '9.8 原价 19.9', 	5	, '','正念运动',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+update meditation_music set is_free='5.25 原价 19.8' where is_free <> '免费';
 
 
 CREATE TABLE `note3`  (

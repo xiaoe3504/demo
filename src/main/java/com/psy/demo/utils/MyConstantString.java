@@ -36,9 +36,11 @@ public class MyConstantString {
     public static final String MERCHANT_SERIAL_NUMBER = "22F2E9D42AEB04742DF885F977AA97FF4798A632";
     // appid
     public static final String APPID = "wxb1cd5bc64dbc5980";
+    public static final String API_V3_KEY = "wangguanghui060912wangguanghui00";
 
     public static final String SCHEMA = "WECHATPAY2-SHA256-RSA2048";
     public static final String JSAPI_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
     public static final String CER_URL = "https://api.mch.weixin.qq.com/v3/certificates";
+    public static final String CER_TEXT = "CER_TEXT";
 
 }

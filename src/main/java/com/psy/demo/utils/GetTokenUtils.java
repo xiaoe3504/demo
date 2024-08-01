@@ -3,9 +3,6 @@ package com.psy.demo.utils;
 import com.psy.demo.vo.req.SignReq;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -16,57 +13,7 @@ import java.util.UUID;
 @Slf4j
 public class GetTokenUtils {
 
-    // Authorization: <schema> <token>
-// GET - getToken("GET", httpurl, "")
-// POST - getToken("POST", httpurl, json)
-
-
     public static void main(String[] args) throws Exception {
-//        testPost();
-//        System.out.println(System.currentTimeMillis()/100);
-    }
-
-
-    private static void testGet() {
-        HttpUrl httpurl = HttpUrl.parse(MyConstantString.JSAPI_URL);
-        String res = getToken(HttpPost.METHOD_NAME, httpurl, "{\n" +
-                "    \"amount\": {\n" +
-                "        \"total\": 1,\n" +
-                "        \"currency\": \"CNY\"\n" +
-                "    },\n" +
-                "    \"mchid\": \"1666640344\",\n" +
-                "    \"attach\": \"attach\",\n" +
-                "    \"description\": \"心芽知道\",\n" +
-                "    \"notify_url\": \"https://www.weixin.qq.com/wxpay/pay.php\",\n" +
-                "    \"payer\": {\n" +
-                "        \"openid\": \"o0Ya06wusUU-L8btHwi2BIAcj12U\"\n" +
-                "    },\n" +
-                "    \"out_trade_no\": \"1722408138159641E3892F00EFADD\",\n" +
-                "    \"goods_tag\": \"WXG\",\n" +
-                "    \"appid\": \"wxb1cd5bc64dbc5980\"\n" +
-                "}");
-        System.out.println("token:" + res);
-    }
-
-
-    private static void testPost() {
-        HttpUrl httpurl = HttpUrl.parse(MyConstantString.JSAPI_URL);
-        String openId = "o0Ya06wusUU-L8btHwi2BIAcj12U";
-        String body = "{"
-                + "\"amount\": {"
-                + "\"total\": 1,"
-                + "\"currency\": \"CNY\""
-                + "},"
-                + "\"mchid\": \"" + MyConstantString.MERCHANT_ID + "\","
-                + "\"description\": \"Image形象店-深圳腾大-QQ公仔\","
-                + "\"notify_url\": \"https://www.weixin.qq.com/wxpay/pay.php\","
-                + "\"payer\": {"
-                + "\"openid\": \"" + openId + "\"" + "},"
-                + "\"out_trade_no\": \"2024072912345678901234567890\","
-                + "\"goods_tag\": \"WXG\","
-                + "\"appid\": \"" + MyConstantString.APPID + "\"" + "}";
-        String res = getToken(HttpPost.METHOD_NAME, httpurl, body);
-        System.out.println("token:" + res);
     }
 
 
