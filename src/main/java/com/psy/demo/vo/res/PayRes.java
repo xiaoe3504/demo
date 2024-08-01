@@ -10,4 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 public class PayRes {
     private String prepayId;
+    private String amount;
+    private String tradeNo;
 }

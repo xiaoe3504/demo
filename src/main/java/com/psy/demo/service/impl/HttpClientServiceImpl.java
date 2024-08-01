@@ -84,7 +84,7 @@ public class HttpClientServiceImpl implements HttpClientService {
         String prePayIdString;
 
         int amount = payReq.getAmount();
-        String tradeNo = System.currentTimeMillis() + CommonUtils.generateNonceStr();
+        String tradeNo = System.currentTimeMillis()+"_" + CommonUtils.generateNonceStr();
         try {
             HttpPost httpPost = new HttpPost(MyConstantString.JSAPI_URL);
             httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
@@ -100,12 +100,11 @@ public class HttpClientServiceImpl implements HttpClientService {
             log.info("token:" + token);
             //拼装http头的Authorization内容
             httpPost.addHeader(AUTHORIZATION, token);
-
             CloseableHttpResponse response = httpClient.execute(httpPost);
-
             prePayIdString = EntityUtils.toString(response.getEntity());
-            res = getRes(prePayIdString);
-            log.info("prePayIdString:" + prePayIdString);
+
+            res = getRes(amount, tradeNo, prePayIdString);
+            log.info("prePayId res:" + JSONObject.toJSONString(res));
         } catch (IOException e) {
             log.error("dealPost err:" + e.getMessage(), e);
             throw new BaseException("dealPost err:");
@@ -114,11 +113,14 @@ public class HttpClientServiceImpl implements HttpClientService {
 
     }
 
-    private PayRes getRes(String prePayIdString) {
+
+    private PayRes getRes(int amount, String tradeNo, String prePayIdString) {
         PayRes res = new PayRes();
         JSONObject resJson = JSON.parseObject(prePayIdString, JSONObject.class);
         String prepayId = resJson.getString("prepay_id");
         res.setPrepayId(prepayId);
+        res.setAmount(String.valueOf(amount));
+        res.setTradeNo(tradeNo);
         return res;
     }
 

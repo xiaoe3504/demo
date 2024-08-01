@@ -36,6 +36,12 @@ public class PayInfoServiceImpl implements PayInfoService {
         if (StringUtils.isEmpty(payInfoDTO.getUniId())) {
             throw new BaseException("UniId is null err");
         }
+        if (StringUtils.isEmpty(payInfoDTO.getAmount())) {
+            throw new BaseException("Amount is null err");
+        }
+        if (StringUtils.isEmpty(payInfoDTO.getTradeNo())) {
+            throw new BaseException("TradeNo is null err");
+        }
         int res;
         try {
             res = payInfoMapper.insert(payInfoDTO);

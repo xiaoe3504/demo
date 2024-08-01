@@ -23,7 +23,7 @@ public class PayController {
     @Autowired
     PayInfoService payInfoService;
 
-    @PostMapping(path = "/dealPay")
+    @PostMapping(path = "/dealPrepay")
     public PayRes dealPost(@RequestBody PayReq payReq) {
         return httpClientService.dealPay(payReq);
     }

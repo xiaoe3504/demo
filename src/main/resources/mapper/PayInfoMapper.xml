@@ -8,26 +8,23 @@
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="category" jdbcType="VARCHAR" property="category"/>
         <result column="uni_id" jdbcType="VARCHAR" property="uniId"/>
+        <result column="amount" jdbcType="VARCHAR" property="amount"/>
+        <result column="trade_no" jdbcType="VARCHAR" property="tradeNo"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, open_id, category, uni_id, create_time, update_time
+        id, open_id, category, uni_id,amount,trade_no, create_time, update_time
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        <!--@mbg.generated-->
-        select
-        <include refid="Base_Column_List"/>
-        from pay_info
-        where id = #{id,jdbcType=BIGINT}
-    </select>
+
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PayInfoDTO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into pay_info (open_id, category, uni_id)
-        values (#{openId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR})
+        insert into pay_info (open_id, category, uni_id, amount, trade_no)
+        values ( #{openId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
+               , #{amount,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR})
     </insert>
 
 
