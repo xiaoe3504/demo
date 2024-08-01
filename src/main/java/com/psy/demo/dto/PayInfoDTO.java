@@ -21,6 +21,11 @@ public class PayInfoDTO {
     private Long id;
 
     /**
+     * id 对应的名字
+     */
+    private String name;
+
+    /**
      * 用户open_id唯一的
      */
     private String openId;

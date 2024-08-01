@@ -1,6 +1,5 @@
 package com.psy.demo.controller;
 
-import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.service.HttpClientService;
 import com.psy.demo.service.PayInfoService;
 import com.psy.demo.utils.GetTokenUtils;
@@ -24,8 +23,8 @@ public class PayController {
     PayInfoService payInfoService;
 
     @PostMapping(path = "/dealPrepay")
-    public PayRes dealPost(@RequestBody PayReq payReq) {
-        return httpClientService.dealPay(payReq);
+    public PayRes dealPrepay(@RequestBody PayReq payReq) {
+        return httpClientService.dealPrepay(payReq);
     }
 
     @PostMapping(path = "/dealSign")

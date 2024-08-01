@@ -8,7 +8,7 @@ import com.psy.demo.vo.res.PayRes;
 import com.psy.demo.vo.res.WeChatCerRes;
 
 public interface HttpClientService {
-    PayRes dealPay(PayReq payReq);
+    PayRes dealPrepay(PayReq payReq);
 
     WeChatCerRes dealCer();
 

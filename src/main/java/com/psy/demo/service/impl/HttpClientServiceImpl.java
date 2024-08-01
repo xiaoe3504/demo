@@ -79,7 +79,7 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @Override
-    public PayRes dealPay(PayReq payReq) {
+    public PayRes dealPrepay(PayReq payReq) {
         PayRes res;
         String prePayIdString;
 
