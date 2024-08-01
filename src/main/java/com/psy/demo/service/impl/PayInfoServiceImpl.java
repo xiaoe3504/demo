@@ -47,9 +47,7 @@ public class PayInfoServiceImpl implements PayInfoService {
     }
 
     @Override
-    public List<PayInfoVO> selectByOpenId(String openId) {
-        PayInfoDTO dto = new PayInfoDTO();
-        dto.setOpenId(openId);
+    public List<PayInfoVO> selectByOpenId(PayInfoDTO dto) {
         List<PayInfoDTO> list = payInfoMapper.selectByUk3(dto);
         return list.stream().collect(Collectors.groupingBy(PayInfoDTO::getCategory))
                 .entrySet().stream()

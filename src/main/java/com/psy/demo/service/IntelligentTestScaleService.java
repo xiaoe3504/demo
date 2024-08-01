@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IntelligentTestScaleService {
 
-    List<IntelligentTestScaleTypeResVO> select();
+    List<IntelligentTestScaleTypeResVO> select(String openId);
 
 }

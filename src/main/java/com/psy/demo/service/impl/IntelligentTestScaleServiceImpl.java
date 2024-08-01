@@ -2,8 +2,12 @@ package com.psy.demo.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
+import com.psy.demo.dto.PayInfoDTO;
+import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
+import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
+import com.psy.demo.utils.MyConstantString;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.IntelligentTestScaleVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +24,28 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
 
     @Autowired
     IntelligentTestScaleMapper intelligentTestScaleMapper;
+    @Autowired
+    PayInfoMapper payInfoMapper;
 
     @Override
-    public List<IntelligentTestScaleTypeResVO> select() {
+    public List<IntelligentTestScaleTypeResVO> select(String openId) {
         List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select();
         Map<String, List<IntelligentTestScaleDTO>> res = getMapAndSort(list);
+        PayInfoDTO dto =PayInfoDTO.builder()
+                .openId(openId)
+                .category(PayCategoryEnum.TYPE_TEST.getTypeName()).build();
+        List<PayInfoDTO> listPayInfo = payInfoMapper.selectByUk3(dto);
+
+        Map<String, PayInfoDTO> map = new HashMap<>();
+        for (PayInfoDTO payInfoDTO : listPayInfo) {
+            map.putIfAbsent(String.valueOf(payInfoDTO.getId()), payInfoDTO);
+        }
+
+        list.forEach(e->{
+            if (map.containsKey(String.valueOf(e.getId()))){
+                e.setPayed(true);
+            }
+        });
 
         return res.entrySet().stream().map(e -> {
             String type = e.getKey();

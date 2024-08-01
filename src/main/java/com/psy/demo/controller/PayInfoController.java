@@ -27,8 +27,8 @@ public class PayInfoController {
         return payInfoService.insert(payInfoDTO);
     }
 
-    @GetMapping(path = "/select/{openId}")
-    public List<PayInfoVO> selectByOpenId(@PathVariable String openId) {
-        return payInfoService.selectByOpenId(openId);
+    @PostMapping(path = "/select")
+    public List<PayInfoVO> selectByOpenId(@RequestBody PayInfoDTO dto) {
+        return payInfoService.selectByOpenId(dto);
     }
 }

@@ -11,6 +11,6 @@ public interface PayInfoService {
 
     int insert(PayInfoDTO payInfoDTO);
 
-    List<PayInfoVO> selectByOpenId(String openId);
+    List<PayInfoVO> selectByOpenId(PayInfoDTO dto);
 
 }

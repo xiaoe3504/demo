@@ -69,4 +69,9 @@ public class IntelligentTestScaleDTO {
     * 更新时间
     */
     private LocalDateTime updateTime;
+    /**
+     * 是否支付
+     */
+    @JsonProperty("isPayed")
+    private boolean isPayed;
 }

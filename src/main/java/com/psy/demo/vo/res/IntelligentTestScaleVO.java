@@ -24,6 +24,8 @@ public class IntelligentTestScaleVO {
     @JsonProperty("isFree")
     private boolean isFree;
     private double price;
+    @JsonProperty("isPayed")
+    private boolean isPayed;
 
     public static IntelligentTestScaleVO genVOByDTO(IntelligentTestScaleDTO dto) {
         IntelligentTestScaleVO vo = new IntelligentTestScaleVO();
@@ -38,6 +40,7 @@ public class IntelligentTestScaleVO {
         vo.setFree(isFree);
         double price = CommonUtils.getPrice(isFreeStr, isFree);
         vo.setPrice(price);
+        vo.setPayed(dto.isPayed());
         return vo;
     }
 
