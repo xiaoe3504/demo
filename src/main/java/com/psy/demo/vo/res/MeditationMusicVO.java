@@ -23,6 +23,8 @@ public class MeditationMusicVO {
     @JsonProperty("isFree")
     private boolean isFree;
     private double price;
+    @JsonProperty("isPayed")
+    private boolean isPayed;
 
     public static MeditationMusicVO genVOByDTO(MeditationMusicDTO dto) {
         MeditationMusicVO vo = new MeditationMusicVO();
@@ -36,6 +38,7 @@ public class MeditationMusicVO {
         vo.setFree(isFree);
         double price = CommonUtils.getPrice(isFreeStr, isFree);
         vo.setPrice(price);
+        vo.setPayed(dto.isPayed());
         return vo;
     }
 

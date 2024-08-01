@@ -7,6 +7,7 @@ import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.MeditationMusicTypeResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,9 @@ public class MeditationMusicController {
 
     @Autowired
     MeditationMusicService meditationMusicService;
-    @GetMapping(path = "/select")
-    public List<MeditationMusicTypeResVO> select() {
-        return meditationMusicService.select();
+    @GetMapping(path = "/select/{openId}")
+    public List<MeditationMusicTypeResVO> select(@PathVariable String openId) {
+        return meditationMusicService.select(openId);
     }
 
 }

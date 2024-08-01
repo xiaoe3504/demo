@@ -1,7 +1,10 @@
 package com.psy.demo.dto;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -61,4 +64,9 @@ public class MeditationMusicDTO {
     * 更新时间
     */
     private LocalDateTime updateTime;
+    /**
+     * 是否支付
+     */
+    @JsonProperty("isPayed")
+    private boolean isPayed;
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface MeditationMusicService {
 
-    List<MeditationMusicTypeResVO> select();
+    List<MeditationMusicTypeResVO> select(String openId);
 
 }

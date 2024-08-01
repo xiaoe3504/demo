@@ -34,11 +34,12 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
         PayInfoDTO dto =PayInfoDTO.builder()
                 .openId(openId)
                 .category(PayCategoryEnum.TYPE_TEST.getTypeName()).build();
+
         List<PayInfoDTO> listPayInfo = payInfoMapper.selectByUk3(dto);
 
         Map<String, PayInfoDTO> map = new HashMap<>();
         for (PayInfoDTO payInfoDTO : listPayInfo) {
-            map.putIfAbsent(String.valueOf(payInfoDTO.getId()), payInfoDTO);
+            map.putIfAbsent(String.valueOf(payInfoDTO.getUniId()), payInfoDTO);
         }
 
         list.forEach(e->{
