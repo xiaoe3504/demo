@@ -25,4 +25,11 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+baichuan:
+  url:
+    addAndQuery: https://api.baichuan-ai.com/v1/npc
+    deleteAndUpdate: https://api.baichuan-ai.com/v1/npc/
+    chat: https://api.baichuan-ai.com/v1/chat/completions
+  appKey: Bearer sk-2a26618225a18d097302965e20204758
+
 

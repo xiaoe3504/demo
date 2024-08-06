@@ -42,5 +42,13 @@ public class MyConstantString {
     public static final String JSAPI_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
     public static final String CER_URL = "https://api.mch.weixin.qq.com/v3/certificates";
     public static final String CER_TEXT = "CER_TEXT";
+    public static final int BEICHUAN_CHARACTER_ID = 30744;
+
+    public static final  String BAICHUAN_ROLE_USER = "user";
+    public static final  String BAICHUAN_MODEL = "Baichuan-NPC-Turbo";
+    public static final  double BAICHUAN_TEMPERATURE= 0.8;
+    public static final  int BAICHUAN_TOP_K= 10;
+    public static final  int BAICHUAN_MAX_TOKENS= 512;
+
 
 }
