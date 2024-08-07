@@ -36,6 +36,12 @@ public class LoginController {
 
     }
 
+    @PostMapping(path = "/saveNickname")
+    public int saveNickname(@RequestBody UserInfoDTO userInfoDTO) {
+        log.info("userInfoRes:" + JSON.toJSONString(userInfoDTO));
+       return userInfoService.saveUser(userInfoDTO);
+
+    }
 
 
 }

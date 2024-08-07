@@ -7,4 +7,6 @@ public interface UserInfoService {
 
     int saveUser(UserInfoDTO userInfoDTO);
 
+    int saveOrUpdateNickname(UserInfoDTO userInfoDTO);
+
 }

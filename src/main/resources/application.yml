@@ -18,6 +18,8 @@ spring:
     username: root
     password: Xiaoe3504
     driver-class-name: com.mysql.cj.jdbc.Driver
+  websocket:
+      timeout: 30000
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -31,5 +33,4 @@ baichuan:
     deleteAndUpdate: https://api.baichuan-ai.com/v1/npc/
     chat: https://api.baichuan-ai.com/v1/chat/completions
   appKey: Bearer sk-2a26618225a18d097302965e20204758
-
 

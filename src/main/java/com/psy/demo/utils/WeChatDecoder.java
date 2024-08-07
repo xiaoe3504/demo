@@ -1,6 +1,7 @@
 package com.psy.demo.utils;
 
 import com.psy.demo.dto.UserInfoDTO;
+import com.psy.demo.global.BaseException;
 import com.psy.demo.vo.res.UserInfoVO;
 import com.psy.demo.vo.res.UserInfoRes;
 import lombok.extern.slf4j.Slf4j;
@@ -47,19 +48,8 @@ public class WeChatDecoder {
             return new String(resultBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
-            e.printStackTrace();
-            return null;
+            throw new BaseException("wechatDecoder decode err");
         }
     }
 
-
-    public static void main(String[] args) {
-        // 示例参数
-        UserInfoRes res=new UserInfoRes();
-        mockUserInfoRes(res);
-        // 解密
-        String userInfoJson = decode(res.getSessionKey(), res.getEncryptedData(), res.getIv());
-        // 打印解密后的用户信息（JSON 格式）
-        System.out.println(userInfoJson);
-    }
 }

@@ -44,11 +44,14 @@ public class MyConstantString {
     public static final String CER_TEXT = "CER_TEXT";
     public static final int BEICHUAN_CHARACTER_ID = 30744;
 
-    public static final  String BAICHUAN_ROLE_USER = "user";
-    public static final  String BAICHUAN_MODEL = "Baichuan-NPC-Turbo";
-    public static final  double BAICHUAN_TEMPERATURE= 0.8;
-    public static final  int BAICHUAN_TOP_K= 10;
-    public static final  int BAICHUAN_MAX_TOKENS= 512;
+    public static final String BAICHUAN_ROLE_USER = "user";
+    public static final String BAICHUAN_MODEL = "Baichuan-NPC-Turbo";
+    public static final double BAICHUAN_TEMPERATURE = 0.8;
+    public static final int BAICHUAN_TOP_K = 10;
+    public static final int BAICHUAN_MAX_TOKENS = 512;
+
+    public static final String DEFAULT_AVATAR_URL = "https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132";
+    public static final String DEFAULT_NICK_NAME = "微信用户";
 
 
 }

@@ -4,6 +4,7 @@ import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.dto.UserInfoDTO;
+import com.psy.demo.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,22 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
 
         return res;
+    }
+
+    @Override
+    public int saveOrUpdateNickname(UserInfoDTO userInfoDTO) {
+        String nickName = userInfoDTO.getNickName();
+        String openId = userInfoDTO.getOpenId();
+        dealSaveNickname(nickName, openId);
+        return 0;
+    }
+
+    private void dealSaveNickname(String nickName, String openId) {
+        if (StringUtils.isEmpty(nickName)){
+            throw new BaseException("nickname can not be null");
+        }
+        if (StringUtils.isEmpty(openId)){
+            throw new BaseException("openId can not be null");
+        }
     }
 }
