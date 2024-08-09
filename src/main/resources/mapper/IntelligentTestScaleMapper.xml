@@ -31,12 +31,12 @@
                     `avatar_url`,
                     `sid`,
                     `hash`,
-                    IFNULL( user_info_cnt, 0 ),
+                    (i.cnt+IFNULL( user_info_cnt, 0 )) as cnt,
                     `create_time`,
                     `update_time` FROM intelligent_test_scale i
             LEFT JOIN ( SELECT category,
                                category_id,
-                               sum( cnt ) AS user_info_cnt
+                               count(1) AS user_info_cnt
                         FROM user_info_category_cnt
                         GROUP BY category,
                                  category_id ) u

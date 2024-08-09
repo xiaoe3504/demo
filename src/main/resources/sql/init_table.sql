@@ -143,3 +143,47 @@ CREATE TABLE `user_info_category_cnt` (
     PRIMARY KEY ( `id` ),
     UNIQUE KEY `uk_open_id_cate_cate_id` ( `open_id`,`category`,`category_id` )
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '用户使用次数表';
+
+
+update intelligent_test_scale set cnt= 39 where id = 1 ;
+update intelligent_test_scale set cnt= 185 where id = 2 ;
+update intelligent_test_scale set cnt= 45 where id = 3 ;
+update intelligent_test_scale set cnt= 42 where id = 4 ;
+update intelligent_test_scale set cnt= 677 where id = 5 ;
+update intelligent_test_scale set cnt= 20 where id = 6 ;
+update intelligent_test_scale set cnt= 45 where id = 7 ;
+update intelligent_test_scale set cnt= 192 where id = 8 ;
+update intelligent_test_scale set cnt= 3634 where id = 9 ;
+update intelligent_test_scale set cnt= 56 where id = 10 ;
+update intelligent_test_scale set cnt= 497 where id = 11 ;
+update intelligent_test_scale set cnt= 6763 where id = 12 ;
+update intelligent_test_scale set cnt= 51 where id = 13 ;
+update intelligent_test_scale set cnt= 68 where id = 14 ;
+update intelligent_test_scale set cnt= 239 where id = 15 ;
+update intelligent_test_scale set cnt= 54 where id = 16 ;
+update intelligent_test_scale set cnt= 2578 where id = 17 ;
+update intelligent_test_scale set cnt= 560 where id = 18 ;
+update intelligent_test_scale set cnt= 11234 where id = 19 ;
+update intelligent_test_scale set cnt= 58 where id = 20 ;
+update intelligent_test_scale set cnt= 59 where id = 21 ;
+update intelligent_test_scale set cnt= 60 where id = 22 ;
+update intelligent_test_scale set cnt= 61 where id = 23 ;
+update intelligent_test_scale set cnt= 62 where id = 24 ;
+update intelligent_test_scale set cnt= 63 where id = 25 ;
+update intelligent_test_scale set cnt= 64 where id = 26 ;
+update intelligent_test_scale set cnt= 65 where id = 27 ;
+update intelligent_test_scale set cnt= 66 where id = 28 ;
+update intelligent_test_scale set cnt= 67 where id = 29 ;
+update intelligent_test_scale set cnt= 68 where id = 30 ;
+update intelligent_test_scale set cnt= 69 where id = 31 ;
+update intelligent_test_scale set cnt= 70 where id = 32 ;
+update intelligent_test_scale set cnt= 71 where id = 33 ;
+update intelligent_test_scale set cnt= 72 where id = 34 ;
+update intelligent_test_scale set cnt= 73 where id = 35 ;
+update intelligent_test_scale set cnt= 74 where id = 36 ;
+update intelligent_test_scale set cnt= 75 where id = 37 ;
+update intelligent_test_scale set cnt= 76 where id = 38 ;
+update intelligent_test_scale set cnt= 77 where id = 39 ;
+update intelligent_test_scale set cnt= 78 where id = 40 ;
+update intelligent_test_scale set cnt= 79 where id = 41 ;
+update intelligent_test_scale set cnt= 80 where id = 42 ;
