@@ -21,17 +21,27 @@
         id, `type`, `name`, title, is_free, avatar_url,cnt, create_time, update_time
     </sql>
     <select id="select" resultMap="BaseResultMap">
-        select `id`,
-               `type`,
-               `name`,
-               `title`,
-               `is_free`,
-               `avatar_url`,
-               `sid`,
-               `hash`,
-               `cnt`,
-               `create_time`,
-               `update_time`
-        from intelligent_test_scale
+        SELECT t.*
+        FROM ( SELECT
+                    `id`,
+                    `type`,
+                    `name`,
+                    `title`,
+                    `is_free`,
+                    `avatar_url`,
+                    `sid`,
+                    `hash`,
+                    IFNULL( user_info_cnt, 0 ),
+                    `create_time`,
+                    `update_time` FROM intelligent_test_scale i
+            LEFT JOIN ( SELECT category,
+                               category_id,
+                               sum( cnt ) AS user_info_cnt
+                        FROM user_info_category_cnt
+                        GROUP BY category,
+                                 category_id ) u
+                ON u.category = 'TYPE_TEST'
+                AND u.category_id = i.id) t
+        ORDER BY t.id
     </select>
 </mapper>
