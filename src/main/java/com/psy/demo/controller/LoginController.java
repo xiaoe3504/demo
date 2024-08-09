@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 public class LoginController {
@@ -36,12 +38,16 @@ public class LoginController {
 
     }
 
-    @PostMapping(path = "/saveNickname")
-    public int saveNickname(@RequestBody UserInfoDTO userInfoDTO) {
+    @PostMapping(path = "/saveOrUpdateNickname")
+    public int saveOrUpdateNickname(@RequestBody UserInfoDTO userInfoDTO) {
         log.info("userInfoRes:" + JSON.toJSONString(userInfoDTO));
-       return userInfoService.saveUser(userInfoDTO);
+       return userInfoService.saveOrUpdateNickname(userInfoDTO);
 
     }
 
+    @PostMapping(path = "/getDTOByOpenId")
+    public UserInfoDTO getDTOByOpenId(@RequestBody UserInfoDTO userInfoDTO) {
+        return userInfoService.getDTOByOpenId(userInfoDTO);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.psy.demo.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.psy.demo.ext.SimpleHttpClient;
 import com.psy.demo.service.BaiChuanService;
 import com.psy.demo.utils.CommonUtils;
@@ -80,6 +81,7 @@ public class BaiChuanServiceImpl implements BaiChuanService {
 
     @Override
     public String dealMsg(String msg) {
+        log.info("historyList:" + JSONObject.toJSONString(historyList));
         if (!CommonUtils.baiChuanCanAddHistory(historyList)) {
             IntStream.range(0, 3).map(i -> 0).forEach(historyList::remove);
         }
@@ -100,10 +102,10 @@ public class BaiChuanServiceImpl implements BaiChuanService {
                 .top_k(BAICHUAN_TOP_K)
                 .max_tokens(BAICHUAN_MAX_TOKENS)
                 .build();
-        log.info("chat req:"+ JSONObject.toJSONString(req));
+        log.info("chat req:" + JSONObject.toJSONString(req));
         SimpleHttpClient.ResponseReader reader = simpleHttpClient.doPost(urlChat, req, getHeader());
         BaiChuanChatRes res = reader.readObject(BaiChuanChatRes.class);
-        log.info("chat res:"+ JSONObject.toJSONString(res));
+        log.info("chat res:" + JSONObject.toJSONString(res));
         String answer = "";
         List<Choices> choices = res.getChoices();
         if (CollectionUtils.isNotEmpty(choices)) {

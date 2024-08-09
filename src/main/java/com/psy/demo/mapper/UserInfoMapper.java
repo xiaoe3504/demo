@@ -16,4 +16,7 @@ public interface UserInfoMapper {
 
     UserInfoDTO selectByOpenId(String openId);
 
+    int insertOrUpdate(UserInfoDTO userInfoDTO);
+
+    UserInfoDTO getDTOByOpenId(String openId);
 }

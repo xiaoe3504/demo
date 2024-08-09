@@ -42,18 +42,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public int saveOrUpdateNickname(UserInfoDTO userInfoDTO) {
-        String nickName = userInfoDTO.getNickName();
-        String openId = userInfoDTO.getOpenId();
-        dealSaveNickname(nickName, openId);
-        return 0;
-    }
-
-    private void dealSaveNickname(String nickName, String openId) {
-        if (StringUtils.isEmpty(nickName)){
+        if (StringUtils.isEmpty(userInfoDTO.getNickName())){
             throw new BaseException("nickname can not be null");
         }
-        if (StringUtils.isEmpty(openId)){
+        if (StringUtils.isEmpty(userInfoDTO.getOpenId())){
             throw new BaseException("openId can not be null");
         }
+       return userInfoMapper.insertOrUpdate(userInfoDTO);
     }
+
+    @Override
+    public UserInfoDTO getDTOByOpenId(UserInfoDTO userInfoDTO) {
+        String openId=userInfoDTO.getOpenId();
+        if (StringUtils.isEmpty(userInfoDTO.getOpenId())){
+            throw new BaseException("openId can not be null");
+        }
+        return userInfoMapper.getDTOByOpenId(openId);
+    }
+
+
 }
