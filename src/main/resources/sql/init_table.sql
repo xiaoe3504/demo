@@ -133,13 +133,13 @@ CREATE TABLE `note3`  (
 
 
 CREATE TABLE `user_info_category_cnt` (
-                                          `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
-                                          `open_id` VARCHAR ( 50 ) COMMENT 'openId',
-                                          `category` VARCHAR ( 50 ) COMMENT '类型',
-                                          `category_id` VARCHAR ( 50 ) COMMENT '类型唯一id',
-                                          `cnt` VARCHAR ( 50 ) COMMENT '次数',
-                                          `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                          `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                                          PRIMARY KEY ( `id` ),
-                                          UNIQUE KEY `uk_open_id_cate_cate_id` ( `open_id`,`category`,`category_id` )
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` VARCHAR ( 50 ) COMMENT 'openId',
+    `category` VARCHAR ( 50 ) COMMENT '类型',
+    `category_id` VARCHAR ( 50 ) COMMENT '类型唯一id',
+    `cnt` BIGINT COMMENT '次数',
+    `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY ( `id` ),
+    UNIQUE KEY `uk_open_id_cate_cate_id` ( `open_id`,`category`,`category_id` )
 ) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '用户使用次数表';
