@@ -6,6 +6,7 @@ import com.psy.demo.ext.SimpleHttpClient;
 import com.psy.demo.service.BaiChuanService;
 import com.psy.demo.utils.CommonUtils;
 import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.utils.StringUtil;
 import com.psy.demo.vo.req.baichuan.BaiChuanAddAndUpdateReq;
 import com.psy.demo.vo.req.baichuan.BaiChuanChatReq;
 import com.psy.demo.vo.req.baichuan.BaiChuanQueryReq;
@@ -13,6 +14,7 @@ import com.psy.demo.vo.req.baichuan.CharacterProfile;
 import com.psy.demo.vo.res.baichuan.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,6 +83,9 @@ public class BaiChuanServiceImpl implements BaiChuanService {
 
     @Override
     public String dealMsg(String msg) {
+        if (StringUtils.isEmpty(msg)) {
+            return DEFAULT_ANSWER;
+        }
         log.info("historyList:" + JSONObject.toJSONString(historyList));
         if (!CommonUtils.baiChuanCanAddHistory(historyList)) {
             IntStream.range(0, 3).map(i -> 0).forEach(historyList::remove);

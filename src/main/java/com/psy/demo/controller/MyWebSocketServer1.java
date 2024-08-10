@@ -14,6 +14,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.psy.demo.utils.MyConstantString.DEFAULT_ANSWER;
+
 @ServerEndpoint("/ws1")
 @Component
 @Slf4j
@@ -41,7 +43,8 @@ public class MyWebSocketServer1 {
     /**
      * 注意:@ServerEndpoint是多例 不能直接用单例的@autowired
      **/
-    private static  BaiChuanService baiChuanService;
+    private static BaiChuanService baiChuanService;
+
     /**
      * 注意:@ServerEndpoint是多例 不能直接用单例的@autowired
      **/
@@ -49,6 +52,7 @@ public class MyWebSocketServer1 {
     private void setBaiChuanService(BaiChuanService baiChuanService) {
         MyWebSocketServer1.baiChuanService = baiChuanService;
     }
+
     /**
      * 连接成功
      *
@@ -91,7 +95,13 @@ public class MyWebSocketServer1 {
     public String onMsg(String msg) {
         log.info("ws1 receive msg：" + msg);
         //接收问题去调用百川
-        String res = baiChuanService.dealMsg(msg);
+        String res = null;
+        try {
+            res = baiChuanService.dealMsg(msg);
+        } catch (Exception e) {
+            log.error("onMessage error:" + e.getMessage(), e);
+            res = DEFAULT_ANSWER;
+        }
         log.info("baichuan answer msg：" + msg);
         return res;
     }

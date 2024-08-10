@@ -53,5 +53,6 @@ public class MyConstantString {
     public static final String DEFAULT_AVATAR_URL = "https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132";
     public static final String DEFAULT_NICK_NAME = "微信用户";
 
+    public static final String DEFAULT_ANSWER = "您好,暂时还没有这方面的答案";
 
 }

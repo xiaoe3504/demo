@@ -144,7 +144,7 @@ public class SimpleHttpClient {
         try {
             response = httpClient.execute(request);
         } catch (IOException e) {
-            log.error("ResponseReader execute:" + e.getMessage(), e);
+            log.error("ResponseReader execute error:" + e.getMessage(), e);
             throw new BaseException("execute error");
         }
 
