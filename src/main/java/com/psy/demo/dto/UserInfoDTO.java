@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserInfoDTO {
     /**
     * id
@@ -42,6 +43,10 @@ public class UserInfoDTO {
     * 头像url
     */
     private String avatarUrl;
+    /**
+     * 是否会员 默认否
+     */
+    private int isMember;
 
     /**
     * 创建时间

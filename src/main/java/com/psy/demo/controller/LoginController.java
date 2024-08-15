@@ -23,19 +23,9 @@ public class LoginController {
     @Autowired
     UserInfoService userInfoService;
 
-    @GetMapping(path = "login/{code}")
+    @GetMapping(path = "/login/{code}")
     public LoginRes test(@PathVariable("code") String code) {
         return loginService.login(code);
-    }
-
-    @PostMapping(path = "decodeAndSave")
-    public UserInfoDTO decodeUserInfo(@RequestBody UserInfoRes userInfoRes) {
-        log.info("userInfoRes:" + JSON.toJSONString(userInfoRes));
-        FinalUserInfo finalUserInfo = loginService.decodeUserInfo(userInfoRes);
-        UserInfoDTO userInfoDTO = CommonUtils.genUserInfoDTO(finalUserInfo);
-        userInfoService.saveUser(userInfoDTO);
-        return userInfoDTO;
-
     }
 
     @PostMapping(path = "/saveOrUpdateNickname")

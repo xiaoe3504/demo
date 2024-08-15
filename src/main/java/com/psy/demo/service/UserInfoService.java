@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface UserInfoService {
 
-    int saveUser(UserInfoDTO userInfoDTO);
+    int dealAdd(String openId);
 
     int saveOrUpdateNickname(UserInfoDTO userInfoDTO);
 
     UserInfoDTO getDTOByOpenId(UserInfoDTO userInfoDTO);
+
+    int updateIsMemberByOpenId(String openId);
 }

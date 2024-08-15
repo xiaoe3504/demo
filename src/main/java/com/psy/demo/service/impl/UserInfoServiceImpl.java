@@ -4,7 +4,6 @@ import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.dto.UserInfoDTO;
-import com.psy.demo.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +18,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     UserInfoMapper userInfoMapper;
 
     @Override
-    public int saveUser(UserInfoDTO userInfoDTO) {
-        if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
-            throw new BaseException("openId不能为空");
-        }
-        if (StringUtils.isEmpty(userInfoDTO.getNickName())) {
-            throw new BaseException("nickName不能为空");
-        }
-        if (StringUtils.isEmpty(userInfoDTO.getAvatarUrl())) {
-            throw new BaseException("avatarUrl不能为空");
+    public int dealAdd(String openId) {
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder().openId(openId).build();
+        if (adjustUserExist(openId)) {
+            return -1;
         }
         int res;
         try {
@@ -40,24 +34,38 @@ public class UserInfoServiceImpl implements UserInfoService {
         return res;
     }
 
+    private boolean adjustUserExist(String openId) {
+        UserInfoDTO dtoDB = userInfoMapper.getDTOByOpenId(openId);
+        if (dtoDB != null) {
+            log.info("db exist... openId:" + openId);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public int saveOrUpdateNickname(UserInfoDTO userInfoDTO) {
-        if (StringUtils.isEmpty(userInfoDTO.getNickName())){
+        if (StringUtils.isEmpty(userInfoDTO.getNickName())) {
             throw new BaseException("nickname can not be null");
         }
-        if (StringUtils.isEmpty(userInfoDTO.getOpenId())){
+        if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
             throw new BaseException("openId can not be null");
         }
-       return userInfoMapper.insertOrUpdate(userInfoDTO);
+        return userInfoMapper.insertOrUpdate(userInfoDTO);
     }
 
     @Override
     public UserInfoDTO getDTOByOpenId(UserInfoDTO userInfoDTO) {
-        String openId=userInfoDTO.getOpenId();
-        if (StringUtils.isEmpty(userInfoDTO.getOpenId())){
+        String openId = userInfoDTO.getOpenId();
+        if (StringUtils.isEmpty(openId)) {
             throw new BaseException("openId can not be null");
         }
         return userInfoMapper.getDTOByOpenId(openId);
+    }
+
+    @Override
+    public int updateIsMemberByOpenId(String openId) {
+        return userInfoMapper.updateIsMemberByOpenId(openId);
     }
 
 
