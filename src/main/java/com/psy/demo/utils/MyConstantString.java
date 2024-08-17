@@ -55,4 +55,6 @@ public class MyConstantString {
 
     public static final String DEFAULT_ANSWER = "您好,暂时还没有这方面的答案";
 
+    public static final String DAY_MSG_LIMIT = "DAY_MSG_LIMIT";
+
 }

@@ -68,5 +68,18 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.updateIsMemberByOpenId(openId);
     }
 
+    @Override
+    public boolean adjustIsMember(String openId) {
+        UserInfoDTO dto = userInfoMapper.getDTOByOpenId(openId);
+        return dto != null && dto.getIsMember() == 1;
+    }
+
+    @Override
+    public int dealAddNotMemberMsgCnt(String openId) {
+        userInfoMapper.updateNotMemberMsgCnt(openId);
+        UserInfoDTO dto = userInfoMapper.getDTOByOpenId(openId);
+        return dto.getNotMemberMsgCnt();
+    }
+
 
 }

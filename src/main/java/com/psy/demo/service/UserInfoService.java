@@ -14,4 +14,8 @@ public interface UserInfoService {
     UserInfoDTO getDTOByOpenId(UserInfoDTO userInfoDTO);
 
     int updateIsMemberByOpenId(String openId);
+
+    boolean adjustIsMember(String openId);
+
+    int dealAddNotMemberMsgCnt(String openId);
 }

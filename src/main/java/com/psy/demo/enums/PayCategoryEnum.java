@@ -8,6 +8,7 @@ import java.util.Arrays;
 public enum PayCategoryEnum {
     TYPE_TEST(0, "TYPE_TEST"),
     TYPE_MEDITATION(1, "TYPE_MEDITATION"),
+    TYPE_MEMBER(2, "TYPE_MEMBER"),
     ;
     private int typeCode;
     private String typeName;

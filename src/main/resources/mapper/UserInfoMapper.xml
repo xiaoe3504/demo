@@ -11,6 +11,8 @@
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
         <result column="is_member" jdbcType="TINYINT" property="isMember"/>
+        <result column="not_member_msg_cnt" jdbcType="BIGINT" property="notMemberMsgCnt"/>
+        <result column="expires_time" jdbcType="TIMESTAMP" property="expiresTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
@@ -64,14 +66,34 @@
         </where>
     </update>
 
-    <update id="updateIsMemberExpiresTime">
+    <update id="dealIsMemberExpiresTime">
         update user_info
         <set>
-            `is_member`    = 0
+            `is_member` = 0
         </set>
         <where>
             is_member = 1
-            and NOW() > expires_time
+                    and NOW() > expires_time
+        </where>
+    </update>
+
+    <update id="initNotMemberMsgCnt">
+        update user_info
+        <set>
+            `not_member_msg_cnt` = 0
+        </set>
+        <where>
+            is_member = 0
+        </where>
+    </update>
+
+    <update id="updateNotMemberMsgCnt" parameterType="string">
+        update user_info
+        <set>
+            `not_member_msg_cnt` = not_member_msg_cnt + 1
+        </set>
+        <where>
+            is_member = 0 and open_id = #{openId,jdbcType=VARCHAR}
         </where>
     </update>
 </mapper>

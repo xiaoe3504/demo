@@ -1,22 +1,23 @@
 package com.psy.demo.controller;
 
 import com.psy.demo.service.BaiChuanService;
-import com.psy.demo.service.impl.XunFeiService;
+import com.psy.demo.service.UserInfoService;
+import com.psy.demo.utils.MyConstantString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.psy.demo.utils.MyConstantString.DEFAULT_ANSWER;
 
-@ServerEndpoint("/ws1")
+@ServerEndpoint("/ws1/{openId}")
 @Component
 @Slf4j
 public class MyWebSocketServer1 {
@@ -27,6 +28,13 @@ public class MyWebSocketServer1 {
     private static final Set<MyWebSocketServer1> connections = new CopyOnWriteArraySet<>();
     // WebSocket会话对象
     private Session session = null;
+    private String openId = null;
+    /**
+     * 注意:@ServerEndpoint是多例 不能直接用单例的@autowired
+     **/
+    private static BaiChuanService baiChuanService;
+
+    private static UserInfoService userInfoService;
 
     public MyWebSocketServer1() {
         number = counter.incrementAndGet();
@@ -40,10 +48,6 @@ public class MyWebSocketServer1 {
         return session;
     }
 
-    /**
-     * 注意:@ServerEndpoint是多例 不能直接用单例的@autowired
-     **/
-    private static BaiChuanService baiChuanService;
 
     /**
      * 注意:@ServerEndpoint是多例 不能直接用单例的@autowired
@@ -53,13 +57,20 @@ public class MyWebSocketServer1 {
         MyWebSocketServer1.baiChuanService = baiChuanService;
     }
 
+    @Autowired
+    private void setUserInfoService(UserInfoService userInfoService) {
+        MyWebSocketServer1.userInfoService = userInfoService;
+    }
+
     /**
      * 连接成功
      *
      * @param session
      */
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(@PathParam("openId") String openId, Session session) {
+        this.openId = openId;
+        log.info("chat openId:" + openId);
         this.session = session;
         connections.add(this);
         log.info("连接成功");
@@ -94,9 +105,14 @@ public class MyWebSocketServer1 {
     @OnMessage
     public String onMsg(String msg) {
         log.info("ws1 receive msg：" + msg);
-        //接收问题去调用百川
-        String res = null;
+        boolean isMember = userInfoService.adjustIsMember(openId);
+        int msgCnt = userInfoService.dealAddNotMemberMsgCnt(openId);
+        if (!isMember && msgCnt >= 10) {
+            return MyConstantString.DAY_MSG_LIMIT;
+        }
+        String res;
         try {
+            //接收问题去调用百川
             res = baiChuanService.dealMsg(msg);
         } catch (Exception e) {
             log.error("onMessage error:" + e.getMessage(), e);

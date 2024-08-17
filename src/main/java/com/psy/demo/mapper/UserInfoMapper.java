@@ -16,5 +16,9 @@ public interface UserInfoMapper {
 
     int updateIsMemberByOpenId(String openId);
 
-    int updateIsMemberExpiresTime();
+    int dealIsMemberExpiresTime();
+
+    int initNotMemberMsgCnt();
+
+    int updateNotMemberMsgCnt(String openId);
 }

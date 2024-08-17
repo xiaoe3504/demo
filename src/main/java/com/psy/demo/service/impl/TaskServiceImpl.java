@@ -17,11 +17,20 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     UserInfoMapper userInfoMapper;
+    //每天查下如果过期就设置 is_member 为0
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void dealIsMemberExpiresTime() {
+        int res = userInfoMapper.dealIsMemberExpiresTime();
+        log.info("cron task dealIsMemberTask start: " + LocalDateTime.now() + ",res:" + res);
 
-    @Scheduled(cron = "0 48 20 * * ?")
-    public void dealIsMemberTask() {
-        int res = userInfoMapper.updateIsMemberExpiresTime();
-        log.info("cron task start: " + LocalDateTime.now() + ",res:" + res);
+
     }
+    //每天把非会员cnt设置为0
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void initNotMemberMsg() {
+        int res = userInfoMapper.initNotMemberMsgCnt();
+        log.info("cron task dealIsNotMemberMsgTask start: " + LocalDateTime.now() + ",res:" + res);
+    }
+
 
 }

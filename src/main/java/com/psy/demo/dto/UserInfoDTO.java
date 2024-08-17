@@ -49,6 +49,14 @@ public class UserInfoDTO {
     private int isMember;
 
     /**
+     * 非会员每日发消息数
+     */
+    private int notMemberMsgCnt;
+    /**
+     * 会员有效期
+     */
+    private LocalDateTime expiresTime;
+    /**
     * 创建时间
     */
     private LocalDateTime createTime;

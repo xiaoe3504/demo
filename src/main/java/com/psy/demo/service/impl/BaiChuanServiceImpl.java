@@ -76,12 +76,6 @@ public class BaiChuanServiceImpl implements BaiChuanService {
     }
 
     @Override
-    public BaiChuanChatRes dealChat(BaiChuanChatReq req) {
-        SimpleHttpClient.ResponseReader reader = simpleHttpClient.doPost(urlChat, req, getHeader());
-        return reader.readObject(BaiChuanChatRes.class);
-    }
-
-    @Override
     public String dealMsg(String msg) {
         if (StringUtils.isEmpty(msg)) {
             return DEFAULT_ANSWER;

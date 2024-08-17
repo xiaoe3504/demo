@@ -190,3 +190,4 @@ update intelligent_test_scale set cnt= 80 where id = 42 ;
 
 
 alter table user_info add column is_member TINYINT ( 10 ) COMMENT '是否会员' not null default 0 after avatar_url;
+alter table user_info add column not_member_msg_cnt BIGINT COMMENT '非会员每天消息数' DEFAULT 0  after is_member;
