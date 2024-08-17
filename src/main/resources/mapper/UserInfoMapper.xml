@@ -54,13 +54,24 @@
     </select>
 
     <update id="updateIsMemberByOpenId" parameterType="com.psy.demo.dto.UserInfoDTO">
-        <!--@mbg.generated-->
         update user_info
         <set>
-            `is_member` = 1,
+            `is_member`    = 1,
+            `expires_time` = DATE_ADD(expires_time, INTERVAL 1 YEAR),
         </set>
         <where>
             open_id = #{openId,jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <update id="updateIsMemberExpiresTime">
+        update user_info
+        <set>
+            `is_member`    = 0
+        </set>
+        <where>
+            is_member = 1
+            and NOW() > expires_time
         </where>
     </update>
 </mapper>

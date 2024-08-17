@@ -189,4 +189,4 @@ update intelligent_test_scale set cnt= 79 where id = 41 ;
 update intelligent_test_scale set cnt= 80 where id = 42 ;
 
 
-alter table user_info add column is_memeber TINYINT ( 10 ) COMMENT '是否会员' not null default 0 after avatar_url;
+alter table user_info add column is_member TINYINT ( 10 ) COMMENT '是否会员' not null default 0 after avatar_url;

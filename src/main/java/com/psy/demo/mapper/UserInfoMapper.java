@@ -15,4 +15,6 @@ public interface UserInfoMapper {
     UserInfoDTO getDTOByOpenId(String openId);
 
     int updateIsMemberByOpenId(String openId);
+
+    int updateIsMemberExpiresTime();
 }
