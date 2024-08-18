@@ -1,6 +1,7 @@
 package com.psy.demo.controller;
 
 import com.psy.demo.service.IntelligentTestScaleService;
+import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class IntelligentTestScaleController {
     @Autowired
     IntelligentTestScaleService intelligentTestScaleService;
     @GetMapping(path = "/select/{openId}")
-    public List<IntelligentTestScaleTypeResVO> select(@PathVariable String openId) {
+    public IntelligentTestScaleTypeResFinalVO select(@PathVariable String openId) {
         return intelligentTestScaleService.select(openId);
     }
 

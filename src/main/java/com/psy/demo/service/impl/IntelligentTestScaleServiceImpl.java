@@ -3,11 +3,14 @@ package com.psy.demo.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import com.psy.demo.dto.PayInfoDTO;
+import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.PayInfoMapper;
+import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
 import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.IntelligentTestScaleVO;
 import lombok.extern.slf4j.Slf4j;
@@ -26,29 +29,20 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
     IntelligentTestScaleMapper intelligentTestScaleMapper;
     @Autowired
     PayInfoMapper payInfoMapper;
+    @Autowired
+    UserInfoMapper userInfoMapper;
 
     @Override
-    public List<IntelligentTestScaleTypeResVO> select(String openId) {
+    public IntelligentTestScaleTypeResFinalVO select(String openId) {
         List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select();
         Map<String, List<IntelligentTestScaleDTO>> res = getMapAndSort(list);
-        PayInfoDTO dto =PayInfoDTO.builder()
+        PayInfoDTO dto = PayInfoDTO.builder()
                 .openId(openId)
                 .category(PayCategoryEnum.TYPE_TEST.getTypeName()).build();
 
-        List<PayInfoDTO> listPayInfo = payInfoMapper.selectByUk3(dto);
 
-        Map<String, PayInfoDTO> map = new HashMap<>();
-        for (PayInfoDTO payInfoDTO : listPayInfo) {
-            map.putIfAbsent(String.valueOf(payInfoDTO.getUniId()), payInfoDTO);
-        }
 
-        list.forEach(e->{
-            if (map.containsKey(String.valueOf(e.getId()))){
-                e.setPayed(true);
-            }
-        });
-
-        return res.entrySet().stream().map(e -> {
+        List<IntelligentTestScaleTypeResVO> listRes = res.entrySet().stream().map(e -> {
             String type = e.getKey();
             List<IntelligentTestScaleVO> listInner = e.getValue().stream()
                     .map(IntelligentTestScaleVO::genVOByDTO).collect(Collectors.toList());
@@ -57,6 +51,14 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
             vo.setDataArr(listInner);
             return vo;
         }).collect(Collectors.toList());
+        //设置是否支付了
+        IntelligentTestScaleTypeResFinalVO resFinal = new IntelligentTestScaleTypeResFinalVO();
+        resFinal.setList(listRes);
+        UserInfoDTO userInfoDTO = userInfoMapper.getDTOByOpenId(openId);
+        if (userInfoDTO != null && userInfoDTO.getIsMember() == 1) {
+            resFinal.setMember(true);
+        }
+        return resFinal;
     }
 
     private Map<String, List<IntelligentTestScaleDTO>> getMapAndSort(List<IntelligentTestScaleDTO> list) {

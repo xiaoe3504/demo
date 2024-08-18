@@ -1,12 +1,11 @@
 package com.psy.demo.service;
 
 
-import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
+import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 
-import java.util.List;
 
 public interface IntelligentTestScaleService {
 
-    List<IntelligentTestScaleTypeResVO> select(String openId);
+    IntelligentTestScaleTypeResFinalVO select(String openId);
 
 }

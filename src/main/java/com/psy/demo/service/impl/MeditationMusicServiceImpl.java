@@ -4,16 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import com.psy.demo.dto.MeditationMusicDTO;
 import com.psy.demo.dto.PayInfoDTO;
+import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.MeditationMusicMapper;
 import com.psy.demo.mapper.PayInfoMapper;
+import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
 import com.psy.demo.service.MeditationMusicService;
-import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
-import com.psy.demo.vo.res.IntelligentTestScaleVO;
-import com.psy.demo.vo.res.MeditationMusicTypeResVO;
-import com.psy.demo.vo.res.MeditationMusicVO;
+import com.psy.demo.vo.res.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,11 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
     MeditationMusicMapper meditationMusicMapper;
     @Autowired
     PayInfoMapper payInfoMapper;
+    @Autowired
+    UserInfoMapper userInfoMapper;
+
     static Map<String, Integer> mapUseKeySort;
+
     static {
         mapUseKeySort = new HashMap<>();
         mapUseKeySort.put("大自然篇", 1);
@@ -42,28 +45,11 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
     }
 
     @Override
-    public List<MeditationMusicTypeResVO> select(String openId) {
+    public MeditationMusicTypeResFinalVO select(String openId) {
         List<MeditationMusicDTO> list = meditationMusicMapper.select();
         Map<String, List<MeditationMusicDTO>> res = getMapAndSort(list);
 
-        PayInfoDTO dto =PayInfoDTO.builder()
-                .openId(openId)
-                .category(PayCategoryEnum.TYPE_MEDITATION.getTypeName()).build();
-
-        List<PayInfoDTO> listPayInfo = payInfoMapper.selectByUk3(dto);
-
-        Map<String, PayInfoDTO> map = new HashMap<>();
-        for (PayInfoDTO payInfoDTO : listPayInfo) {
-            map.putIfAbsent(String.valueOf(payInfoDTO.getUniId()), payInfoDTO);
-        }
-
-        list.forEach(e->{
-            if (map.containsKey(String.valueOf(e.getId()))){
-                e.setPayed(true);
-            }
-        });
-
-        return res.entrySet().stream().map(e -> {
+        List<MeditationMusicTypeResVO> listRes = res.entrySet().stream().map(e -> {
             String type = e.getKey();
             List<MeditationMusicVO> listInner = e.getValue().stream()
                     .map(MeditationMusicVO::genVOByDTO).collect(Collectors.toList());
@@ -72,6 +58,15 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
             vo.setDataArr(listInner);
             return vo;
         }).collect(Collectors.toList());
+
+        //设置是否支付了
+        MeditationMusicTypeResFinalVO resFinal = new MeditationMusicTypeResFinalVO();
+        resFinal.setList(listRes);
+        UserInfoDTO userInfoDTO = userInfoMapper.getDTOByOpenId(openId);
+        if (userInfoDTO != null && userInfoDTO.getIsMember() == 1) {
+            resFinal.setMember(true);
+        }
+        return resFinal;
     }
 
     private Map<String, List<MeditationMusicDTO>> getMapAndSort(List<MeditationMusicDTO> list) {
