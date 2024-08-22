@@ -34,3 +34,8 @@ baichuan:
     chat: https://api.baichuan-ai.com/v1/chat/completions
   appKey: Bearer sk-2a26618225a18d097302965e20204758
 
+logging:
+  file:
+    name: app.log
+  level:
+    root: INFO
