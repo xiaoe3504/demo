@@ -191,3 +191,14 @@ update intelligent_test_scale set cnt= 80 where id = 42 ;
 
 alter table user_info add column is_member TINYINT ( 10 ) COMMENT '是否会员' not null default 0 after avatar_url;
 alter table user_info add column not_member_msg_cnt BIGINT COMMENT '非会员每天消息数' DEFAULT 0  after is_member;
+
+
+
+CREATE TABLE `mood_map`  (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户open_id唯一的',
+   `mood` int(10) DEFAULT 0 COMMENT '心情(1快乐2惊讶3愤怒4悲伤5恐惧)',
+   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+   PRIMARY KEY (`id`) USING BTREE
+)

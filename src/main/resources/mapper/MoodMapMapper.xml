@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.MoodMapMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.MoodMapDTO">
+        <!--@mbg.generated-->
+        <!--@Table mood_map-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="mood" jdbcType="INTEGER" property="mood"/>
+        <result column="mood_date" jdbcType="VARCHAR" property="moodDate"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, open_id, mood, mood_date, create_time, update_time
+    </sql>
+
+    <insert id="insertOrUpdate">
+        INSERT INTO mood_map (open_id, mood, mood_date)
+        VALUES (#{openId,jdbcType=VARCHAR}, #{mood,jdbcType=VARCHAR}, #{moodDate,jdbcType=VARCHAR})
+        ON DUPLICATE KEY UPDATE mood = VALUES(mood);
+    </insert>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select open_id, mood, mood_date
+        from mood_map
+        <where>
+            open_id = #{openId,jdbcType=VARCHAR}
+        </where>
+    </select>
+</mapper>
