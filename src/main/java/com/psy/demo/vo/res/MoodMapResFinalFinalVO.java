@@ -10,22 +10,17 @@ import lombok.*;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MoodMapResFinalVO {
+public class MoodMapResFinalFinalVO {
 
     /**
-    * 心情(1快乐2惊讶3愤怒4悲伤5恐惧)
-    */
-    private String color;
-
-    /**
-    * 用户心情日期
-    */
-    private int date;
-
-    /**
-     * 是否这个月
+     * 每日心情
      */
-    private boolean thisMonth;
+    MoodMapResFinalVO[][] moods;
+    /**
+     * 当日心情
+     */
+    String moodToday;
+
 
 
 }

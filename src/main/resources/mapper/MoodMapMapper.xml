@@ -29,4 +29,17 @@
             open_id = #{openId,jdbcType=VARCHAR}
         </where>
     </select>
+
+    <select id="getMoodToday" resultMap="BaseResultMap">
+        select open_id, mood, mood_date
+        from mood_map
+        <where>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+            <if test="moodDate != null">
+                and mood_date = #{moodDate,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

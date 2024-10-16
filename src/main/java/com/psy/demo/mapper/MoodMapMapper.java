@@ -10,4 +10,6 @@ public interface MoodMapMapper {
     List<MoodMapDTO> selectByOpenId(String openId);
 
     int insertOrUpdate(MoodMapDTO dto);
+
+    MoodMapDTO getMoodToday(MoodMapDTO dto);
 }
