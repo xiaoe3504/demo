@@ -2,7 +2,7 @@ package com.psy.demo.service;
 
 
 import com.psy.demo.dto.MoodMapDTO;
-import com.psy.demo.vo.res.MoodMapResVO;
+import com.psy.demo.vo.res.MoodMapResFinalVO;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public interface MoodMapService {
 
     int dealAdd(MoodMapDTO moodMapDTO);
 
-    List<MoodMapResVO> selectByOpenId(String openId);
+    List<MoodMapResFinalVO> selectByOpenId(String openId);
 
 }

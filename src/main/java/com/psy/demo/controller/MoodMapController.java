@@ -2,6 +2,7 @@ package com.psy.demo.controller;
 
 import com.psy.demo.dto.MoodMapDTO;
 import com.psy.demo.service.MoodMapService;
+import com.psy.demo.vo.res.MoodMapResFinalVO;
 import com.psy.demo.vo.res.MoodMapResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class MoodMapController {
     }
 
     @GetMapping(path = "/selectByOpenId/{openId}")
-    public List<MoodMapResVO> selectByOpenId(@PathVariable String openId) {
+    public List<MoodMapResFinalVO> selectByOpenId(@PathVariable String openId) {
         return moodMapService.selectByOpenId(openId);
     }
 
