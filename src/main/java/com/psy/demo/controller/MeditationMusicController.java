@@ -3,14 +3,12 @@ package com.psy.demo.controller;
 import com.psy.demo.dto.MeditationMusicDTO;
 import com.psy.demo.service.IntelligentTestScaleService;
 import com.psy.demo.service.MeditationMusicService;
+import com.psy.demo.vo.req.CommonTypeReqVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.MeditationMusicTypeResFinalVO;
 import com.psy.demo.vo.res.MeditationMusicTypeResVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class MeditationMusicController {
     @GetMapping(path = "/select/{openId}")
     public MeditationMusicTypeResFinalVO select(@PathVariable String openId) {
         return meditationMusicService.select(openId);
+    }
+
+    @PostMapping(path = "/selectType")
+    public MeditationMusicTypeResFinalVO selectType(@RequestBody CommonTypeReqVO req) {
+        return meditationMusicService.selectType(req);
     }
 
 }

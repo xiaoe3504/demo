@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.psy.demo.mapper.MeditationMusicMapper">
-  <resultMap id="BaseResultMap" type="com.psy.demo.dto.MeditationMusicDTO">
-    <!--@mbg.generated-->
-    <!--@Table meditation_music-->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="is_free" jdbcType="VARCHAR" property="isFree" />
-    <result column="duration" jdbcType="TINYINT" property="duration" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
-    <result column="mp3_name" jdbcType="VARCHAR" property="mp3Name" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, `type`, `name`, title, is_free, duration, avatar_url, mp3_name, create_time, 
-    update_time
-  </sql>
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.MeditationMusicDTO">
+        <!--@mbg.generated-->
+        <!--@Table meditation_music-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="is_free" jdbcType="VARCHAR" property="isFree"/>
+        <result column="duration" jdbcType="TINYINT" property="duration"/>
+        <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
+        <result column="mp3_name" jdbcType="VARCHAR" property="mp3Name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `type`, `name`, title, is_free, duration, avatar_url, mp3_name, create_time,
+        update_time
+    </sql>
 
-  <select id="select" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from meditation_music
-  </select>
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from meditation_music
+        <where>
+            <if test="type != null and type != ''">
+                type = #{type,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

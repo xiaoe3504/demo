@@ -2,16 +2,14 @@ package com.psy.demo.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
-import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.enums.IntelligentTestTypeEnum;
-import com.psy.demo.enums.PayCategoryEnum;
+import com.psy.demo.enums.MeditationMusicTypeEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
-import com.psy.demo.utils.MyConstantString;
 import com.psy.demo.vo.req.CommonTypeReqVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
@@ -38,6 +36,12 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
     PayInfoMapper payInfoMapper;
     @Autowired
     UserInfoMapper userInfoMapper;
+
+    static Map<String, Integer> mapUseKeySort;
+
+    static {
+        mapUseKeySort= genMapUseKeySort();
+    }
 
     @Override
     public IntelligentTestScaleTypeResFinalVO select(String openId) {
@@ -88,7 +92,7 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
         vo.setType(typeDesc + "篇");
         vo.setDataArr(listVO);
 
-        List<IntelligentTestScaleTypeResVO> listRes = Arrays.asList(vo);
+        List<IntelligentTestScaleTypeResVO> listRes = Collections.singletonList(vo);
         resFinal.setList(listRes);
         if (getIsMember(openId)) {
             resFinal.setMember(true);
@@ -97,7 +101,6 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
     }
 
     private Map<String, List<IntelligentTestScaleDTO>> getMapAndSort(List<IntelligentTestScaleDTO> list) {
-        Map<String, Integer> mapUseKeySort = genMapUseKeySort();
         Map<String, List<IntelligentTestScaleDTO>> map = list.stream().collect(Collectors.groupingBy(IntelligentTestScaleDTO::getType));
         // 将Map的entrySet转换为List
         Map<String, List<IntelligentTestScaleDTO>> treeMap = new TreeMap<>(Comparator.comparing(mapUseKeySort::get));

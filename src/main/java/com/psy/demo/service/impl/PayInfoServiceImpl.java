@@ -57,7 +57,7 @@ public class PayInfoServiceImpl implements PayInfoService {
                                 return intelligentTestScaleMapper.select(MyConstantString.DEFAULT_NULL_STRING).stream().collect(Collectors.toMap
                                         (dto -> String.valueOf(dto.getId()), IntelligentTestScaleDTO::getName));
                             } else if (key.equals(TYPE_MEDITATION)) {
-                                return meditationMusicMapper.select().stream().collect(Collectors.toMap
+                                return meditationMusicMapper.select(MyConstantString.DEFAULT_NULL_STRING).stream().collect(Collectors.toMap
                                         (dto -> String.valueOf(dto.getId()), MeditationMusicDTO::getName));
                             }
                             return new HashMap<>();

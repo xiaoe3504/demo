@@ -2,6 +2,7 @@ package com.psy.demo.mapper;
 
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,6 +10,6 @@ import java.util.List;
 public interface IntelligentTestScaleMapper {
 
 
-    List<IntelligentTestScaleDTO> select(String type);
+    List<IntelligentTestScaleDTO> select(@Param("type") String type);
 
 }

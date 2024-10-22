@@ -3,6 +3,9 @@ package com.psy.demo.enums;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Getter
 public enum MeditationMusicTypeEnum {
@@ -24,4 +27,13 @@ public enum MeditationMusicTypeEnum {
                 filter(e -> e.getCode() == code).findFirst()
                 .orElseGet(() -> NATURE).getDesc();
     }
+
+    public static Map<String, Integer> genMapUseKeySort() {
+        LinkedHashMap<String, Integer> mapUseKeySort = Arrays.stream(MeditationMusicTypeEnum.values())
+                .collect(Collectors.toMap(MeditationMusicTypeEnum::getDesc,
+                        MeditationMusicTypeEnum::getCode, (e1, e2) -> e1, LinkedHashMap::new));
+        mapUseKeySort.entrySet().stream().sorted(Map.Entry.comparingByValue());
+        return mapUseKeySort;
+    }
+
 }
