@@ -220,10 +220,11 @@ CREATE TABLE `psychologist`  (
     `listen_style` int(10) DEFAULT 0 COMMENT '倾听风格',
     `professional_qualification` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '专业资质',
     `expert_areas` int(10) DEFAULT 0 COMMENT '擅长领域',
+    `price` double DEFAULT 19.8 COMMENT '价格',
     `is_member` int(10) DEFAULT 0 COMMENT '是否是严选0否1是',
     `status` int(10)  DEFAULT 0 COMMENT '个人状态0喊他上线1服务中2找他聊',
     `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_open_id` ( `open_id`)
-)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '心理咨询师表';;
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '心理咨询师表';

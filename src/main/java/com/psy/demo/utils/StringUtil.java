@@ -45,8 +45,7 @@ public class StringUtil {
     }
 
     public static String doubleToPercentString(double value) {
-        String percentValue = String.format("%.2f%%", value * 100);
-        return percentValue;
+        return String.format("%.0f%%", value * 100);
     }
 
     public static String[] getStringArr(String binaryString, List<String> source) {

@@ -19,6 +19,7 @@
         <result column="listen_style" jdbcType="VARCHAR" property="listenStyle"/>
         <result column="professional_qualification" jdbcType="VARCHAR" property="professionalQualification"/>
         <result column="expert_areas" jdbcType="VARCHAR" property="expertAreas"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
         <result column="is_member" jdbcType="INTEGER" property="isMember"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -28,7 +29,7 @@
         <!--@mbg.generated-->
         id, open_id, `name`, gender, slogan, background_url, avatar_url, experience_cnt,
         response_rate, applause_rate, recommended_rate, person_introduce, listen_style, professional_qualification,
-        expert_areas, is_member, `status`, create_time, update_time
+        expert_areas, price, is_member, `status`, create_time, update_time
     </sql>
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PsychologistDTO"
@@ -38,7 +39,7 @@
                                   slogan, background_url, avatar_url,
                                   experience_cnt, response_rate, applause_rate,
                                   recommended_rate, person_introduce, listen_style,
-                                  professional_qualification, expert_areas,
+                                  professional_qualification, expert_areas, price,
                                   is_member, `status`)
         values (#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
                 #{slogan,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
@@ -46,6 +47,7 @@
                 #{recommendedRate,jdbcType=DOUBLE}, #{personIntroduce,jdbcType=VARCHAR},
                 #{listenStyle,jdbcType=VARCHAR},
                 #{professionalQualification,jdbcType=VARCHAR}, #{expertAreas,jdbcType=VARCHAR},
+                #{price,jdbcType=DOUBLE},
                 #{isMember,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
     </insert>
 

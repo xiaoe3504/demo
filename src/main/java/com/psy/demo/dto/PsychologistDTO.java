@@ -1,9 +1,18 @@
 package com.psy.demo.dto;
 
 import java.time.LocalDateTime;
+
+import com.psy.demo.enums.PsyStatusEnum;
+import com.psy.demo.global.BaseException;
+import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.utils.StringUtil;
+import com.psy.demo.vo.res.PsychologistVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import static com.psy.demo.utils.StringUtil.doubleToPercentString;
 
 /**
     * 心理咨询师表
@@ -11,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class PsychologistDTO {
     /**
     * id
@@ -88,6 +98,11 @@ public class PsychologistDTO {
     private String expertAreas;
 
     /**
+     * 价格
+     */
+    private Double price;
+
+    /**
     * 是否是严选0否1是
     */
     private Integer isMember;
@@ -106,4 +121,37 @@ public class PsychologistDTO {
     * 更新时间
     */
     private LocalDateTime updateTime;
+
+
+    public static PsychologistVO genPsychologistVOByDTO(PsychologistDTO psychologistDTO) {
+        if (psychologistDTO == null) {
+            throw new BaseException("genPsychologistVO error dto is null...");
+        }
+        PsychologistVO res;
+        try {
+            res = getBuild(psychologistDTO);
+        } catch (Exception e) {
+            log.error("genPsychologistVOByDTO error..."+e.getMessage(),e);
+            throw new BaseException("genPsychologistVOByDTO error");
+        }
+        return res;
+
+    }
+
+    private static PsychologistVO getBuild(PsychologistDTO dto) {
+        return PsychologistVO.builder()
+                .id(dto.getId())
+                .openId(dto.getOpenId())
+                .name(dto.getName())
+                .avatarUrl(dto.getAvatarUrl())
+                .status(dto.getStatus())
+                .gender(dto.getGender() == 0 ? "female" : "male")
+                .slogan(dto.getSlogan())
+                .experienceCnt(dto.getExperienceCnt() > 100 ? "100+" : String.valueOf(dto.getExperienceCnt()))
+                .applauseRate(doubleToPercentString(dto.getApplauseRate()))
+                .expertAreas(StringUtil.getStringArr(dto.getExpertAreas(), MyConstantString.EXPERT_AREAS_LIST))
+                .price(dto.getPrice())
+                .isMember(dto.getIsMember() == 1)
+                .build();
+    }
 }
