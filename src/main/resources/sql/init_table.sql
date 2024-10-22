@@ -228,3 +228,25 @@ CREATE TABLE `psychologist`  (
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_open_id` ( `open_id`)
 )ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '心理咨询师表';
+
+
+CREATE TABLE `conversation`  (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `psychologist_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '咨询师open_id',
+    `client_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '来访者open_id',
+    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_2id` ( `psychologist_id`,`client_id`)
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '聊天会话表';
+
+
+CREATE TABLE `message`  (
+     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+     `conversation_id` int(10) COMMENT '谈话唯一id',
+     `is_sender_psychologist` TINYINT ( 10 ) COMMENT '发消息的是咨询师0否1是',
+     `message` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '发的消息详情',
+     `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+     PRIMARY KEY (`id`) USING BTREE
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '聊天详情表';

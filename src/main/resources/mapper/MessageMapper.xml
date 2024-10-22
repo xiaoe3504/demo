@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.MessageDTO">
+        <!--@mbg.generated-->
+        <!--@Table message-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="conversation_id" jdbcType="INTEGER" property="conversationId"/>
+        <result column="is_sender_psychologist" jdbcType="TINYINT" property="isSenderPsychologist"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, conversation_id, is_sender_psychologist, message, create_time, update_time
+    </sql>
+    <select id="selectMessagesByOpenId" parameterType="java.lang.String" resultType="com.psy.demo.vo.res.MessageVO">
+        <!--@mbg.generated-->
+        SELECT t.id,
+               u.nick_name  AS sender_name,
+               u.avatar_url AS sender_avatar_url,
+               t.is_sender_psychologist,
+               t.message,
+               t.time
+                FROM
+                (select *
+                 from (
+                              SELECT m.id,
+                                     m.is_sender_psychologist,
+                                     m.message,
+                                     m.create_time AS time,
+                                     CASE
+
+                                             WHEN m.is_sender_psychologist = 1 THEN
+                                                     c.psychologist_id
+                                             ELSE c.client_id
+                                             END   AS sender_id,
+                                     c.psychologist_id,
+                                     c.client_id
+                              FROM (SELECT * FROM message) m
+                                           LEFT JOIN (SELECT * FROM conversation) c ON m.conversation_id = c.id
+                              ) b
+        <where>
+            b.psychologist_id = #{openId,jdbcType=VARCHAR} or b.client_id = #{openId,jdbcType=VARCHAR}
+        </where>
+        )t
+        LEFT JOIN user_info u
+                ON t.sender_id = u.open_id
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.MessageDTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into message (conversation_id, is_sender_psychologist, message,
+                             create_time, update_time)
+        values (#{conversationId,jdbcType=INTEGER}, #{isSenderPsychologist,jdbcType=TINYINT},
+                #{message,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+</mapper>

@@ -60,6 +60,9 @@ public class MyConstantString {
 
     public static final String DAY_MSG_LIMIT = "DAY_MSG_LIMIT";
 
+    public static final String AVATAR_URL_PREFIX = "https://7072-prod-8gnfzqw5a0ea2d6b-1323362704.tcb.qcloud.la/userinfo/";
+    public static final String AVATAR_URL_SUFFIX = "/avatar.jpeg";
+
     public static final String DEFAULT_NULL_STRING = "";
 
     public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(

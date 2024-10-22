@@ -4,13 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.enums.IntelligentTestTypeEnum;
-import com.psy.demo.enums.MeditationMusicTypeEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
-import com.psy.demo.vo.req.CommonTypeReqVO;
+import com.psy.demo.vo.req.CommonTypeReq;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.IntelligentTestScaleVO;
@@ -72,7 +71,7 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
     }
 
     @Override
-    public IntelligentTestScaleTypeResFinalVO selectType(CommonTypeReqVO req) {
+    public IntelligentTestScaleTypeResFinalVO selectType(CommonTypeReq req) {
         IntelligentTestScaleTypeResFinalVO resFinal = new IntelligentTestScaleTypeResFinalVO();
 
         String openId = req.getOpenId();

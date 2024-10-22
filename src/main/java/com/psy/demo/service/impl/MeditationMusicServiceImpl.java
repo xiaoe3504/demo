@@ -10,10 +10,9 @@ import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.MeditationMusicService;
 import com.psy.demo.utils.MyConstantString;
-import com.psy.demo.vo.req.CommonTypeReqVO;
+import com.psy.demo.vo.req.CommonTypeReq;
 import com.psy.demo.vo.res.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class MeditationMusicServiceImpl implements MeditationMusicService {
     }
 
     @Override
-    public MeditationMusicTypeResFinalVO selectType(CommonTypeReqVO req) {
+    public MeditationMusicTypeResFinalVO selectType(CommonTypeReq req) {
         MeditationMusicTypeResFinalVO resFinal = new MeditationMusicTypeResFinalVO();
         String openId = req.getOpenId();
         int type = req.getType();
