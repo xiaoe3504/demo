@@ -4,21 +4,28 @@ import com.alibaba.fastjson.JSONObject;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.dto.UserInfoDTO;
+import com.psy.demo.enums.IntelligentTestTypeEnum;
 import com.psy.demo.enums.PayCategoryEnum;
+import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.mapper.UserInfoMapper;
 import com.psy.demo.service.IntelligentTestScaleService;
 import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.vo.req.CommonTypeReqVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResFinalVO;
 import com.psy.demo.vo.res.IntelligentTestScaleTypeResVO;
 import com.psy.demo.vo.res.IntelligentTestScaleVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.psy.demo.enums.IntelligentTestTypeEnum.genMapUseKeySort;
+import static com.psy.demo.utils.MyConstantString.DEFAULT_NULL_STRING;
 
 
 @Service
@@ -34,28 +41,56 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
 
     @Override
     public IntelligentTestScaleTypeResFinalVO select(String openId) {
-        List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select();
+        IntelligentTestScaleTypeResFinalVO resFinal = new IntelligentTestScaleTypeResFinalVO();
+
+        List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select(DEFAULT_NULL_STRING);
         Map<String, List<IntelligentTestScaleDTO>> res = getMapAndSort(list);
-        PayInfoDTO dto = PayInfoDTO.builder()
-                .openId(openId)
-                .category(PayCategoryEnum.TYPE_TEST.getTypeName()).build();
-
-
 
         List<IntelligentTestScaleTypeResVO> listRes = res.entrySet().stream().map(e -> {
             String type = e.getKey();
             List<IntelligentTestScaleVO> listInner = e.getValue().stream()
                     .map(IntelligentTestScaleVO::genVOByDTO).collect(Collectors.toList());
             IntelligentTestScaleTypeResVO vo = new IntelligentTestScaleTypeResVO();
-            vo.setType(type);
+            vo.setType(type + "篇");
             vo.setDataArr(listInner);
             return vo;
         }).collect(Collectors.toList());
-        //设置是否支付了
-        IntelligentTestScaleTypeResFinalVO resFinal = new IntelligentTestScaleTypeResFinalVO();
         resFinal.setList(listRes);
+        if (getIsMember(openId)) {
+            resFinal.setMember(true);
+        }
+        return resFinal;
+    }
+
+    private boolean getIsMember(String openId) {
         UserInfoDTO userInfoDTO = userInfoMapper.getDTOByOpenId(openId);
-        if (userInfoDTO != null && userInfoDTO.getIsMember() == 1) {
+        return userInfoDTO != null && userInfoDTO.getIsMember() == 1;
+    }
+
+    @Override
+    public IntelligentTestScaleTypeResFinalVO selectType(CommonTypeReqVO req) {
+        IntelligentTestScaleTypeResFinalVO resFinal = new IntelligentTestScaleTypeResFinalVO();
+
+        String openId = req.getOpenId();
+        int type = req.getType();
+        if (StringUtils.isEmpty(openId)) {
+            throw new BaseException("openId can not be null");
+        }
+        if (type <= 0) {
+            throw new BaseException("type invalid");
+        }
+
+        String typeDesc = IntelligentTestTypeEnum.getDescByCode(type);
+        List<IntelligentTestScaleDTO> list = intelligentTestScaleMapper.select(typeDesc);
+        List<IntelligentTestScaleVO> listVO = list.stream().map(IntelligentTestScaleVO::genVOByDTO).collect(Collectors.toList());
+
+        IntelligentTestScaleTypeResVO vo = new IntelligentTestScaleTypeResVO();
+        vo.setType(typeDesc + "篇");
+        vo.setDataArr(listVO);
+
+        List<IntelligentTestScaleTypeResVO> listRes = Arrays.asList(vo);
+        resFinal.setList(listRes);
+        if (getIsMember(openId)) {
             resFinal.setMember(true);
         }
         return resFinal;
@@ -71,12 +106,5 @@ public class IntelligentTestScaleServiceImpl implements IntelligentTestScaleServ
         return treeMap;
     }
 
-    private Map<String, Integer> genMapUseKeySort() {
-        Map<String, Integer> mapUseKeySort = new HashMap<>();
-        mapUseKeySort.put("情绪情感篇", 1);
-        mapUseKeySort.put("人际关系篇", 2);
-        mapUseKeySort.put("人格特质篇", 3);
-        mapUseKeySort.put("认知思维篇", 4);
-        return mapUseKeySort;
-    }
+
 }

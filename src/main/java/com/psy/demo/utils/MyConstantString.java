@@ -1,5 +1,8 @@
 package com.psy.demo.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MyConstantString {
     //私钥
     public static final String PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n" +
@@ -56,5 +59,25 @@ public class MyConstantString {
     public static final String DEFAULT_ANSWER = "您好,暂时还没有这方面的答案";
 
     public static final String DAY_MSG_LIMIT = "DAY_MSG_LIMIT";
+
+    public static final String DEFAULT_NULL_STRING = "";
+
+    public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(
+            "温暖",
+            "友善",
+            "和蔼",
+            "感性",
+            "理性"
+    );
+
+    public static final List<String> EXPERT_AREAS_LIST = Arrays.asList(
+            "个人成长",
+            "亲子",
+            "学业",
+            "情绪",
+            "婚姻爱情",
+            "情绪",
+            "职场"
+    );
 
 }

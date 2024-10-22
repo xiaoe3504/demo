@@ -12,6 +12,7 @@ import com.psy.demo.mapper.IntelligentTestScaleMapper;
 import com.psy.demo.mapper.MeditationMusicMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.service.PayInfoService;
+import com.psy.demo.utils.MyConstantString;
 import com.psy.demo.vo.res.PayInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +54,7 @@ public class PayInfoServiceImpl implements PayInfoService {
                         @NotNull
                         public Map<String, String> load(@NotNull String key) {
                             if (key.equals(TYPE_TEST)) {
-                                return intelligentTestScaleMapper.select().stream().collect(Collectors.toMap
+                                return intelligentTestScaleMapper.select(MyConstantString.DEFAULT_NULL_STRING).stream().collect(Collectors.toMap
                                         (dto -> String.valueOf(dto.getId()), IntelligentTestScaleDTO::getName));
                             } else if (key.equals(TYPE_MEDITATION)) {
                                 return meditationMusicMapper.select().stream().collect(Collectors.toMap

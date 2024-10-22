@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.PsychologistMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.PsychologistDTO">
+        <!--@mbg.generated-->
+        <!--@Table psychologist-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="background_url" jdbcType="VARCHAR" property="backgroundUrl"/>
+        <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
+        <result column="experience_cnt" jdbcType="INTEGER" property="experienceCnt"/>
+        <result column="response_rate" jdbcType="DOUBLE" property="responseRate"/>
+        <result column="applause_rate" jdbcType="DOUBLE" property="applauseRate"/>
+        <result column="recommended_rate" jdbcType="DOUBLE" property="recommendedRate"/>
+        <result column="person_introduce" jdbcType="VARCHAR" property="personIntroduce"/>
+        <result column="listen_style" jdbcType="VARCHAR" property="listenStyle"/>
+        <result column="professional_qualification" jdbcType="VARCHAR" property="professionalQualification"/>
+        <result column="expert_areas" jdbcType="VARCHAR" property="expertAreas"/>
+        <result column="is_member" jdbcType="INTEGER" property="isMember"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, open_id, `name`, gender, slogan, background_url, avatar_url, experience_cnt,
+        response_rate, applause_rate, recommended_rate, person_introduce, listen_style, professional_qualification,
+        expert_areas, is_member, `status`, create_time, update_time
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PsychologistDTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into psychologist (open_id, `name`, gender,
+                                  slogan, background_url, avatar_url,
+                                  experience_cnt, response_rate, applause_rate,
+                                  recommended_rate, person_introduce, listen_style,
+                                  professional_qualification, expert_areas,
+                                  is_member, `status`)
+        values (#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+                #{slogan,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
+                #{experienceCnt,jdbcType=INTEGER}, #{responseRate,jdbcType=DOUBLE}, #{applauseRate,jdbcType=DOUBLE},
+                #{recommendedRate,jdbcType=DOUBLE}, #{personIntroduce,jdbcType=VARCHAR},
+                #{listenStyle,jdbcType=VARCHAR},
+                #{professionalQualification,jdbcType=VARCHAR}, #{expertAreas,jdbcType=VARCHAR},
+                #{isMember,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+    </insert>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from psychologist
+    </select>
+</mapper>

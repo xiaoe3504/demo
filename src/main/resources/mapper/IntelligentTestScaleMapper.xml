@@ -18,30 +18,36 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, `type`, `name`, title, is_free, avatar_url,cnt, create_time, update_time
+        id, `type`, `name`, title, is_free, avatar_url,sid,hash,cnt, create_time, update_time
     </sql>
-    <select id="select" resultMap="BaseResultMap">
+    <select id="select" resultMap="BaseResultMap" parameterType="string">
         SELECT t.*
-        FROM ( SELECT
-                    `id`,
-                    `type`,
-                    `name`,
-                    `title`,
-                    `is_free`,
-                    `avatar_url`,
-                    `sid`,
-                    `hash`,
-                    (i.cnt+IFNULL( user_info_cnt, 0 )) as cnt,
-                    `create_time`,
-                    `update_time` FROM intelligent_test_scale i
-            LEFT JOIN ( SELECT category,
-                               category_id,
-                               count(1) AS user_info_cnt
-                        FROM user_info_category_cnt
-                        GROUP BY category,
-                                 category_id ) u
-                ON u.category = 'TYPE_TEST'
-                AND u.category_id = i.id) t
+        FROM (SELECT `id`,
+                     `type`,
+                     `name`,
+                     `title`,
+                     `is_free`,
+                     `avatar_url`,
+                     `sid`,
+                     `hash`,
+                     (i.cnt + IFNULL(user_info_cnt, 0)) as cnt,
+                     `create_time`,
+                     `update_time`
+              FROM (select *  from intelligent_test_scale
+                           <where>
+                               <if test="type != null and type != ''">
+                                   type = #{type,jdbcType=VARCHAR}
+                               </if>
+                           </where>
+                           ) i
+                           LEFT JOIN (SELECT category,
+                                             category_id,
+                                             count(1) AS user_info_cnt
+                                      FROM user_info_category_cnt
+                                      GROUP BY category,
+                                               category_id) u
+                      ON u.category = 'TYPE_TEST'
+                              AND u.category_id = i.id) t
         ORDER BY t.id
     </select>
 </mapper>

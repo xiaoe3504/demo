@@ -9,6 +9,6 @@ import java.util.List;
 public interface IntelligentTestScaleMapper {
 
 
-    List<IntelligentTestScaleDTO> select();
+    List<IntelligentTestScaleDTO> select(String type);
 
 }

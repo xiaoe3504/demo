@@ -193,12 +193,37 @@ alter table user_info add column is_member TINYINT ( 10 ) COMMENT '是否会员'
 alter table user_info add column not_member_msg_cnt BIGINT COMMENT '非会员每天消息数' DEFAULT 0  after is_member;
 
 
-
 CREATE TABLE `mood_map`  (
-   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-   `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户open_id唯一的',
-   `mood` int(10) DEFAULT 0 COMMENT '心情(1快乐2惊讶3愤怒4悲伤5恐惧)',
-   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-   PRIMARY KEY (`id`) USING BTREE
-)
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户open_id唯一的',
+    `mood` int(10) DEFAULT 0 COMMENT '心情(1快乐2惊讶3愤怒4悲伤5恐惧)',
+    `mood_date` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1900-01-01' COMMENT '用户心情日期',
+    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_open_id_mood_date` ( `open_id`,`mood_date` )
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '心情地图表';;
+
+CREATE TABLE `psychologist`  (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户open_id唯一的',
+    `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户名',
+    `gender` int(2) DEFAULT 0 COMMENT '性别(0女1男)',
+    `slogan` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '口号',
+    `background_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '背景图',
+    `avatar_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户头像图标',
+    `experience_cnt` int(10) DEFAULT 0 COMMENT '经验人数',
+    `response_rate` double DEFAULT 1 COMMENT '响应率',
+    `applause_rate` double DEFAULT 1 COMMENT '好评率',
+    `recommended_rate` double DEFAULT 1 COMMENT '推荐率',
+    `person_introduce` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '个人介绍',
+    `listen_style` int(10) DEFAULT 0 COMMENT '倾听风格',
+    `professional_qualification` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '专业资质',
+    `expert_areas` int(10) DEFAULT 0 COMMENT '擅长领域',
+    `is_member` int(10) DEFAULT 0 COMMENT '是否是严选0否1是',
+    `status` int(10)  DEFAULT 0 COMMENT '个人状态0喊他上线1服务中2找他聊',
+    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_open_id` ( `open_id`)
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '心理咨询师表';;
