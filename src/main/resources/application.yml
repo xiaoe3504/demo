@@ -26,6 +26,7 @@ mybatis:
   type-aliases-package: com.psy.demo.dto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
 
 baichuan:
   url:

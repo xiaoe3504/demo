@@ -12,22 +12,12 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
 
-    <resultMap id="MyResultMap" type="com.psy.demo.vo.res.MessageVO">
-        <!--@mbg.generated-->
-        <!--@Table message-->
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="is_sender_psychologist" jdbcType="TINYINT" property="isSenderPsychologist"/>
-        <result column="message" jdbcType="VARCHAR" property="message"/>
-        <result column="sender_name" jdbcType="VARCHAR" property="senderName"/>
-        <result column="sender_avatar_url" jdbcType="VARCHAR" property="senderAvatarUrl"/>
-        <result column="time" jdbcType="VARCHAR" property="time"/>
-    </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, conversation_id, is_sender_psychologist, message, create_time, update_time
     </sql>
     <select id="selectMessagesByOpenId" parameterType="com.psy.demo.vo.req.MessageReq"
-            resultMap="MyResultMap">
+            resultType="com.psy.demo.vo.res.MessageVO">
         <!--@mbg.generated-->
         SELECT t.id,
                u.nick_name  AS sender_name,
