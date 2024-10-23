@@ -152,6 +152,12 @@ public class PsychologistDTO {
                 .expertAreas(StringUtil.getStringArr(dto.getExpertAreas(), MyConstantString.EXPERT_AREAS_LIST))
                 .price(dto.getPrice())
                 .isMember(dto.getIsMember() == 1)
+                .backgroundUrl(dto.getBackgroundUrl())
+                .responseRate(doubleToPercentString(dto.getResponseRate()))
+                .recommendedRate(doubleToPercentString(dto.getRecommendedRate()))
+                .personIntroduce(dto.getPersonIntroduce())
+                .listenStyle(StringUtil.getStringArr(dto.getListenStyle(), MyConstantString.LISTEN_STYLE_LIST))
+                .professionalQualification(dto.getProfessionalQualification())
                 .build();
     }
 }

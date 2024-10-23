@@ -72,6 +72,36 @@ public class PsychologistVO {
     private boolean isMember;
 
 
+    /**
+     * 背景图
+     */
+    private String backgroundUrl;
+
+    /**
+     * 响应率
+     */
+    private String responseRate;
+
+    /**
+     * 推荐率
+     */
+    private String recommendedRate;
+
+    /**
+     * 个人介绍
+     */
+    private String personIntroduce;
+
+    /**
+     * 倾听风格
+     */
+    private String[] listenStyle;
+
+    /**
+     * 专业资质
+     */
+    private String professionalQualification;
+
 
 
 }
