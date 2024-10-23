@@ -1,6 +1,7 @@
 package com.psy.demo.mapper;
 
 import com.psy.demo.dto.MessageDTO;
+import com.psy.demo.vo.req.MessageReq;
 import com.psy.demo.vo.res.MessageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,6 +12,6 @@ import java.util.List;
 public interface MessageMapper {
     int insert(MessageDTO record);
 
-    List<MessageVO> selectMessagesByOpenId(@Param("openId") String openId);
+    List<MessageVO> selectMessagesByOpenId(@Param("req") MessageReq req);
 
 }

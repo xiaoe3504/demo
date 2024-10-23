@@ -9,6 +9,7 @@ import com.psy.demo.mapper.*;
 import com.psy.demo.service.ConversationService;
 import com.psy.demo.utils.DateUtils;
 import com.psy.demo.vo.req.ConversationReq;
+import com.psy.demo.vo.req.MessageReq;
 import com.psy.demo.vo.res.MessageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -58,11 +59,16 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    public List<MessageVO> getMessages(String openId) {
-        if (StringUtils.isEmpty(openId)) {
-            throw new BaseException("getMessages error openId null ");
+    public List<MessageVO> getMessages(MessageReq req) {
+        String clientId = req.getClientId();
+        if (StringUtils.isEmpty(clientId)) {
+            throw new BaseException("getMessages error clientId null ");
         }
-        List<MessageVO> messageVOS = messageMapper.selectMessagesByOpenId(openId);
+        String psychologistId = req.getPsychologistId();
+        if (StringUtils.isEmpty(psychologistId)) {
+            throw new BaseException("getMessages error psychologistId null ");
+        }
+        List<MessageVO> messageVOS = messageMapper.selectMessagesByOpenId(req);
         messageVOS.forEach(e -> {
             e.setTime(DateUtils.getTimeInterval(e.getTime()));
         });

@@ -11,11 +11,23 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+
+    <resultMap id="MyResultMap" type="com.psy.demo.vo.res.MessageVO">
+        <!--@mbg.generated-->
+        <!--@Table message-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="is_sender_psychologist" jdbcType="TINYINT" property="isSenderPsychologist"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="sender_name" jdbcType="VARCHAR" property="senderName"/>
+        <result column="sender_avatar_url" jdbcType="VARCHAR" property="senderAvatarUrl"/>
+        <result column="time" jdbcType="VARCHAR" property="time"/>
+    </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, conversation_id, is_sender_psychologist, message, create_time, update_time
     </sql>
-    <select id="selectMessagesByOpenId" parameterType="java.lang.String" resultType="com.psy.demo.vo.res.MessageVO">
+    <select id="selectMessagesByOpenId" parameterType="com.psy.demo.vo.req.MessageReq"
+            resultMap="MyResultMap">
         <!--@mbg.generated-->
         SELECT t.id,
                u.nick_name  AS sender_name,
@@ -42,7 +54,8 @@
                                            LEFT JOIN (SELECT * FROM conversation) c ON m.conversation_id = c.id
                               ) b
         <where>
-            b.psychologist_id = #{openId,jdbcType=VARCHAR} or b.client_id = #{openId,jdbcType=VARCHAR}
+            b.psychologist_id = #{req.psychologistId,jdbcType=VARCHAR}
+            and b.client_id = #{req.clientId,jdbcType=VARCHAR}
         </where>
         )t
         LEFT JOIN user_info u
