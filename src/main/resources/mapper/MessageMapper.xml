@@ -19,6 +19,7 @@
     <select id="selectMessagesByOpenId" parameterType="com.psy.demo.vo.req.MessageReq"
             resultType="com.psy.demo.vo.res.MessageVO">
         <!--@mbg.generated-->
+        select * from (
         SELECT t.id,
                u.nick_name  AS sender_name,
                u.avatar_url AS sender_avatar_url,
@@ -49,7 +50,7 @@
         </where>
         )t
         LEFT JOIN user_info u
-                ON t.sender_id = u.open_id
+                ON t.sender_id = u.open_id) t_final order by t_final.time desc
     </select>
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.MessageDTO"

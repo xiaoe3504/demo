@@ -10,21 +10,24 @@
         <result column="uni_id" jdbcType="VARCHAR" property="uniId"/>
         <result column="amount" jdbcType="VARCHAR" property="amount"/>
         <result column="trade_no" jdbcType="VARCHAR" property="tradeNo"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="feedback" jdbcType="VARCHAR" property="feedback"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, open_id, category, uni_id,amount,trade_no, create_time, update_time
+        id, open_id, category, uni_id,amount,trade_no,`description`,feedback,create_time, update_time
     </sql>
 
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PayInfoDTO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into pay_info (open_id, category, uni_id, amount, trade_no)
+        insert into pay_info (open_id, category, uni_id, amount, trade_no, description, feedback)
         values ( #{openId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
-               , #{amount,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR})
+               , #{amount,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+               , #{feedback,jdbcType=VARCHAR})
     </insert>
 
 
@@ -43,5 +46,17 @@
                 and uni_id = #{uniId,jdbcType=VARCHAR}
             </if>
         </where>
+    </select>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pay_info
+        <where>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by create_time desc
     </select>
 </mapper>

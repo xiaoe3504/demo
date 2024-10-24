@@ -13,6 +13,8 @@ import com.psy.demo.mapper.MeditationMusicMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.service.PayInfoService;
 import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.utils.StringUtil;
+import com.psy.demo.vo.res.PayInfoFinalVO;
 import com.psy.demo.vo.res.PayInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,5 +128,18 @@ public class PayInfoServiceImpl implements PayInfoService {
                     return vo;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PayInfoFinalVO> select(String openId) {
+        List<PayInfoDTO> list = payInfoMapper.selectByOpenId(openId);
+        return list.stream().map(e -> PayInfoFinalVO.builder()
+                .category(PayCategoryEnum.getDescByName(e.getCategory()))
+                .description(e.getDescription())
+                .amount(StringUtil.getPriceString(e.getAmount()))
+                .tradeNo(e.getTradeNo())
+                .createTime(e.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")))
+                .build()).collect(Collectors.toList());
+
     }
 }

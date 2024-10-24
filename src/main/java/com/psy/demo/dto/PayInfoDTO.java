@@ -50,6 +50,15 @@ public class PayInfoDTO {
      */
     private String tradeNo;
 
+    /**
+     * 订单描述
+     */
+    private String description;
+
+    /**
+     * 订单评价
+     */
+    private String feedback;
 
     /**
      * 创建时间

@@ -250,3 +250,19 @@ CREATE TABLE `message`  (
      `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
      PRIMARY KEY (`id`) USING BTREE
 )ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '聊天详情表';
+
+
+CREATE TABLE `pay_info` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` varchar(50) DEFAULT NULL COMMENT '用户open_id唯一的',
+    `category` varchar(50) DEFAULT NULL COMMENT '大类，TYPE_TEST,TYPE_MEDITATION两种',
+    `uni_id` varchar(50) DEFAULT NULL COMMENT '大类下的id唯一的',
+    `amount` varchar(50) DEFAULT NULL COMMENT '价格',
+    `trade_no` varchar(50) DEFAULT NULL COMMENT '订单号',
+    `desc` varchar(200) DEFAULT NULL COMMENT '订单描述',
+    `feedback` varchar(200) DEFAULT NULL COMMENT '订单评价',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_openid_category_uniid` (`open_id`,`category`,`uni_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='支付信息'
