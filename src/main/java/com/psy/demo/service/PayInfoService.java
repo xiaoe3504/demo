@@ -2,6 +2,7 @@ package com.psy.demo.service;
 
 
 import com.psy.demo.dto.PayInfoDTO;
+import com.psy.demo.vo.req.FeedbackReq;
 import com.psy.demo.vo.res.PayInfoFinalVO;
 import com.psy.demo.vo.res.PayInfoVO;
 
@@ -15,4 +16,6 @@ public interface PayInfoService {
     List<PayInfoVO> selectByOpenId(PayInfoDTO dto);
 
     List<PayInfoFinalVO> select(String openId);
+
+    int dealFeedback(FeedbackReq req);
 }

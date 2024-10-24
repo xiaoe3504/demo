@@ -1,6 +1,7 @@
 package com.psy.demo.vo.res;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.utils.MyConstantString;
@@ -28,6 +29,8 @@ public class PayInfoFinalVO {
      */
     private Long id;
     private String category;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String feedback;
 
     private List<PayInfoFinalInnerVO>list;
 
@@ -49,6 +52,7 @@ public class PayInfoFinalVO {
         return PayInfoFinalVO.builder()
                 .id(dto.getId())
                 .category(PayCategoryEnum.getDescByName(dto.getCategory()))
+                .feedback(dto.getFeedback())
                 .list(list)
                 .build();
     }

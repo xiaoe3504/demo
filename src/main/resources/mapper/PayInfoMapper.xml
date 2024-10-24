@@ -59,4 +59,10 @@
         </where>
         order by create_time desc
     </select>
+
+    <update id="updateFeedback" parameterType="com.psy.demo.vo.req.FeedbackReq">
+        update pay_info
+        set feedback= #{req.feedback,jdbcType=VARCHAR}
+        where id = #{req.id,jdbcType=BIGINT};
+    </update>
 </mapper>

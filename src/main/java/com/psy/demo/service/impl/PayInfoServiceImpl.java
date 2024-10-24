@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import com.psy.demo.dto.IntelligentTestScaleDTO;
 import com.psy.demo.dto.MeditationMusicDTO;
 import com.psy.demo.dto.PayInfoDTO;
+import com.psy.demo.enums.FeedbackEnum;
 import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.IntelligentTestScaleMapper;
@@ -13,6 +14,7 @@ import com.psy.demo.mapper.MeditationMusicMapper;
 import com.psy.demo.mapper.PayInfoMapper;
 import com.psy.demo.service.PayInfoService;
 import com.psy.demo.utils.MyConstantString;
+import com.psy.demo.vo.req.FeedbackReq;
 import com.psy.demo.vo.res.PayInfoFinalVO;
 import com.psy.demo.vo.res.PayInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -131,8 +133,18 @@ public class PayInfoServiceImpl implements PayInfoService {
     @Override
     public List<PayInfoFinalVO> select(String openId) {
         List<PayInfoDTO> list = payInfoMapper.selectByOpenId(openId);
-        List<PayInfoFinalVO> listBeforeFinal = list.stream().map(PayInfoFinalVO::genVO).collect(Collectors.toList());
-        return listBeforeFinal;
+        return list.stream().map(PayInfoFinalVO::genVO).collect(Collectors.toList());
+    }
+
+    @Override
+    public int dealFeedback(FeedbackReq req) {
+        if (null == req.getId() || req.getId() <= 0) {
+            throw new BaseException("id null invalid err");
+        }
+        if (!FeedbackEnum.isFeedBackType(req.getFeedback())) {
+            throw new BaseException("feedback err");
+        }
+        return payInfoMapper.updateFeedback(req);
     }
 
 
