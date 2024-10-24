@@ -69,7 +69,7 @@ public class StringUtil {
         }
         int amountI = Integer.valueOf(amount);
         double d = amountI / 100.0;
-        String formattedValue = String.format("%.1f", d);
+        String formattedValue = String.format("%.2f", d);
         return "总价¥" + formattedValue + "元 实付¥" + formattedValue + "元";
 
     }
