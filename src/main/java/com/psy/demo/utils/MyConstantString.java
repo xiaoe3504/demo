@@ -65,6 +65,12 @@ public class MyConstantString {
 
     public static final String DEFAULT_NULL_STRING = "";
 
+    public static final String ORDER_DESCRIPTION = "订单内容";
+    public static final String ORDER_PRICE = "订单价格";
+    public static final String ORDER_NO = "订单编号";
+    public static final String ORDER_TIME = "订单时间";
+
+
     public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(
             "温暖",
             "友善",
