@@ -9,6 +9,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
         <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="audio" jdbcType="VARCHAR" property="audio"/>
         <result column="background_url" jdbcType="VARCHAR" property="backgroundUrl"/>
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
         <result column="experience_cnt" jdbcType="INTEGER" property="experienceCnt"/>
@@ -27,7 +28,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, open_id, `name`, gender, slogan, background_url, avatar_url, experience_cnt,
+        id, open_id, `name`, gender, slogan,audio, background_url, avatar_url, experience_cnt,
         response_rate, applause_rate, recommended_rate, person_introduce, listen_style, professional_qualification,
         expert_areas, price, is_member, `status`, create_time, update_time
     </sql>
@@ -36,13 +37,15 @@
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into psychologist (open_id, `name`, gender,
-                                  slogan, background_url, avatar_url,
+                                  slogan,audio, background_url,
+                                  avatar_url,
                                   experience_cnt, response_rate, applause_rate,
                                   recommended_rate, person_introduce, listen_style,
                                   professional_qualification, expert_areas, price,
                                   is_member, `status`)
         values (#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
-                #{slogan,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
+                #{slogan,jdbcType=VARCHAR},#{audio,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR},
+                #{avatarUrl,jdbcType=VARCHAR},
                 #{experienceCnt,jdbcType=INTEGER}, #{responseRate,jdbcType=DOUBLE}, #{applauseRate,jdbcType=DOUBLE},
                 #{recommendedRate,jdbcType=DOUBLE}, #{personIntroduce,jdbcType=VARCHAR},
                 #{listenStyle,jdbcType=VARCHAR},

@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -79,6 +80,7 @@ public class PayInfoServiceImpl implements PayInfoService {
         }
     }
 
+    @Transactional
     @Override
     public int insert(PayInfoDTO payInfoDTO) {
         if (StringUtils.isEmpty(payInfoDTO.getOpenId())) {
@@ -99,6 +101,14 @@ public class PayInfoServiceImpl implements PayInfoService {
         if (StringUtils.isEmpty(payInfoDTO.getTradeNo())) {
             throw new BaseException("TradeNo is null err");
         }
+        boolean ukErr = (PayCategoryEnum.TYPE_MEDITATION.getName().equals(payInfoDTO.getCategory()) ||
+                PayCategoryEnum.TYPE_MEMBER.getName().equals(payInfoDTO.getCategory()) ||
+                PayCategoryEnum.TYPE_TEST.getName().equals(payInfoDTO.getCategory()))
+                && (payInfoMapper.selectByUk3(payInfoDTO) != null);
+        if (ukErr) {
+            throw new BaseException("type test meditation member uni key err");
+        }
+
         int res;
         try {
             res = payInfoMapper.insert(payInfoDTO);
@@ -109,26 +119,6 @@ public class PayInfoServiceImpl implements PayInfoService {
         return res;
     }
 
-    @Override
-    public List<PayInfoVO> selectByOpenId(PayInfoDTO dto) {
-        List<PayInfoDTO> list = payInfoMapper.selectByUk3(dto);
-
-        return list.stream().collect(Collectors.groupingBy(PayInfoDTO::getCategory))
-                .entrySet().stream()
-                .map(e -> {
-                    PayInfoVO vo = PayInfoVO.builder().category(e.getKey()).dtos(e.getValue()).build();
-                    vo.getDtos().forEach(ee -> {
-                        String idString = String.valueOf(ee.getId());
-                        if (e.getKey().equals(TYPE_TEST)) {
-                            ee.setName(mapTypeTest.get(idString));
-                        } else if (e.getKey().equals(TYPE_MEDITATION)) {
-                            ee.setName(mapTypeMeditation.get(idString));
-                        }
-                    });
-                    return vo;
-                })
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<PayInfoFinalVO> select(String openId) {

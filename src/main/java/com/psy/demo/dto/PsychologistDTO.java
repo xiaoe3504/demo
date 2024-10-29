@@ -48,6 +48,11 @@ public class PsychologistDTO {
     private String slogan;
 
     /**
+     * 咨询师语录
+     */
+    private String audio;
+
+    /**
     * 背景图
     */
     private String backgroundUrl;
@@ -147,6 +152,7 @@ public class PsychologistDTO {
                 .status(dto.getStatus())
                 .gender(dto.getGender() == 0 ? "female" : "male")
                 .slogan(dto.getSlogan())
+                .audio(dto.getAudio())
                 .experienceCnt(dto.getExperienceCnt() > 100 ? "100+" : String.valueOf(dto.getExperienceCnt()))
                 .applauseRate(doubleToPercentString(dto.getApplauseRate()))
                 .expertAreas(StringUtil.getStringArr(dto.getExpertAreas(), MyConstantString.EXPERT_AREAS_LIST))

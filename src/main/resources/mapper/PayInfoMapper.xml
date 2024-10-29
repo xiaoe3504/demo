@@ -46,6 +46,7 @@
                 and uni_id = #{uniId,jdbcType=VARCHAR}
             </if>
         </where>
+        limit 1
     </select>
 
     <select id="selectByOpenId" resultMap="BaseResultMap">

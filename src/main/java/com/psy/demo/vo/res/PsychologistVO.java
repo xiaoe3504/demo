@@ -44,11 +44,14 @@ public class PsychologistVO {
      * 性别(0女1男)
      */
     private String gender;
-
     /**
      * 口号
      */
     private String slogan;
+    /**
+     * 咨询师语录
+     */
+    private String audio;
     /**
      * 谈话数量
      */
@@ -101,7 +104,6 @@ public class PsychologistVO {
      * 专业资质
      */
     private String professionalQualification;
-
 
 
 }

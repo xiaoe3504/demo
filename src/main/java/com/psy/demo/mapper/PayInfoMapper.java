@@ -11,7 +11,7 @@ import java.util.List;
 public interface PayInfoMapper {
     int insert(PayInfoDTO record);
 
-    List<PayInfoDTO> selectByUk3(PayInfoDTO info);
+    PayInfoDTO selectByUk3(PayInfoDTO info);
 
     List<PayInfoDTO> selectByOpenId(@Param("openId") String openId);
 
