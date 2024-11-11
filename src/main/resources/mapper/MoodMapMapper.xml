@@ -27,6 +27,8 @@
         from mood_map
         <where>
             open_id = #{openId,jdbcType=VARCHAR}
+            and create_time  BETWEEN DATE_FORMAT(CURDATE() ,'%Y-%m-01')
+            AND LAST_DAY(CURDATE())
         </where>
     </select>
 

@@ -5,6 +5,7 @@ import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.service.LoginService;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.utils.CommonUtils;
+import com.psy.demo.vo.res.BaseRes;
 import com.psy.demo.vo.res.FinalUserInfo;
 import com.psy.demo.vo.res.LoginRes;
 import com.psy.demo.vo.res.UserInfoRes;
@@ -39,5 +40,11 @@ public class LoginController {
     public UserInfoDTO getDTOByOpenId(@RequestBody UserInfoDTO userInfoDTO) {
         return userInfoService.getDTOByOpenId(userInfoDTO);
     }
+
+    @GetMapping(path = "/getPhoneNumber/{code}")
+    public BaseRes getPhoneNumber(@PathVariable String code) {
+        return loginService.getPhoneNumber(code);
+    }
+
 
 }

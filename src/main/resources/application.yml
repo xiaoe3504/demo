@@ -3,6 +3,11 @@ miniProgram:
   grantType: authorization_code
   loginUrl: https://api.weixin.qq.com/sns/jscode2session
   secret: 48b399b2902602f3eef7028c1826b33d
+  accessTokenUrl: https://api.weixin.qq.com/cgi-bin/stable_token
+  accessTokenGrantType: client_credential
+  getPhoneNumberUrl: https://api.weixin.qq.com/wxa/business/getuserphonenumber
+
+
 server:
   port: 80
 xunfei:
