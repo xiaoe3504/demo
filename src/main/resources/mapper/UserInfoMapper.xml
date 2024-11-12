@@ -44,7 +44,9 @@
                                `password`, avatar_url)
         VALUES (#{openId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
                 #{password,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
-        ON DUPLICATE KEY UPDATE nick_name = VALUES(nick_name),avatar_url = VALUES(avatar_url);
+        ON DUPLICATE KEY UPDATE nick_name = VALUES(nick_name),
+        avatar_url = VALUES(avatar_url),
+        phone_number = VALUES(phone_number);
     </insert>
 
     <select id="getDTOByOpenId" resultMap="BaseResultMap">

@@ -12,4 +12,6 @@ public interface ConversationService {
     int leaveMessage(ConversationReq req);
 
     List<MessageVO> getMessages(MessageReq req);
+
+    List<MessageVO> getMessagesPsychologist(MessageReq req);
 }

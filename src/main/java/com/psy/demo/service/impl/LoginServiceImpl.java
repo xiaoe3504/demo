@@ -75,15 +75,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     public String getAccessToken() {
-        AccessTokenReq accessTokenReq = AccessTokenReq.builder().appid(appid).grant_type(accessTokenGrantType).secret(secret).build();
-        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSONObject.toJSONString(accessTokenReq), mediaType);
+        String url = accessTokenUrl + "?appid=" + appid + "&secret=" + secret + "&grant_type=" + accessTokenGrantType;
 
         Request request = new Request.Builder()
-                .url(accessTokenUrl)
-                .post(body)
+                .url(url)
                 .build();
-        log.info("accessToken url:" + accessTokenUrl);
+        log.info("accessToken url:" + url);
         try {
             Response response = client.newCall(request).execute();
             String string = Objects.requireNonNull(response.body()).string();
@@ -110,14 +107,21 @@ public class LoginServiceImpl implements LoginService {
             Response response = client.newCall(request).execute();
             String string = Objects.requireNonNull(response.body()).string();
             GetPhoneNumberRes res = JSONObject.parseObject(string, GetPhoneNumberRes.class);
-            log.info("getPhoneNumber res:" + JSONObject.toJSONString(res));
-            GetPhoneNumberPhoneInfo phone_info = res.getPhone_info();
-            if (phone_info != null) {
-                return phone_info.getPhoneNumber();
-            } else {
-                log.info("getPhoneNumber phone_info null:");
+            if (res.getErrcode() != 0) {
+                log.error("getPhoneNumber err res:" + JSONObject.toJSONString(res));
                 return null;
+            } else {
+                log.info("getPhoneNumber suc res:" + JSONObject.toJSONString(res));
+                GetPhoneNumberPhoneInfo phone_info = res.getPhone_info();
+                if (phone_info != null) {
+                    return phone_info.getPhoneNumber();
+                } else {
+                    log.info("getPhoneNumber phone_info null:");
+                    return null;
+                }
             }
+
+
         } catch (Exception e) {
             log.error("okHttp error:" + e.getMessage(), e);
             throw new BaseException("okHttp error:");

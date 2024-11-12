@@ -60,15 +60,29 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     public List<MessageVO> getMessages(MessageReq req) {
+        String psychologistId = req.getPsychologistId();
         String clientId = req.getClientId();
+        if (StringUtils.isEmpty(psychologistId)) {
+            throw new BaseException("getMessages error psychologistId null ");
+        }
         if (StringUtils.isEmpty(clientId)) {
             throw new BaseException("getMessages error clientId null ");
         }
+        List<MessageVO> messageVOS = messageMapper.selectMessagesByOpenId(req);
+        messageVOS.forEach(e -> {
+            e.setTime(DateUtils.getTimeInterval(e.getTime()));
+        });
+        return messageVOS;
+    }
+
+    @Override
+    public List<MessageVO> getMessagesPsychologist(MessageReq req) {
         String psychologistId = req.getPsychologistId();
         if (StringUtils.isEmpty(psychologistId)) {
             throw new BaseException("getMessages error psychologistId null ");
         }
-        List<MessageVO> messageVOS = messageMapper.selectMessagesByOpenId(req);
+        List<MessageVO> messageVOS = messageMapper.selectMessagesByPsychologistId(req);
+
         messageVOS.forEach(e -> {
             e.setTime(DateUtils.getTimeInterval(e.getTime()));
         });

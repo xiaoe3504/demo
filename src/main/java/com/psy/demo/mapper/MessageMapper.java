@@ -14,4 +14,7 @@ public interface MessageMapper {
 
     List<MessageVO> selectMessagesByOpenId(@Param("req") MessageReq req);
 
+    List<MessageVO> selectMessagesByPsychologistId(@Param("req") MessageReq req);
+
+
 }

@@ -25,9 +25,13 @@ public class MessageDTO {
     private Integer conversationId;
 
     /**
-    * 发消息的是咨询师0否1是
-    */
+     * 发消息的是咨询师0否1是
+     */
     private Boolean isSenderPsychologist;
+    /**
+     * 接收方是否已读
+     */
+    private Boolean hasRead;
 
     /**
     * 发的消息详情

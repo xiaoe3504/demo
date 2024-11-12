@@ -51,6 +51,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
             throw new BaseException("openId can not be null");
         }
+        if (StringUtils.isEmpty(userInfoDTO.getPhoneNumber())) {
+            throw new BaseException("phoneNumber can not be null");
+        }
         return userInfoMapper.insertOrUpdate(userInfoDTO);
     }
 

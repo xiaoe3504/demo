@@ -28,6 +28,11 @@ public class MessageVO {
     /**
      * 发送方名称
      */
+    private String senderId;
+
+    /**
+     * 发送方名称
+     */
     private String senderName;
 
     /**

@@ -24,6 +24,10 @@ public class ConversationController {
     public List<MessageVO> getMessages(@RequestBody MessageReq req) {
         return conversationService.getMessages(req);
     }
+    @PostMapping(path = "/getMessagesPsychologist")
+    public List<MessageVO> getMessagesPsychologist(@RequestBody MessageReq req) {
+        return conversationService.getMessagesPsychologist(req);
+    }
 
 
 }
