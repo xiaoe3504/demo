@@ -1,6 +1,7 @@
 package com.psy.demo.vo.res;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,13 @@ public class MessageVO {
     /**
      * 是否倾听师发的
      */
+    @JsonProperty("isSenderPsychologist")
     private boolean isSenderPsychologist;
+
+    /**
+     * 接收方是否已读
+     */
+    private boolean hasRead;
 
     /**
      * 发送方名称

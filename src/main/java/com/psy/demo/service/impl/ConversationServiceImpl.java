@@ -81,12 +81,20 @@ public class ConversationServiceImpl implements ConversationService {
         if (StringUtils.isEmpty(psychologistId)) {
             throw new BaseException("getMessages error psychologistId null ");
         }
+        //查的都是用户发来的
         List<MessageVO> messageVOS = messageMapper.selectMessagesByPsychologistId(req);
-
         messageVOS.forEach(e -> {
             e.setTime(DateUtils.getTimeInterval(e.getTime()));
         });
         return messageVOS;
+    }
+
+    @Override
+    public int dealHasRead(MessageDTO dto) {
+        if (dto.getId() == null || dto.getId() <= 0) {
+            throw new BaseException("dealHasRead error dto id invalid ");
+        }
+        return messageMapper.dealHasRead(dto);
     }
 
     private int getConversationId(ConversationDTO conversationDTO) {

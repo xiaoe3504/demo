@@ -1,5 +1,6 @@
 package com.psy.demo.controller;
 
+import com.psy.demo.dto.MessageDTO;
 import com.psy.demo.service.ConversationService;
 import com.psy.demo.vo.req.ConversationReq;
 import com.psy.demo.vo.req.MessageReq;
@@ -27,6 +28,11 @@ public class ConversationController {
     @PostMapping(path = "/getMessagesPsychologist")
     public List<MessageVO> getMessagesPsychologist(@RequestBody MessageReq req) {
         return conversationService.getMessagesPsychologist(req);
+    }
+
+    @PostMapping(path = "/dealHasRead")
+    public int dealHasRead(@RequestBody MessageDTO dto) {
+        return conversationService.dealHasRead(dto);
     }
 
 

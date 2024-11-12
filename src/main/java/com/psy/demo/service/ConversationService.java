@@ -1,6 +1,7 @@
 package com.psy.demo.service;
 
 
+import com.psy.demo.dto.MessageDTO;
 import com.psy.demo.vo.req.ConversationReq;
 import com.psy.demo.vo.req.MessageReq;
 import com.psy.demo.vo.res.MessageVO;
@@ -14,4 +15,6 @@ public interface ConversationService {
     List<MessageVO> getMessages(MessageReq req);
 
     List<MessageVO> getMessagesPsychologist(MessageReq req);
+
+    int dealHasRead(MessageDTO dto);
 }

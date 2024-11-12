@@ -88,7 +88,7 @@
                                              END   AS sender_id,
                                      c.psychologist_id,
                                      c.client_id
-                              FROM (SELECT * FROM message) m
+                              FROM (SELECT * FROM message where is_sender_psychologist = 0) m
                                            LEFT JOIN (SELECT * FROM conversation) c ON m.conversation_id = c.id
                               ) b
         <where>
@@ -103,7 +103,6 @@
                 order by t_final.time desc
     </select>
 
-
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.MessageDTO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
@@ -113,4 +112,14 @@
                 #{message,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
+
+    <update id="dealHasRead" parameterType="com.psy.demo.dto.MessageDTO">
+        update message
+        <set>
+            `has_read` = 1,
+        </set>
+        <where>
+            id = #{dto.id,jdbcType=VARCHAR}
+        </where>
+    </update>
 </mapper>
