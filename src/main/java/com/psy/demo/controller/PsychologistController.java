@@ -3,6 +3,7 @@ package com.psy.demo.controller;
 
 import com.psy.demo.dto.PsychologistDTO;
 import com.psy.demo.service.PsychologistService;
+import com.psy.demo.vo.res.PsychologistOrderResVO;
 import com.psy.demo.vo.res.PsychologistVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class PsychologistController {
     }
 
     @GetMapping(path = "/select/{openId}")
-    public PsychologistDTO selectByOpenId(@PathVariable String openId) {
-        return null;
+    public PsychologistOrderResVO selectOrderResByOpenId(@PathVariable String openId) {
+        return psychologistService.selectOrderResByOpenId(openId);
     }
 
 }

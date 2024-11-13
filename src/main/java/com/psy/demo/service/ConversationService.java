@@ -17,4 +17,7 @@ public interface ConversationService {
     List<MessageVO> getMessagesPsychologist(MessageReq req);
 
     int dealHasRead(MessageDTO dto);
+
+    int getUnreadCnt(MessageReq req);
+
 }

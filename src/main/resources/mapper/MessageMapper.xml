@@ -74,23 +74,24 @@
                        t.time
                 FROM
                 (select *
-                 from (
-                              SELECT m.id,
-                                     m.is_sender_psychologist,
-                                     m.has_read,
-                                     m.message,
-                                     m.create_time AS time,
-                                     CASE
+                from (
+                SELECT m.id,
+                       m.is_sender_psychologist,
+                       m.has_read,
+                       m.message,
+                       m.create_time AS time,
+                       CASE
 
-                                             WHEN m.is_sender_psychologist = 1 THEN
-                                                     c.psychologist_id
-                                             ELSE c.client_id
-                                             END   AS sender_id,
-                                     c.psychologist_id,
-                                     c.client_id
-                              FROM (SELECT * FROM message where is_sender_psychologist = 0) m
-                                           LEFT JOIN (SELECT * FROM conversation) c ON m.conversation_id = c.id
-                              ) b
+                               WHEN m.is_sender_psychologist = 1 THEN
+                                       c.psychologist_id
+                               ELSE c.client_id
+                               END   AS sender_id,
+                       c.psychologist_id,
+                       c.client_id
+                FROM (SELECT *
+                      FROM message where is_sender_psychologist = 0) m
+                LEFT JOIN (SELECT * FROM conversation) c ON m.conversation_id = c.id
+                ) b
         <where>
             b.psychologist_id = #{req.psychologistId,jdbcType=VARCHAR}
             <if test="req.clientId != null and req.clientId != ''">
@@ -101,6 +102,22 @@
                 LEFT JOIN user_info u
                 ON t.sender_id = u.open_id) t_final
                 order by t_final.time desc
+    </select>
+
+    <select id="selectHasReadCntByPsychologistId" parameterType="com.psy.demo.vo.req.MessageReq"
+            resultType="int">
+        <!--@mbg.generated-->
+        select count(1) as cnt
+        from (
+        SELECT m.conversation_id,c.psychologist_id
+        FROM (
+        SELECT conversation_id
+        FROM message where is_sender_psychologist = 0
+        and has_read = 0
+        ) m
+        LEFT JOIN (SELECT id,psychologist_id FROM conversation) c ON m.conversation_id = c.id
+        ) b
+        where b.psychologist_id = #{req.psychologistId,jdbcType=VARCHAR}
     </select>
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.MessageDTO"

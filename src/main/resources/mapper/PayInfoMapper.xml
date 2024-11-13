@@ -6,6 +6,7 @@
         <!--@Table pay_info-->
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="psychologist_id" jdbcType="VARCHAR" property="psychologistId"/>
         <result column="category" jdbcType="VARCHAR" property="category"/>
         <result column="uni_id" jdbcType="VARCHAR" property="uniId"/>
         <result column="amount" jdbcType="VARCHAR" property="amount"/>
@@ -24,8 +25,8 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PayInfoDTO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into pay_info (open_id, category, uni_id, amount, trade_no, description, feedback)
-        values ( #{openId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
+        insert into pay_info (open_id, psychologist_id,category, uni_id, amount, trade_no, description, feedback)
+        values ( #{openId,jdbcType=VARCHAR},#{psychologistId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
                , #{amount,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
                , #{feedback,jdbcType=VARCHAR})
     </insert>

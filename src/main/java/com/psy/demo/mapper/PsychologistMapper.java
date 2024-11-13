@@ -1,7 +1,9 @@
 package com.psy.demo.mapper;
 
 import com.psy.demo.dto.PsychologistDTO;
+import com.psy.demo.vo.res.PsychologistOrderResVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,4 +13,5 @@ public interface PsychologistMapper {
 
     List<PsychologistDTO> selectAll();
 
+    PsychologistOrderResVO selectOrderResByOpenId(@Param("openId") String openId);
 }

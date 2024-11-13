@@ -17,4 +17,6 @@ public interface MessageMapper {
     List<MessageVO> selectMessagesByPsychologistId(@Param("req") MessageReq req);
 
     int dealHasRead(@Param("dto") MessageDTO dto);
+
+    int selectHasReadCntByPsychologistId(@Param("req") MessageReq req);
 }

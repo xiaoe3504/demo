@@ -59,4 +59,8 @@
         select *
         from psychologist
     </select>
+
+    <select id="selectOrderResByOpenId" resultType="com.psy.demo.vo.res.PsychologistOrderResVO">
+        select *  from pay_info
+    </select>
 </mapper>

@@ -31,6 +31,11 @@ public class PayInfoDTO {
     private String openId;
 
     /**
+     * 咨询师id
+     */
+    private String psychologistId;
+
+    /**
      * 大类，TYPE_TEST,TYPE_MEDITATION两种
      */
     private String category;
