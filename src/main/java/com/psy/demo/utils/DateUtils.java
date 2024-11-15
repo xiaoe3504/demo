@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 @Slf4j
 public class DateUtils {
@@ -65,6 +66,34 @@ public class DateUtils {
         DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
         return dayOfWeek.getValue();
     }
+
+    // 辅助方法：计算并返回给定日期后的第一个周三
+    private static LocalDate getNextWednesday(LocalDate date) {
+        // 获取当前日期是周几
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+
+        // 根据当前周几来计算距离下一个周三需要加的天数
+        // 注意：若当前已是周三，则需加7天来到下一个周三，否则直接计算到本周三的天数
+        int daysToAdd = (dayOfWeek == DayOfWeek.WEDNESDAY) ? 7 : (DayOfWeek.WEDNESDAY.getValue() - dayOfWeek.getValue() + 7) % 7;
+
+        // 返回计算后的下一个周三的日期
+        return date.plusDays(daysToAdd);
+    }
+
+    public static boolean validWithdrawalTime(LocalDateTime orderTime) {
+        // 获取当前日期
+        LocalDate today = LocalDate.now();
+        // 设定目标为下一个周三
+        LocalDate nextWednesday = getNextWednesday(today);
+        // 计算两个日期之间的天数差异
+        long daysUntilNextWed = ChronoUnit.DAYS.between(orderTime.toLocalDate(), nextWednesday);
+
+        // 打印出结果
+//        System.out.println("距离下一个周三还有 " + daysUntilNextWed + " 天");
+
+        return daysUntilNextWed >= 7;
+    }
+
 
 
 }

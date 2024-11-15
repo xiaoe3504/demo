@@ -14,4 +14,6 @@ public interface PsychologistMapper {
     List<PsychologistDTO> selectAll();
 
     PsychologistOrderResVO selectOrderResByOpenId(@Param("openId") String openId);
+
+    int setStatus(@Param("dto") PsychologistDTO dto);
 }

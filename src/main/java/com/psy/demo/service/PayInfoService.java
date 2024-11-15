@@ -15,4 +15,7 @@ public interface PayInfoService {
     List<PayInfoFinalVO> select(String openId);
 
     int dealFeedback(FeedbackReq req);
+
+    List<PayInfoFinalVO> selectByPsychologistId(String psychologistId);
+
 }

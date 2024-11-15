@@ -18,6 +18,4 @@ public interface ConversationService {
 
     int dealHasRead(MessageDTO dto);
 
-    int getUnreadCnt(MessageReq req);
-
 }

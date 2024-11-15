@@ -25,8 +25,8 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.PayInfoDTO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
-        insert into pay_info (open_id, psychologist_id,category, uni_id, amount, trade_no, description, feedback)
-        values ( #{openId,jdbcType=VARCHAR},#{psychologistId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
+        insert into pay_info (open_id, psychologist_id, category, uni_id, amount, trade_no, description, feedback)
+        values ( #{openId,jdbcType=VARCHAR}, #{psychologistId,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{uniId,jdbcType=VARCHAR}
                , #{amount,jdbcType=VARCHAR}, #{tradeNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
                , #{feedback,jdbcType=VARCHAR})
     </insert>
@@ -67,4 +67,26 @@
         set feedback= #{req.feedback,jdbcType=VARCHAR}
         where id = #{req.id,jdbcType=BIGINT};
     </update>
+
+    <select id="selectByPsychologistId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pay_info
+        <where>
+            <if test="psychologistId != null">
+                psychologist_id = #{psychologistId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="getOrderCntAndAmount" resultType="com.psy.demo.vo.res.OrderAmountVO">
+        SELECT count(1)    AS order_cnt,
+               sum(amount) AS amount
+        FROM pay_info
+        <where>
+            psychologist_id = #{psychologistId,jdbcType=VARCHAR}
+        </where>
+        GROUP BY psychologist_id
+    </select>
 </mapper>

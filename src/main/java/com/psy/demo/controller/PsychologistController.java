@@ -1,8 +1,11 @@
 package com.psy.demo.controller;
 
 
+import com.psy.demo.dto.MessageDTO;
 import com.psy.demo.dto.PsychologistDTO;
 import com.psy.demo.service.PsychologistService;
+import com.psy.demo.vo.req.MessageReq;
+import com.psy.demo.vo.res.OrderAmountVO;
 import com.psy.demo.vo.res.PsychologistOrderResVO;
 import com.psy.demo.vo.res.PsychologistVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +36,21 @@ public class PsychologistController {
     public PsychologistOrderResVO selectOrderResByOpenId(@PathVariable String openId) {
         return psychologistService.selectOrderResByOpenId(openId);
     }
+
+    @GetMapping(path = "/getOrderCntAndAmount/{psychologistId}")
+    public OrderAmountVO getOrderCntAndAmount(@PathVariable("psychologistId") String psychologistId) {
+        return psychologistService.getOrderCntAndAmount(psychologistId);
+    }
+
+    @PostMapping(path = "/setStatus")
+    public int setStatus(@RequestBody PsychologistDTO dto) {
+        return psychologistService.setStatus(dto);
+    }
+
+    @PostMapping(path = "/getUnreadCnt")
+    public int getHasReadCnt(@RequestBody MessageReq req) {
+        return psychologistService.getUnreadCnt(req);
+    }
+
 
 }

@@ -97,14 +97,7 @@ public class ConversationServiceImpl implements ConversationService {
         return messageMapper.dealHasRead(dto);
     }
 
-    @Override
-    public int getUnreadCnt(MessageReq req) {
-        String psychologistId = req.getPsychologistId();
-        if (StringUtils.isEmpty(psychologistId)) {
-            throw new BaseException("getUnreadCnt error psychologistId null ");
-        }
-        return messageMapper.selectHasReadCntByPsychologistId(req);
-    }
+
 
     private int getConversationId(ConversationDTO conversationDTO) {
         ConversationDTO dtoExists = conversationMapper.selectById2(conversationDTO);

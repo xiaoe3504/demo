@@ -31,11 +31,6 @@ public class ConversationController {
         return conversationService.getMessagesPsychologist(req);
     }
 
-    @PostMapping(path = "/getUnreadCnt")
-    public int getHasReadCnt(@RequestBody MessageReq req) {
-        return conversationService.getUnreadCnt(req);
-    }
-
     @PostMapping(path = "/dealHasRead")
     public int dealHasRead(@RequestBody MessageDTO dto) {
         return conversationService.dealHasRead(dto);

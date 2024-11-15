@@ -2,6 +2,7 @@ package com.psy.demo.mapper;
 
 import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.vo.req.FeedbackReq;
+import com.psy.demo.vo.res.OrderAmountVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,8 @@ public interface PayInfoMapper {
     List<PayInfoDTO> selectByOpenId(@Param("openId") String openId);
 
     int updateFeedback(@Param("req") FeedbackReq req);
+
+    List<PayInfoDTO> selectByPsychologistId(@Param("psychologistId") String psychologistId);
+
+    OrderAmountVO getOrderCntAndAmount(@Param("psychologistId")String psychologistId);
 }

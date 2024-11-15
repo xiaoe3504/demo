@@ -30,4 +30,10 @@ public class PayInfoController {
     public int dealFeedback(@RequestBody FeedbackReq req) {
         return payInfoService.dealFeedback(req);
     }
+
+    @GetMapping(path = "/selectByPsychologistId/{psychologistId}")
+    public List<PayInfoFinalVO> selectByPsychologistId(@PathVariable("psychologistId") String psychologistId) {
+        return payInfoService.selectByPsychologistId(psychologistId);
+    }
+
 }

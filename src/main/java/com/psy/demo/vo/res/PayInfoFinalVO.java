@@ -4,12 +4,14 @@ package com.psy.demo.vo.res;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.enums.PayCategoryEnum;
+import com.psy.demo.utils.DateUtils;
 import com.psy.demo.utils.MyConstantString;
 import com.psy.demo.utils.StringUtil;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ public class PayInfoFinalVO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String feedback;
 
+    private boolean canWithdrawal;
+
     private List<PayInfoFinalInnerVO>list;
 
 
@@ -49,10 +53,15 @@ public class PayInfoFinalVO {
         dealInnerVO(tradeNo, list, MyConstantString.ORDER_NO);
         dealInnerVO(createTime, list, MyConstantString.ORDER_TIME);
 
+        //判断提现时间
+        LocalDateTime orderTime = dto.getCreateTime();
+        boolean canWithdrawal=DateUtils.validWithdrawalTime(orderTime);
+
         return PayInfoFinalVO.builder()
                 .id(dto.getId())
                 .category(PayCategoryEnum.getDescByName(dto.getCategory()))
                 .feedback(dto.getFeedback())
+                .canWithdrawal(canWithdrawal)
                 .list(list)
                 .build();
     }

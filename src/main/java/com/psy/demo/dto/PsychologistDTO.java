@@ -113,6 +113,11 @@ public class PsychologistDTO {
     private Integer isMember;
 
     /**
+     * 个人状态0喊他上线1服务中2找他聊
+     */
+    private Integer isDel;
+
+    /**
     * 个人状态0喊他上线1服务中2找他聊
     */
     private Integer status;
@@ -155,14 +160,14 @@ public class PsychologistDTO {
                 .audio(dto.getAudio())
                 .experienceCnt(dto.getExperienceCnt() > 100 ? "100+" : String.valueOf(dto.getExperienceCnt()))
                 .applauseRate(doubleToPercentString(dto.getApplauseRate()))
-                .expertAreas(StringUtil.getStringArr(dto.getExpertAreas(), MyConstantString.EXPERT_AREAS_LIST))
+                .expertAreas(dto.getExpertAreas().split(","))
                 .price(dto.getPrice())
                 .isMember(dto.getIsMember() == 1)
                 .backgroundUrl(dto.getBackgroundUrl())
                 .responseRate(doubleToPercentString(dto.getResponseRate()))
                 .recommendedRate(doubleToPercentString(dto.getRecommendedRate()))
                 .personIntroduce(dto.getPersonIntroduce())
-                .listenStyle(StringUtil.getStringArr(dto.getListenStyle(), MyConstantString.LISTEN_STYLE_LIST))
+                .listenStyle(dto.getListenStyle().split(","))
                 .professionalQualification(dto.getProfessionalQualification())
                 .build();
     }

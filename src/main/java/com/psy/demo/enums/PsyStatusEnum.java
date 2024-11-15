@@ -18,9 +18,14 @@ public enum PsyStatusEnum {
         this.desc = desc;
     }
 
+    public static boolean isPsyStatusEnum(Integer code) {
+        return Arrays.stream(PayCategoryEnum.values()).anyMatch(e -> e.getCode()==(code));
+    }
+
     public static String getDescByCode(int code) {
         return Arrays.stream(PsyStatusEnum.values()).
                 filter(e -> e.getCode() == code).findFirst()
                 .orElseGet(() -> TYPE_OFFLINE).getDesc();
     }
+
 }

@@ -16,7 +16,6 @@ import com.psy.demo.service.PayInfoService;
 import com.psy.demo.utils.MyConstantString;
 import com.psy.demo.vo.req.FeedbackReq;
 import com.psy.demo.vo.res.PayInfoFinalVO;
-import com.psy.demo.vo.res.PayInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -137,5 +136,10 @@ public class PayInfoServiceImpl implements PayInfoService {
         return payInfoMapper.updateFeedback(req);
     }
 
+    @Override
+    public List<PayInfoFinalVO> selectByPsychologistId(String psychologistId) {
+        List<PayInfoDTO> list = payInfoMapper.selectByPsychologistId(psychologistId);
+        return list.stream().map(PayInfoFinalVO::genVO).collect(Collectors.toList());
+    }
 
 }
