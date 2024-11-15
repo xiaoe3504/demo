@@ -80,7 +80,6 @@ public class PsychologistServiceImpl implements PsychologistService {
     }
 
 
-
     @Override
     public int getUnreadCnt(MessageReq req) {
         String psychologistId = req.getPsychologistId();
@@ -88,5 +87,11 @@ public class PsychologistServiceImpl implements PsychologistService {
             throw new BaseException("getUnreadCnt error psychologistId null ");
         }
         return messageMapper.selectHasReadCntByPsychologistId(req);
+    }
+
+    @Override
+    public boolean isPsychologist(String openId) {
+        PsychologistDTO dto = psychologistMapper.selectByOpenId(openId);
+        return dto != null;
     }
 }

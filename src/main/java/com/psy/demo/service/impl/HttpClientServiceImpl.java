@@ -97,7 +97,6 @@ public class HttpClientServiceImpl implements HttpClientService {
 
             HttpUrl httpurl = HttpUrl.parse(MyConstantString.JSAPI_URL);
             String token = GetTokenUtils.getToken(HttpPost.METHOD_NAME, httpurl, body);
-            log.info("token:" + token);
             //拼装http头的Authorization内容
             httpPost.addHeader(AUTHORIZATION, token);
             CloseableHttpResponse response = httpClient.execute(httpPost);

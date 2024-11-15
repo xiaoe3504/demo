@@ -6,6 +6,8 @@ miniProgram:
   accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
   accessTokenGrantType: client_credential
   getPhoneNumberUrl: https://api.weixin.qq.com/wxa/business/getuserphonenumber
+  batchWithdrawUrl: https://api.mch.weixin.qq.com/v3/transfer/batches
+
 
 
 server:

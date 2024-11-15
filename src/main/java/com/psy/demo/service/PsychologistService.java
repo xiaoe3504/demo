@@ -27,4 +27,6 @@ public interface PsychologistService {
 
 
     int getUnreadCnt(MessageReq req);
+
+    boolean isPsychologist(String openId);
 }

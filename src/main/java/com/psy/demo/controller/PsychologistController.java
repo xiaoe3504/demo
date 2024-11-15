@@ -52,5 +52,10 @@ public class PsychologistController {
         return psychologistService.getUnreadCnt(req);
     }
 
+    @GetMapping(path = "/isPsychologist/{openId}")
+    public boolean isPsychologist(@PathVariable String openId) {
+        return psychologistService.isPsychologist(openId);
+    }
+
 
 }

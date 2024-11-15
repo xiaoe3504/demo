@@ -2,6 +2,7 @@ package com.psy.demo.vo.res;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.psy.demo.dto.PayInfoDTO;
 import com.psy.demo.enums.PayCategoryEnum;
 import com.psy.demo.utils.DateUtils;
@@ -35,6 +36,9 @@ public class PayInfoFinalVO {
     private String feedback;
 
     private boolean canWithdrawal;
+
+    @JsonProperty("isClicked")
+    private boolean isClicked;
 
     private List<PayInfoFinalInnerVO>list;
 

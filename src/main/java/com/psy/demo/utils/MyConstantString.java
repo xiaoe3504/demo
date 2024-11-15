@@ -43,6 +43,7 @@ public class MyConstantString {
 
     public static final String SCHEMA = "WECHATPAY2-SHA256-RSA2048";
     public static final String JSAPI_URL = "https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi";
+    public static final String WITHDRAW_URL = "https://api.mch.weixin.qq.com/v3/transfer/batches";
     public static final String CER_URL = "https://api.mch.weixin.qq.com/v3/certificates";
     public static final String CER_TEXT = "CER_TEXT";
     public static final int BEICHUAN_CHARACTER_ID = 30744;

@@ -4,8 +4,14 @@ import com.psy.demo.vo.req.SignReq;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.UUID;

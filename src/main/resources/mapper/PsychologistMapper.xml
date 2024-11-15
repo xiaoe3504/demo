@@ -77,4 +77,13 @@
             `open_id` = #{dto.openId,jdbcType=VARCHAR}
         </where>
     </update>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select * from psychologist
+        <where>
+            `open_id` = #{openId,jdbcType=VARCHAR}
+            and is_del = 0
+        </where>
+
+    </select>
 </mapper>
