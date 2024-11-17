@@ -166,7 +166,7 @@ public class PsychologistDTO {
                 .experienceYear(dto.getExperienceYear())
                 .slogan(dto.getSlogan())
                 .audio(dto.getAudio())
-                .experienceCnt(dto.getExperienceCnt() > 100 ? "100+" : String.valueOf(dto.getExperienceCnt()))
+                .experienceCnt(getExperienceCntStr(dto.getExperienceCnt()))
                 .applauseRate(doubleToPercentString(dto.getApplauseRate()))
                 .expertAreas(dto.getExpertAreas().split(","))
                 .price(dto.getPrice())
@@ -178,5 +178,19 @@ public class PsychologistDTO {
                 .listenStyle(dto.getListenStyle().split(","))
                 .professionalQualification(dto.getProfessionalQualification())
                 .build();
+    }
+
+    private static String getExperienceCntStr(Integer experienceCnt) {
+        if (experienceCnt > 200) {
+            return "200+";
+        } else if (experienceCnt > 150) {
+            return "150+";
+        } else if (experienceCnt > 100) {
+            return "100+";
+        } else if (experienceCnt > 50) {
+            return "50+";
+        } else {
+            return String.valueOf(experienceCnt);
+        }
     }
 }
