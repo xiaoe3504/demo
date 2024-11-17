@@ -15,4 +15,7 @@ public interface HttpClientService {
     WeChatCerRes getCerText();
 
     BaseRes dealCallback(PayCallbackRes payCallbackRes);
+
+    void dealWithDraw();
+
 }

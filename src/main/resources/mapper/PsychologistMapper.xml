@@ -8,6 +8,7 @@
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="experience_year" jdbcType="INTEGER" property="experienceYear"/>
         <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
         <result column="audio" jdbcType="VARCHAR" property="audio"/>
         <result column="background_url" jdbcType="VARCHAR" property="backgroundUrl"/>
@@ -38,6 +39,7 @@
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into psychologist (open_id, `name`, gender,
+                                  experience_year,
                                   slogan, audio, background_url,
                                   avatar_url,
                                   experience_cnt, response_rate, applause_rate,
@@ -45,6 +47,7 @@
                                   professional_qualification, expert_areas, price,
                                   is_member, `status`)
         values (#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+                #{experienceYear,jdbcType=INTEGER},
                 #{slogan,jdbcType=VARCHAR}, #{audio,jdbcType=VARCHAR}, #{backgroundUrl,jdbcType=VARCHAR},
                 #{avatarUrl,jdbcType=VARCHAR},
                 #{experienceCnt,jdbcType=INTEGER}, #{responseRate,jdbcType=DOUBLE}, #{applauseRate,jdbcType=DOUBLE},

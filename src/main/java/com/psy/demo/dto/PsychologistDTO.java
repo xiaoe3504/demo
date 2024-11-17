@@ -15,36 +15,43 @@ import lombok.extern.slf4j.Slf4j;
 import static com.psy.demo.utils.StringUtil.doubleToPercentString;
 
 /**
-    * 心理咨询师表
-    */
+ * 心理咨询师表
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
 public class PsychologistDTO {
     /**
-    * id
-    */
+     * id
+     */
     private Long id;
 
     /**
-    * 用户open_id唯一的
-    */
+     * 用户open_id唯一的
+     */
     private String openId;
 
     /**
-    * 用户名
-    */
+     * 用户名
+     */
     private String name;
 
     /**
-    * 性别(0女1男)
-    */
+     * 性别(0女1男)
+     */
     private Integer gender;
 
+
     /**
-    * 口号
-    */
+     * 性别(0女1男)
+     */
+    private Integer experienceYear;
+
+
+    /**
+     * 口号
+     */
     private String slogan;
 
     /**
@@ -53,53 +60,53 @@ public class PsychologistDTO {
     private String audio;
 
     /**
-    * 背景图
-    */
+     * 背景图
+     */
     private String backgroundUrl;
 
     /**
-    * 用户头像图标
-    */
+     * 用户头像图标
+     */
     private String avatarUrl;
 
     /**
-    * 经验人数
-    */
+     * 经验人数
+     */
     private Integer experienceCnt;
 
     /**
-    * 响应率
-    */
+     * 响应率
+     */
     private Double responseRate;
 
     /**
-    * 好评率
-    */
+     * 好评率
+     */
     private Double applauseRate;
 
     /**
-    * 推荐率
-    */
+     * 推荐率
+     */
     private Double recommendedRate;
 
     /**
-    * 个人介绍
-    */
+     * 个人介绍
+     */
     private String personIntroduce;
 
     /**
-    * 倾听风格
-    */
+     * 倾听风格
+     */
     private String listenStyle;
 
     /**
-    * 专业资质
-    */
+     * 专业资质
+     */
     private String professionalQualification;
 
     /**
-    * 擅长领域
-    */
+     * 擅长领域
+     */
     private String expertAreas;
 
     /**
@@ -108,8 +115,8 @@ public class PsychologistDTO {
     private Double price;
 
     /**
-    * 是否是严选0否1是
-    */
+     * 是否是严选0否1是
+     */
     private Integer isMember;
 
     /**
@@ -118,18 +125,18 @@ public class PsychologistDTO {
     private Integer isDel;
 
     /**
-    * 个人状态0喊他上线1服务中2找他聊
-    */
+     * 个人状态0喊他上线1服务中2找他聊
+     */
     private Integer status;
 
     /**
-    * 创建时间
-    */
+     * 创建时间
+     */
     private LocalDateTime createTime;
 
     /**
-    * 更新时间
-    */
+     * 更新时间
+     */
     private LocalDateTime updateTime;
 
 
@@ -141,7 +148,7 @@ public class PsychologistDTO {
         try {
             res = getBuild(psychologistDTO);
         } catch (Exception e) {
-            log.error("genPsychologistVOByDTO error..."+e.getMessage(),e);
+            log.error("genPsychologistVOByDTO error..." + e.getMessage(), e);
             throw new BaseException("genPsychologistVOByDTO error");
         }
         return res;
@@ -156,6 +163,7 @@ public class PsychologistDTO {
                 .avatarUrl(dto.getAvatarUrl())
                 .status(dto.getStatus())
                 .gender(dto.getGender() == 0 ? "female" : "male")
+                .experienceYear(dto.getExperienceYear())
                 .slogan(dto.getSlogan())
                 .audio(dto.getAudio())
                 .experienceCnt(dto.getExperienceCnt() > 100 ? "100+" : String.valueOf(dto.getExperienceCnt()))

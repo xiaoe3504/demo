@@ -45,6 +45,10 @@ public class PsychologistVO {
      */
     private String gender;
     /**
+     * 经验(年)
+     */
+    private Integer experienceYear;
+    /**
      * 口号
      */
     private String slogan;

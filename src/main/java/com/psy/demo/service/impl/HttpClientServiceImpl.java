@@ -18,9 +18,12 @@ import com.psy.demo.utils.*;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import com.psy.demo.vo.req.PayReq;
+import com.psy.demo.vo.req.TransferDetailList;
+import com.psy.demo.vo.req.WithdrawReq;
 import com.psy.demo.vo.res.BaseRes;
 import com.psy.demo.vo.res.PayCallbackRes;
 import com.psy.demo.vo.res.PayRes;
@@ -203,6 +206,82 @@ public class HttpClientServiceImpl implements HttpClientService {
         log.info("payCallbackRes:" + JSONObject.toJSONString(payCallbackRes));
         return BaseRes.ofSuccess("payCallbackRes suc");
     }
+
+
+    @Override
+    public void dealWithDraw(){
+        WithdrawReq withdrawReq = genWithdrawReq();
+        System.out.println(JSONObject.toJSONString(withdrawReq));
+
+        HttpPost httpPost = new HttpPost(MyConstantString.WITHDRAW_URL);
+        httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
+
+        String body = genWithdrawBody(withdrawReq);
+        log.info("withdraw body:" + body);
+        StringEntity entity = new StringEntity(body, ContentType.APPLICATION_JSON);
+        httpPost.setEntity(entity);
+
+        HttpUrl httpurl = HttpUrl.parse(MyConstantString.WITHDRAW_URL);
+        String token = GetTokenUtils.getToken(HttpPost.METHOD_NAME, httpurl, body);
+        System.out.println("token:" + token);
+        //拼装http头的Authorization内容
+        httpPost.addHeader(AUTHORIZATION, token);
+        try {
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            String res = EntityUtils.toString(response.getEntity());
+            log.info(res);
+            JSONObject resJson = JSON.parseObject(res, JSONObject.class);
+            log.info(resJson.toJSONString());
+        } catch (IOException e) {
+            log.error("withdraw dealPost err:" + e.getMessage(), e);
+            throw new BaseException("withdraw dealPost err:");
+        }
+
+
+    }
+
+    private String genWithdrawBody(WithdrawReq withdrawReq) {
+        return "{" +
+                "\"appid\": \"" +MyConstantString.APPID+ "\"," +
+                "\"batch_name\": \"20241115测试转零钱\"," +
+                "\"batch_remark\": \"20241115测试转零钱\"," +
+                "\"out_batch_no\": \"test20241115test012336541\"," +
+                "\"total_amount\": 1," +
+                "\"total_num\": 1," +
+                "\"transfer_detail_list\": [" +
+                "{" +
+                "\"openid\": \"o0Ya06wusUU-L8btHwi2BIAcj12U\"," +
+                "\"out_detail_no\": \"test20241115test012336541001\"," +
+                "\"transfer_amount\": 1," +
+                "\"transfer_remark\": \"test20241115test012336541001\"" +
+//                "\"user_name\": \"程远\"" +
+                "}" +
+                "]" +
+                "}";
+    }
+    private WithdrawReq genWithdrawReq() {
+        TransferDetailList inner = TransferDetailList.builder()
+                .openid("o0Ya06wusUU-L8btHwi2BIAcj12U")
+                .out_detail_no("test20241115_test012336541_001")
+                .transfer_remark("test20241115_test012336541_001")
+                .user_name("程远")
+                .transfer_amount(1)
+                .build();
+
+
+        return WithdrawReq.builder()
+                .appid(MyConstantString.APPID)
+                .batch_name("20241115测试转零钱")
+                .batch_remark("20241115测试转零钱")
+                .out_batch_no("test20241115_test012336541")
+                .total_amount(1)
+                .total_num(1)
+                .transfer_detail_list(
+                        Arrays.asList(inner)
+                )
+                .build();
+    }
+
 
 
 }
