@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.MuyuMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.MuyuDTO">
+        <!--@mbg.generated-->
+        <!--@Table muyu-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="hit_date" jdbcType="VARCHAR" property="hitDate"/>
+        <result column="hit_cnt" jdbcType="INTEGER" property="hitCnt"/>
+        <result column="is_del" jdbcType="INTEGER" property="isDel"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, open_id, hit_date, hit_cnt, is_del, create_time, update_time
+    </sql>
+
+    <insert id="insertOrUpdate">
+        insert into muyu (open_id, hit_date, hit_cnt)
+        values (#{openId,jdbcType=VARCHAR}, DATE_FORMAT(NOW(), '%Y-%m-%d'), 1)
+        ON DUPLICATE KEY UPDATE hit_cnt = hit_cnt + 1;
+    </insert>
+
+    <select id="getCntToday" resultType="java.lang.Integer">
+        select
+        hit_cnt
+        from muyu
+        where open_id = #{openId,jdbcType=VARCHAR}
+        and hit_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+        limit 1
+    </select>
+
+    <select id="getCntTotal" resultType="java.lang.Integer">
+        select sum(hit_cnt) as hit_cnt
+        from muyu
+        where open_id = #{openId,jdbcType=VARCHAR}
+        group by open_id
+    </select>
+</mapper>

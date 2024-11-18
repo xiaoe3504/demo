@@ -265,4 +265,17 @@ CREATE TABLE `pay_info` (
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_openid_category_uniid` (`open_id`,`category`,`uni_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='支付信息'
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='支付信息';
+
+
+CREATE TABLE `muyu`  (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `open_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户唯一open_id',
+    `hit_date` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '敲击日',
+    `hit_cnt` int(20)  DEFAULT 0 COMMENT '敲击数',
+    `is_del` int(20)  DEFAULT 0 COMMENT '是否删除',
+    `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_openid_date` ( `open_id`,`hit_date`)
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '木鱼表';
