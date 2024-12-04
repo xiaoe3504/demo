@@ -54,6 +54,9 @@ public class PsychologistServiceImpl implements PsychologistService {
     @Override
     public OrderAmountVO getOrderCntAndAmount(String psychologistId) {
         OrderAmountVO vo = payInfoMapper.getOrderCntAndAmount(psychologistId);
+        if (vo == null) {
+            vo= OrderAmountVO.builder().orderCnt(0).amount(0).build();
+        }
         dealAmount(vo);
         return vo;
     }
