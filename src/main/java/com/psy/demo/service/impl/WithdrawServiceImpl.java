@@ -39,9 +39,7 @@ public class WithdrawServiceImpl implements WithdrawService {
 
     @Override
     public WithdrawResVO dealWithdraw(MyWithdrawReq req) {
-//        adjustParams(req);
 
-        httpClientService.dealWithDraw();
 
         return null;
     }

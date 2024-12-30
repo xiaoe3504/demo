@@ -56,6 +56,11 @@ public class PayInfoDTO {
     private String tradeNo;
 
     /**
+     * 微信支付单号
+     */
+    private String transactionId;
+
+    /**
      * 订单描述
      */
     private String description;

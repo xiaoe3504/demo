@@ -11,6 +11,7 @@
         <result column="uni_id" jdbcType="VARCHAR" property="uniId"/>
         <result column="amount" jdbcType="VARCHAR" property="amount"/>
         <result column="trade_no" jdbcType="VARCHAR" property="tradeNo"/>
+        <result column="transaction_id" jdbcType="VARCHAR" property="transactionId"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="feedback" jdbcType="VARCHAR" property="feedback"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>

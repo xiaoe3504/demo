@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.ProfitSharingInfoMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.ProfitSharingInfoDTO">
+        <!--@mbg.generated-->
+        <!--@Table profit_sharing_info-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="trade_no" jdbcType="VARCHAR" property="tradeNo"/>
+        <result column="transaction_id" jdbcType="VARCHAR" property="transactionId"/>
+        <result column="out_order_no" jdbcType="VARCHAR" property="outOrderNo"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="amount" jdbcType="VARCHAR" property="amount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, trade_no, transaction_id, out_order_no, order_id, amount, create_time, update_time
+    </sql>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.ProfitSharingInfoDTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into profit_sharing_info (trade_no, transaction_id, amount)
+        values (#{dto.tradeNo,jdbcType=VARCHAR}, #{dto.transactionId,jdbcType=VARCHAR}, #{dto.amount,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateOutOrderNoOrderId" parameterType="com.psy.demo.dto.ProfitSharingInfoDTO">
+        <!--@mbg.generated-->
+        update profit_sharing_info
+        set out_order_no = #{dto.outOrderNo,jdbcType=VARCHAR},
+            order_id     = #{dto.orderId,jdbcType=VARCHAR}
+        where trade_no = #{dto.tradeNo,jdbcType=VARCHAR}
+    </update>
+</mapper>

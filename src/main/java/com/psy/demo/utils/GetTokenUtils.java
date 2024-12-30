@@ -3,6 +3,9 @@ package com.psy.demo.utils;
 import com.psy.demo.vo.req.SignReq;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -20,8 +23,11 @@ import java.util.UUID;
 public class GetTokenUtils {
 
     public static void main(String[] args) throws Exception {
+        String url = "https://api.mch.weixin.qq.com/v3/pay/transactions/out-trade-no/1733325307992_E35A9CF77EBDEE7B?mchid=1666640344";
+        HttpUrl httpurl = HttpUrl.parse(url);
+        String token = getToken(HttpGet.METHOD_NAME, httpurl, null);
+        System.out.println(token);
     }
-
 
     public static String getToken(String method, HttpUrl url, String body) {
         String nonceStr = UUID.randomUUID().toString();
@@ -83,7 +89,7 @@ public class GetTokenUtils {
                 + canonicalUrl + "\n"
                 + timestamp + "\n"
                 + nonceStr + "\n"
-                + body + "\n";
+                + (StringUtils.isEmpty(body) ? "" : body) + "\n";
     }
 
     public static String dealSign(SignReq signReq) {

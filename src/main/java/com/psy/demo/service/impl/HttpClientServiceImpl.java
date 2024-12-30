@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.gson.JsonObject;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.service.HttpClientService;
 import com.psy.demo.utils.*;
@@ -21,16 +22,14 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+import com.psy.demo.vo.req.MyProfitSharingQueryReq;
+import com.psy.demo.vo.req.MyProfitSharingReq;
 import com.psy.demo.vo.req.PayReq;
-import com.psy.demo.vo.req.TransferDetailList;
-import com.psy.demo.vo.req.WithdrawReq;
-import com.psy.demo.vo.res.BaseRes;
-import com.psy.demo.vo.res.PayCallbackRes;
-import com.psy.demo.vo.res.PayRes;
-import com.psy.demo.vo.res.WeChatCerRes;
+import com.psy.demo.vo.res.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -41,6 +40,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 
@@ -87,7 +87,7 @@ public class HttpClientServiceImpl implements HttpClientService {
         String prePayIdString;
 
         int amount = payReq.getAmount();
-        String tradeNo = System.currentTimeMillis()+"_" + CommonUtils.generateNonceStr();
+        String tradeNo = System.currentTimeMillis() + "_" + CommonUtils.generateNonceStr();
         try {
             HttpPost httpPost = new HttpPost(MyConstantString.JSAPI_URL);
             httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
@@ -144,7 +144,9 @@ public class HttpClientServiceImpl implements HttpClientService {
                 + "\"openid\": \"" + openId + "\"" + "},"
                 + "\"out_trade_no\": \"" + tradeNo + "\","
                 + "\"goods_tag\": \"WXG\","
-                + "\"appid\": \"" + appId + "\"" + "}";
+                + "\"appid\": \"" + appId + "\""
+                + ",\"settle_info\":{\"profit_sharing\":true}" +
+                "}";
     }
 
     @Override
@@ -158,21 +160,12 @@ public class HttpClientServiceImpl implements HttpClientService {
             log.error(e.getMessage(), e);
             throw new BaseException("dealGet error");
         }
-        httpGet.addHeader(ACCEPT, APPLICATION_JSON.toString());
-        httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
+
         HttpUrl httpurl = HttpUrl.parse(MyConstantString.CER_URL);
         String token = GetTokenUtils.getToken(HttpGet.METHOD_NAME, httpurl, "");
         //拼装http头的Authorization内容
-        httpGet.addHeader(AUTHORIZATION, token);
-        CloseableHttpResponse response;
-        try {
-            response = httpClient.execute(httpGet);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            throw new BaseException("dealGet error");
-        }
-        if (SC_OK != response.getStatusLine().getStatusCode()) {
-            log.error("res fail...");
+        CloseableHttpResponse response = dealHttpGet(token, httpGet);
+        if (response == null) {
             return null;
         }
         try {
@@ -209,79 +202,141 @@ public class HttpClientServiceImpl implements HttpClientService {
 
 
     @Override
-    public void dealWithDraw(){
-        WithdrawReq withdrawReq = genWithdrawReq();
-        System.out.println(JSONObject.toJSONString(withdrawReq));
+    public ProfitSharingDealRes dealProfitSharing(MyProfitSharingReq req, String dealUrl) {
+        HttpUrl httpUrl = HttpUrl.parse(dealUrl);
+        //todo unfreeze_unsplit 改成true
+        String body = "{\"appid\":\"" + MyConstantString.APPID + "\"," +
+                "\"transaction_id\":\"" + req.getTransactionId() + "\"," +
+                "\"out_order_no\":\"" + req.getTransactionId() +"_"+ RandomUtils.genRandomLetters(6) + "\"," +
+                "\"receivers\":[{\"type\":\"PERSONAL_OPENID\"," +
+                "\"account\":\"" + req.getOpenId() + "\"," +
+                "\"amount\":" + req.getAmount() +
+                ",\"description\":\"分账给咨询师\"}" +
+                "]," +
+                "\"unfreeze_unsplit\":false}";
+        HttpPost httpPost = getHttpPost(dealUrl, httpUrl, body);
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(httpPost);
+            String res = EntityUtils.toString(response.getEntity());
+            log.info("dealProfitSharing string res :" + res);
+            ProfitSharingDealRes profitSharingDealRes = JSONObject.parseObject(res, ProfitSharingDealRes.class);
+            if (profitSharingDealRes != null && StringUtils.isNotEmpty(profitSharingDealRes.getOrder_id())) {
+                log.info("dealProfitSharing suc :" + JSONObject.toJSONString(profitSharingDealRes));
+            }
+            return profitSharingDealRes;
+        } catch (IOException e) {
+            log.error("dealProfitSharing err:" + e.getMessage(), e);
+            throw new BaseException("add profitSharing err:");
+        } finally {
+            try {
+                response.close();
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+                throw new BaseException("dealGet error");
+            }
+        }
+    }
 
-        HttpPost httpPost = new HttpPost(MyConstantString.WITHDRAW_URL);
+    @Override
+    public String queryTransactionId(String tradeNo) {
+        QueryTransactionIdRes res;
+        String url = MyConstantString.QUERY_TRANSACTION_ID_URL + tradeNo + "?mchid=" + MyConstantString.MERCHANT_ID;
+        HttpUrl httpurl = HttpUrl.parse(url);
+        String token = GetTokenUtils.getToken(HttpGet.METHOD_NAME, httpurl, null);
+        HttpGet httpGet;
+        try {
+            URIBuilder uriBuilder = new URIBuilder(url);
+            httpGet = new HttpGet(uriBuilder.build());
+        } catch (URISyntaxException e) {
+            log.error(e.getMessage(), e);
+            throw new BaseException("dealGet error");
+        }
+        CloseableHttpResponse response = dealHttpGet(token, httpGet);
+        if (response == null) {
+            return null;
+        }
+        try {
+            // do something useful with the response body
+            // and ensure it is fully consumed
+            String resString = EntityUtils.toString(response.getEntity());
+            res = JSONObject.parseObject(resString, QueryTransactionIdRes.class);
+            log.info("queryTransactionId res:" + JSONObject.toJSONString(res));
+            return res.getTransaction_id();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw new BaseException("queryTransactionId error");
+        } finally {
+            try {
+                response.close();
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+                throw new BaseException("queryTransactionId error");
+            }
+        }
+    }
+
+    @Override
+    public JsonObject queryProfitSharing(MyProfitSharingQueryReq req, String queryUrl) {
+
+
+        return null;
+    }
+
+    @Nullable
+    private CloseableHttpResponse dealHttpGet(String token, HttpGet httpGet) {
+        httpGet.addHeader(ACCEPT, APPLICATION_JSON.toString());
+        httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
+        //拼装http头的Authorization内容
+        httpGet.addHeader(AUTHORIZATION, token);
+        CloseableHttpResponse response;
+        try {
+            response = httpClient.execute(httpGet);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw new BaseException("dealGet error");
+        }
+        if (SC_OK != response.getStatusLine().getStatusCode()) {
+            log.error("res fail...");
+            return null;
+        }
+        return response;
+    }
+
+    @NotNull
+    private HttpPost getHttpPost(String dealUrl, HttpUrl httpUrl, String body) {
+        String token = GetTokenUtils.getToken(HttpPost.METHOD_NAME, httpUrl, body);
+        HttpPost httpPost = new HttpPost(dealUrl);
         httpPost.addHeader(ACCEPT, APPLICATION_JSON.toString());
-
-        String body = genWithdrawBody(withdrawReq);
-        log.info("withdraw body:" + body);
+        httpPost.addHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
         StringEntity entity = new StringEntity(body, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
-
-        HttpUrl httpurl = HttpUrl.parse(MyConstantString.WITHDRAW_URL);
-        String token = GetTokenUtils.getToken(HttpPost.METHOD_NAME, httpurl, body);
-        System.out.println("token:" + token);
-        //拼装http头的Authorization内容
         httpPost.addHeader(AUTHORIZATION, token);
+        return httpPost;
+    }
+
+    @Override
+    public ProfitSharingAddRes addProfitSharing(String openId, String addUrl) {
+        HttpUrl httpUrl = HttpUrl.parse(addUrl);
+        String body = "{\"appid\":\"" + MyConstantString.APPID +
+                "\",\"type\":\"PERSONAL_OPENID\",\"account\":\"" +
+                openId +
+                "\",\"relation_type\":\"PARTNER\"}";
+        HttpPost httpPost = getHttpPost(addUrl, httpUrl, body);
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);
             String res = EntityUtils.toString(response.getEntity());
-            log.info(res);
-            JSONObject resJson = JSON.parseObject(res, JSONObject.class);
-            log.info(resJson.toJSONString());
+            log.info("add profitSharing string res :" + res);
+            ProfitSharingAddRes profitSharingAddRes = JSONObject.parseObject(res, ProfitSharingAddRes.class);
+            if (profitSharingAddRes != null && StringUtils.isNotEmpty(profitSharingAddRes.getAccount())) {
+                log.info("add profitSharing suc :" + JSONObject.toJSONString(profitSharingAddRes));
+            }
+            return profitSharingAddRes;
         } catch (IOException e) {
-            log.error("withdraw dealPost err:" + e.getMessage(), e);
-            throw new BaseException("withdraw dealPost err:");
+            log.error("add profitSharing err:" + e.getMessage(), e);
+            throw new BaseException("add profitSharing err:");
         }
-
-
     }
-
-    private String genWithdrawBody(WithdrawReq withdrawReq) {
-        return "{" +
-                "\"appid\": \"" +MyConstantString.APPID+ "\"," +
-                "\"batch_name\": \"20241115测试转零钱\"," +
-                "\"batch_remark\": \"20241115测试转零钱\"," +
-                "\"out_batch_no\": \"test20241115test012336541\"," +
-                "\"total_amount\": 1," +
-                "\"total_num\": 1," +
-                "\"transfer_detail_list\": [" +
-                "{" +
-                "\"openid\": \"o0Ya06wusUU-L8btHwi2BIAcj12U\"," +
-                "\"out_detail_no\": \"test20241115test012336541001\"," +
-                "\"transfer_amount\": 1," +
-                "\"transfer_remark\": \"test20241115test012336541001\"" +
-//                "\"user_name\": \"程远\"" +
-                "}" +
-                "]" +
-                "}";
-    }
-    private WithdrawReq genWithdrawReq() {
-        TransferDetailList inner = TransferDetailList.builder()
-                .openid("o0Ya06wusUU-L8btHwi2BIAcj12U")
-                .out_detail_no("test20241115_test012336541_001")
-                .transfer_remark("test20241115_test012336541_001")
-                .user_name("程远")
-                .transfer_amount(1)
-                .build();
-
-
-        return WithdrawReq.builder()
-                .appid(MyConstantString.APPID)
-                .batch_name("20241115测试转零钱")
-                .batch_remark("20241115测试转零钱")
-                .out_batch_no("test20241115_test012336541")
-                .total_amount(1)
-                .total_num(1)
-                .transfer_detail_list(
-                        Arrays.asList(inner)
-                )
-                .build();
-    }
-
 
 
 }

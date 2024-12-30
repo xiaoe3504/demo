@@ -7,8 +7,10 @@ miniProgram:
   accessTokenGrantType: client_credential
   getPhoneNumberUrl: https://api.weixin.qq.com/wxa/business/getuserphonenumber
   batchWithdrawUrl: https://api.mch.weixin.qq.com/v3/transfer/batches
-
-
+  profitSharing:
+    addUrl: https://api.mch.weixin.qq.com/v3/profitsharing/receivers/add
+    dealUrl: https://api.mch.weixin.qq.com/v3/profitsharing/orders
+    queryUrl: /v3/profitsharing/orders/
 
 server:
   port: 80

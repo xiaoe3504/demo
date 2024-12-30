@@ -95,7 +95,7 @@ public class PayInfoServiceImpl implements PayInfoService {
             throw new BaseException("UniId is null err");
         }
         if (StringUtils.isEmpty(payInfoDTO.getAmount())) {
-            throw new BaseException("Amount is null err");
+            throw new BaseException("payAmount is null err");
         }
         if (StringUtils.isEmpty(payInfoDTO.getTradeNo())) {
             throw new BaseException("TradeNo is null err");
