@@ -12,5 +12,5 @@ import java.util.List;
 public class RegionCity {
     private String name;
     private String code;
-    private List<RegionArea> area;
+//    private List<RegionArea> area;
 }
