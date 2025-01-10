@@ -97,6 +97,10 @@ public class MyConstantString {
     public static final String AVATAR_URL_PREFIX = "https://7072-prod-8gnfzqw5a0ea2d6b-1323362704.tcb.qcloud.la/userinfo/";
     public static final String AVATAR_URL_SUFFIX = "/avatar.jpeg";
 
+    public static final String GROWTH_CENTER_URL_PREFIX = "https://7072-prod-8gnfzqw5a0ea2d6b-1323362704.tcb.qcloud.la/growthcenter/";
+    public static final String GROWTH_CENTER_URL_SUFFIX = ".mp3";
+
+
     public static final String DEFAULT_NULL_STRING = "";
 
     public static final String ORDER_DESCRIPTION = "订单内容";
@@ -105,6 +109,7 @@ public class MyConstantString {
     public static final String ORDER_TIME = "订单时间";
     public static final String WECHATPAY_SERIAL = "Wechatpay-Serial";
 
+    public static final String ORGANIZATION = "ORGANIZATION";
 
     public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(
             "温暖",

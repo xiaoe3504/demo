@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.OrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.psy.demo.dto.OrganizationDTO">
+        <!--@mbg.generated-->
+        <!--@Table organization-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="member_cnt" jdbcType="INTEGER" property="memberCnt"/>
+        <result column="expired_time" jdbcType="TIMESTAMP" property="expiredTime"/>
+        <result column="pay_type" jdbcType="INTEGER" property="payType"/>
+        <result column="check_name_type" jdbcType="INTEGER" property="checkNameType"/>
+        <result column="is_del" jdbcType="INTEGER" property="isDel"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, member_cnt, expired_time, pay_type, check_name_type, is_del, create_time,
+        update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from organization
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.OrganizationDTO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into organization (`name`, member_cnt, expired_time,
+                                  pay_type, check_name_type)
+        values (#{name,jdbcType=VARCHAR}, #{memberCnt,jdbcType=INTEGER}, DATE_ADD(now(), INTERVAL 1 YEAR),
+                #{payType,jdbcType=INTEGER}, #{checkNameType,jdbcType=INTEGER})
+    </insert>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select *
+        from organization
+    </select>
+</mapper>

@@ -279,3 +279,65 @@ CREATE TABLE `muyu`  (
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_openid_date` ( `open_id`,`hit_date`)
 )ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '木鱼表';
+
+
+CREATE TABLE `organization`  (
+     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+     `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '机构名称',
+     `member_cnt` int(20)  DEFAULT 0 COMMENT '敲击数',
+     `expired_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '失效时间',
+     `pay_type` int(20)  DEFAULT 0 COMMENT '支付类别,0成长中心，咨询师，音频都需要付费，1成长中心，咨询师需要付费，2成长中心需付费',
+     `check_name_type` int(20)  DEFAULT 0 COMMENT '姓名检查类别,0无需检查，1需要检查',
+     `is_del` int(20)  DEFAULT 0 COMMENT '是否删除',
+     `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+     PRIMARY KEY (`id`) USING BTREE,
+     UNIQUE KEY `uk_name` (`name`)
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '机构表';
+
+alter table user_info add column organization_id bigint ( 20 ) COMMENT '机构id' not null default 0 after open_id;
+
+
+alter table user_info add column real_name varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '真实名称' after nick_name;
+
+
+CREATE TABLE `growth_center`  (
+     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+     `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '类型',
+     `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+     `duration` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '时长',
+     `src` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '音频地址',
+     `is_del` int(20)  DEFAULT 0 COMMENT '是否删除',
+     `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+     PRIMARY KEY (`id`) USING BTREE
+)ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '成长中心表';
+
+
+
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (1, 'job', '三个减压神器', '8:11', 0, '2025-01-06 22:27:57', '2025-01-06 22:27:57');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (2, 'job', '专注力训练', '8:26', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (3, 'job', '呼吸训练', '9:33', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (4, 'job', '想象放松', '8:12', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (5, 'job', '肌肉放松训练', '7:52', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (6, 'job', '肩颈放松', '10:31', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (7, 'job', '身心放松', '8:40', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (8, 'job', '静心放松', '7:20', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (9, 'worry', '	全然抵达当下	', '	9:44	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (10, 'worry', '	尝试接纳自己	', '	7:49	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (11, 'worry', '	摆脱抑郁情绪	', '	7:43	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (12, 'worry', '	无选择觉察	', '	8:43	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (13, 'worry', '	直面焦虑漩涡	', '	9:39	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (14, 'worry', '	解离负面思维	', '	8:17	', 0, '2025-01-06 23:15:49', '2025-01-07 00:41:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (15, 'mood', '做情绪的主人', '7:49', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (16, 'mood', '利用你的情绪', '6:12', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (17, 'mood', '培养你的积极心态', '8:19', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (18, 'mood', '接纳你的情绪', '7:16', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (19, 'mood', '接纳你的消极心态.', '6:29', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (20, 'mood', '认识你的情绪', '10:40', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (21, 'mood', '让你的情绪自由流动', '8:35', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (22, 'mood', '释放你的情绪', '14:49', 0, '2025-01-06 23:29:18', '2025-01-06 23:29:18');
+
+
+
+

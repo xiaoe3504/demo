@@ -2,8 +2,10 @@ package com.psy.demo.service.impl;
 
 import com.psy.demo.global.BaseException;
 import com.psy.demo.mapper.UserInfoMapper;
+import com.psy.demo.service.OrganizationService;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.dto.UserInfoDTO;
+import com.psy.demo.vo.req.UserInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     UserInfoMapper userInfoMapper;
+    @Autowired
+    OrganizationService organizationService;
 
     @Override
     public int dealAdd(String openId) {
@@ -45,15 +49,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public int saveOrUpdateNickname(UserInfoDTO userInfoDTO) {
-        if (StringUtils.isEmpty(userInfoDTO.getNickName())) {
-            throw new BaseException("nickname can not be null");
-        }
-        if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
-            throw new BaseException("openId can not be null");
-        }
-        if (StringUtils.isEmpty(userInfoDTO.getPhoneNumber())) {
-            throw new BaseException("phoneNumber can not be null");
-        }
+        adjustParams(userInfoDTO);
         return userInfoMapper.insertOrUpdate(userInfoDTO);
     }
 
@@ -82,6 +78,53 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfoMapper.updateNotMemberMsgCnt(openId);
         UserInfoDTO dto = userInfoMapper.getDTOByOpenId(openId);
         return dto.getNotMemberMsgCnt();
+    }
+
+    @Override
+    public int saveOrUpdateUserInfoReg(UserInfoVO vo) {
+        adjustParamsReg(vo);
+        return userInfoMapper.insertOrUpdateAvatarPhoneNickRealOrg(vo);
+    }
+
+    private void adjustParamsReg(UserInfoVO vo) {
+        if (StringUtils.isEmpty(vo.getNickName())) {
+            throw new BaseException("nickname can not be null");
+        }
+        if (StringUtils.isEmpty(vo.getOpenId())) {
+            throw new BaseException("openId can not be null");
+        }
+        if (StringUtils.isEmpty(vo.getPhoneNumber())) {
+            throw new BaseException("phoneNumber can not be null");
+        }
+
+        if (StringUtils.isEmpty(vo.getAvatarUrl())) {
+            throw new BaseException("avatarUrl can not be null");
+        }
+        if (StringUtils.isEmpty(vo.getRealName())) {
+            throw new BaseException("realName can not be null");
+        }
+        if (StringUtils.isEmpty(vo.getOrganizationName())) {
+            throw new BaseException("organizationName can not be null");
+        }
+
+        String organizationId = organizationService.getMapOrg()
+                .getOrDefault(vo.getOrganizationName(), "");
+        if (StringUtils.isEmpty(organizationId)) {
+            throw new BaseException("organizationId not match");
+        }
+        vo.setOrganizationId(Long.valueOf(organizationId));
+    }
+
+    private void adjustParams(UserInfoDTO userInfoDTO) {
+        if (StringUtils.isEmpty(userInfoDTO.getNickName())) {
+            throw new BaseException("nickname can not be null");
+        }
+        if (StringUtils.isEmpty(userInfoDTO.getOpenId())) {
+            throw new BaseException("openId can not be null");
+        }
+        if (StringUtils.isEmpty(userInfoDTO.getPhoneNumber())) {
+            throw new BaseException("phoneNumber can not be null");
+        }
     }
 
 

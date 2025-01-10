@@ -1,8 +1,8 @@
-package com.psy.demo.dto;
-
-import java.time.LocalDateTime;
+package com.psy.demo.vo.req;
 
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
     * 用户信息
@@ -13,12 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UserInfoDTO {
-    /**
-    * id
-    */
-    private Long id;
-
+public class UserInfoVO {
     /**
     * openId
     */
@@ -34,6 +29,10 @@ public class UserInfoDTO {
      */
     private Long organizationId;
 
+    /**
+     * 机构id
+     */
+    private String organizationName;
     /**
     * 昵称
     */
@@ -53,26 +52,5 @@ public class UserInfoDTO {
     * 头像url
     */
     private String avatarUrl;
-    /**
-     * 是否会员 默认否
-     */
-    private int isMember;
 
-    /**
-     * 非会员每日发消息数
-     */
-    private int notMemberMsgCnt;
-    /**
-     * 会员有效期
-     */
-    private LocalDateTime expiresTime;
-    /**
-    * 创建时间
-    */
-    private LocalDateTime createTime;
-
-    /**
-    * 更新时间
-    */
-    private LocalDateTime updateTime;
 }

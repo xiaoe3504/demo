@@ -206,6 +206,19 @@ public class StringUtil {
         System.out.println(res);
     }
 
+    public static String getSrc(String type, String name) {
+        String result;
+        try {
+            result = URLEncoder.encode(name, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new BaseException("mp3 getSrc encode error...");
+        }
+        if (StringUtils.isEmpty(result)) {
+            return null;
+        }
+        return MyConstantString.GROWTH_CENTER_URL_PREFIX + type + "/" + result + MyConstantString.GROWTH_CENTER_URL_SUFFIX;
+    }
+
     public static void main(String[] args) {
         encode(false);
     }

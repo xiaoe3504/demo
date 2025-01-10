@@ -5,6 +5,7 @@ import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.service.LoginService;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.utils.CommonUtils;
+import com.psy.demo.vo.req.UserInfoVO;
 import com.psy.demo.vo.res.BaseRes;
 import com.psy.demo.vo.res.FinalUserInfo;
 import com.psy.demo.vo.res.LoginRes;
@@ -33,6 +34,13 @@ public class LoginController {
     public int saveOrUpdateNickname(@RequestBody UserInfoDTO userInfoDTO) {
         log.info("userInfoRes:" + JSON.toJSONString(userInfoDTO));
        return userInfoService.saveOrUpdateNickname(userInfoDTO);
+
+    }
+
+    @PostMapping(path = "/saveOrUpdateUserInfoReg")
+    public int saveOrUpdateUserInfoReg(@RequestBody UserInfoVO vo) {
+        log.info("saveOrUpdateUserInfoReg:" + JSON.toJSONString(vo));
+        return userInfoService.saveOrUpdateUserInfoReg(vo);
 
     }
 

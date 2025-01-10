@@ -25,7 +25,7 @@
         <!--@mbg.generated-->
         delete
         from user_info
-        where open_id = #{id,jdbcType=VARCHAR}
+        where open_id = #{openId,jdbcType=VARCHAR}
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.UserInfoDTO"
@@ -44,9 +44,9 @@
                                `password`, avatar_url)
         VALUES (#{openId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
                 #{password,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
-        ON DUPLICATE KEY UPDATE nick_name = VALUES(nick_name),
-        avatar_url = VALUES(avatar_url),
-        phone_number = VALUES(phone_number);
+        ON DUPLICATE KEY UPDATE nick_name    = VALUES(nick_name),
+                                avatar_url   = VALUES(avatar_url),
+                                phone_number = VALUES(phone_number);
     </insert>
 
     <select id="getDTOByOpenId" resultMap="BaseResultMap">
@@ -95,7 +95,21 @@
             `not_member_msg_cnt` = not_member_msg_cnt + 1
         </set>
         <where>
-            is_member = 0 and open_id = #{openId,jdbcType=VARCHAR}
+            is_member = 0
+                    and open_id = #{openId,jdbcType=VARCHAR}
         </where>
     </update>
+
+    <insert id="insertOrUpdateAvatarPhoneNickRealOrg">
+        INSERT INTO user_info (open_id, phone_number, nick_name, organization_id, real_name,
+                               `password`, avatar_url)
+        VALUES (#{openId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR},
+                #{organizationId,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
+        ON DUPLICATE KEY UPDATE nick_name       = VALUES(nick_name),
+                                organization_id = VALUES(organization_id),
+                                real_name       = VALUES(real_name),
+                                avatar_url      = VALUES(avatar_url),
+                                phone_number    = VALUES(phone_number);
+    </insert>
 </mapper>
