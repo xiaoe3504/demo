@@ -23,4 +23,10 @@ public interface HttpClientService {
     String queryTransactionId(String tradeNo);
 
     JsonObject queryProfitSharing(MyProfitSharingQueryReq req, String queryUrl);
+
+    CozeAccessTokenRes getAccessToken();
+
+    String createConversation(String cozeAccessToken);
+
+    CozeBootRes chat(String conversationId, String openId, String content, String cozeAccessToken, String bootId);
 }

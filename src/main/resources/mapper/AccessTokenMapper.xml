@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.AccessTokenMapper">
+  <resultMap id="BaseResultMap" type="com.psy.demo.dto.AccessTokenDTO">
+    <!--@mbg.generated-->
+    <!--@Table access_token-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
+    <result column="token_type" jdbcType="VARCHAR" property="tokenType" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `type`, access_token, expires_in, token_type, is_del, create_time, update_time
+  </sql>
+  <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from access_token
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insertOrUpdate">
+    <!--@mbg.generated-->
+    INSERT INTO access_token (`type`, access_token, expires_in,
+    token_type)
+    VALUES (#{type,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, #{expiresIn,jdbcType=INTEGER},
+    #{tokenType,jdbcType=VARCHAR})
+    ON DUPLICATE KEY UPDATE access_token    = VALUES(access_token),
+    expires_in   = VALUES(expires_in),
+    token_type = VALUES(token_type);
+  </insert>
+
+</mapper>

@@ -39,7 +39,7 @@ public class GetTokenUtils {
         log.info(message);
         log.info("message:---------------");
         String signature;
-        signature = sign(message.getBytes(StandardCharsets.UTF_8));
+        signature = sign(message.getBytes(StandardCharsets.UTF_8),MyConstantString.PRIVATE_KEY);
         log.info("signature:" + signature);
         System.out.println("signature:" + signature);
         String res = "mchid=\"" + MyConstantString.MERCHANT_ID + "\","
@@ -52,11 +52,11 @@ public class GetTokenUtils {
         return res;
     }
 
-    public static String sign(byte[] message) {
+    public static String sign(byte[] message,String privateKeyString) {
         String res = null;
         try {
             Signature sign = Signature.getInstance("SHA256withRSA");
-            PrivateKey privateKey = PemUtil.loadPrivateKey(MyConstantString.PRIVATE_KEY);
+            PrivateKey privateKey = PemUtil.loadPrivateKey(privateKeyString);
             sign.initSign(privateKey);
             sign.update(message);
             res = Base64.getEncoder().encodeToString(sign.sign());
@@ -101,7 +101,7 @@ public class GetTokenUtils {
                 + timestamp + "\n"
                 + nonceStr + "\n"
                 + prepayIdStr + "\n";
-        return GetTokenUtils.sign(message.getBytes(StandardCharsets.UTF_8));
+        return GetTokenUtils.sign(message.getBytes(StandardCharsets.UTF_8),MyConstantString.PRIVATE_KEY);
     }
 
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.CozeMessageMapper">
+  <resultMap id="BaseResultMap" type="com.psy.demo.dto.CozeMessageDTO">
+    <!--@mbg.generated-->
+    <!--@Table coze_message-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="coze_message_id" jdbcType="VARCHAR" property="cozeMessageId" />
+    <result column="coze_conversation_id" jdbcType="VARCHAR" property="cozeConversationId" />
+    <result column="is_sender_boot" jdbcType="TINYINT" property="isSenderBoot" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, coze_message_id, coze_conversation_id, is_sender_boot, content, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from coze_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.CozeMessageDTO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into coze_message (coze_message_id, coze_conversation_id, is_sender_boot,
+      content
+      )
+    values (#{cozeMessageId,jdbcType=VARCHAR}, #{cozeConversationId,jdbcType=VARCHAR}, #{isSenderBoot,jdbcType=TINYINT},
+      #{content,jdbcType=VARCHAR}
+      )
+  </insert>
+
+</mapper>

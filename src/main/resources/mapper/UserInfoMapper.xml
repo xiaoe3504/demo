@@ -112,4 +112,11 @@
                                 avatar_url      = VALUES(avatar_url),
                                 phone_number    = VALUES(phone_number);
     </insert>
+
+    <select id="selectDTOByOpenId" resultMap="BaseResultMap">
+        select * from user_info
+        <where>
+            open_id = #{openId,jdbcType=VARCHAR}
+        </where>
+    </select>
 </mapper>

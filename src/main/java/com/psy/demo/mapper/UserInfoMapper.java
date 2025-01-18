@@ -25,4 +25,6 @@ public interface UserInfoMapper {
     int updateNotMemberMsgCnt(String openId);
 
     int insertOrUpdateAvatarPhoneNickRealOrg(UserInfoVO userInfoDTO);
+
+    UserInfoDTO selectDTOByOpenId(@Param("openId") String openId);
 }

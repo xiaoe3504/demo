@@ -38,7 +38,7 @@ public class LoginServiceImpl implements LoginService {
     //url: 'https://api.weixin.qq.com/sns/jscode2session
     // ?appid=wxb1cd5bc64dbc5980&secret=850099790Sky!@#&js_code=' + res.code + '&grant_type=authorization_code',
 
-    private static final int DEFAULT_TIME_OUT = 20;
+    private static final int DEFAULT_TIME_OUT = 10;
 
     private OkHttpClient client = new OkHttpClient
             .Builder()

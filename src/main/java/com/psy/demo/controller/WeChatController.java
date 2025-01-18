@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/wechat")
 public class WeChatController {
     @Autowired
@@ -24,11 +24,13 @@ public class WeChatController {
     @Autowired
     HttpClientService httpClientService;
 
+    @Deprecated
     @GetMapping(path = "/dealCer")
     public WeChatCerRes dealCer() {
         return weChatService.dealCer();
     }
 
+    @Deprecated
     @GetMapping(path = "/getCerText")
     public WeChatCerRes getCerText() {
         return httpClientService.getCerText();

@@ -86,6 +86,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.insertOrUpdateAvatarPhoneNickRealOrg(vo);
     }
 
+    @Override
+    public boolean getHasReg(String openId) {
+        UserInfoDTO dto = userInfoMapper.selectDTOByOpenId(openId);
+        if (dto == null) {
+            return false;
+        }
+        Long organizationId = dto.getOrganizationId();
+        return organizationId !=null && organizationId > 0;
+    }
+
     private void adjustParamsReg(UserInfoVO vo) {
         if (StringUtils.isEmpty(vo.getNickName())) {
             throw new BaseException("nickname can not be null");

@@ -21,4 +21,6 @@ public interface UserInfoService {
     int dealAddNotMemberMsgCnt(String openId);
 
     int saveOrUpdateUserInfoReg(UserInfoVO userInfoDTO);
+
+    boolean getHasReg(String openId);
 }
