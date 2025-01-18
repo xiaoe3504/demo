@@ -17,6 +17,7 @@ public class CozeMessageDTO {
     */
     private Long id;
 
+
     /**
     * 谈话唯一id
     */
