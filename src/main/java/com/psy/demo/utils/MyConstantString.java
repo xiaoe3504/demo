@@ -155,8 +155,7 @@ public class MyConstantString {
     public static final String ORGANIZATION = "ORGANIZATION";
     public static final String COZE = "coze";
     public static final String TOKEN_SUFFIX = "Bearer ";
-    public static final String COZE_BOOT_ID_FEMALE = "7457883281737531401";
-    public static final String COZE_BOOT_ID_MALE = "7457857320757395493";
+
 
     public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(
             "温暖",

@@ -1,6 +1,7 @@
 package com.psy.demo.service.impl;
 
 
+import com.psy.demo.enums.CozeIdEnum;
 import com.psy.demo.global.BaseException;
 import com.psy.demo.service.CozeService;
 import com.psy.demo.utils.MyConstantString;
@@ -49,9 +50,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
         String[] pathSegments = path.split("/");
         String openId = pathSegments[2]; // Assuming the param1 is in the specified position
         String bootId = pathSegments[3]; // Assuming the param2 is in the specified position
-        if (!MyConstantString.COZE_BOOT_ID_MALE.equals(bootId)
-                && !MyConstantString.COZE_BOOT_ID_FEMALE.equals(bootId)) {
-            throw new BaseException("coze boot id error...");
+        if (!CozeIdEnum.isCozeBootId(bootId)) {
+            throw new BaseException("coze boot id not match...");
         }
         log.info("Connection established with openId: " + openId + ",bootId:" + bootId);
 
