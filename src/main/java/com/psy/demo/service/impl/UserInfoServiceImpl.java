@@ -6,10 +6,17 @@ import com.psy.demo.service.OrganizationService;
 import com.psy.demo.service.UserInfoService;
 import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.vo.req.UserInfoVO;
+import com.psy.demo.vo.res.OrganizationVO;
+import com.psy.demo.vo.res.UserIsMemberVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import static com.psy.demo.enums.MoodEnum.MOOD_DEFAULT;
 
 
 @Service
@@ -93,7 +100,13 @@ public class UserInfoServiceImpl implements UserInfoService {
             return false;
         }
         Long organizationId = dto.getOrganizationId();
-        return organizationId !=null && organizationId > 0;
+        return organizationId != null && organizationId > 0;
+    }
+
+    @Override
+    public boolean getIsMember(String openId) {
+        UserIsMemberVO vo = userInfoMapper.getIsMember(openId);
+        return vo != null && (vo.getPayType() == 1 || vo.getIsMember() == 1);
     }
 
     private void adjustParamsReg(UserInfoVO vo) {
@@ -117,8 +130,9 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new BaseException("organizationName can not be null");
         }
 
-        String organizationId = organizationService.getMapOrg()
-                .getOrDefault(vo.getOrganizationName(), "");
+        String organizationId = organizationService.getMapOrg().stream()
+                .filter(e -> e.getName().equals(vo.getOrganizationName())).findFirst().orElseGet(OrganizationVO::new)
+                .getId();
         if (StringUtils.isEmpty(organizationId)) {
             throw new BaseException("organizationId not match");
         }

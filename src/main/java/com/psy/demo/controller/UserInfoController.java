@@ -27,4 +27,9 @@ public class UserInfoController {
         return userInfoService.getHasReg(openId);
     }
 
+    @GetMapping(path = "/getIsMember/{openId}")
+    public boolean getIsMember(@PathVariable("openId") String openId) {
+        return userInfoService.getIsMember(openId);
+    }
+
 }

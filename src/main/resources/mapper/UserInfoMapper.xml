@@ -119,4 +119,12 @@
             open_id = #{openId,jdbcType=VARCHAR}
         </where>
     </select>
+
+    <select id="getIsMember" resultType="com.psy.demo.vo.res.UserIsMemberVO">
+        select u.is_member,o.pay_type from
+                (select * from
+                        user_info
+                 where open_id=#{openId,jdbcType=VARCHAR})u
+                        left join organization o on u.organization_id=o.id
+    </select>
 </mapper>

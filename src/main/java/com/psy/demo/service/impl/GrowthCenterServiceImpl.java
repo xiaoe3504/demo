@@ -41,6 +41,7 @@ public class GrowthCenterServiceImpl implements GrowthCenterService {
         vo.setIntroduce(introduce);
         for (int i = 0; i < list.size(); i++) {
             GrowthCenterInnerVO voInner = GrowthCenterInnerVO.builder().id(String.format("%02d", i+1))
+                    .idReal(list.get(i).getId())
                     .duration(list.get(i).getDuration()).name(list.get(i).getName())
                     .isPlay(false)
                     .src(StringUtil.getSrc(list.get(i).getType(),list.get(i).getName()))

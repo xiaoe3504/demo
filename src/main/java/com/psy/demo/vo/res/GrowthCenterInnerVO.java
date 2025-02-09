@@ -16,9 +16,14 @@ import java.time.LocalDateTime;
 @Setter
 public class GrowthCenterInnerVO {
     /**
-    * id
-    */
+     * id
+     */
     private String id;
+
+    /**
+     * id
+     */
+    private Long idReal;
 
     /**
     * 名称

@@ -297,6 +297,8 @@ CREATE TABLE `organization`  (
 
 alter table user_info add column organization_id bigint ( 20 ) COMMENT '机构id' not null default 0 after open_id;
 
+alter table organization modify column pay_type int(20)  DEFAULT 0 COMMENT '支付类别,0成长中心，咨询师，音频都需要付费，1成长中心，咨询师需要付费，2成长中心需付费';
+
 
 alter table user_info add column real_name varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '真实名称' after nick_name;
 
@@ -313,7 +315,7 @@ CREATE TABLE `growth_center`  (
      PRIMARY KEY (`id`) USING BTREE
 )ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '成长中心表';
 
-
+alter table growth_center add column `amount` varchar(50) DEFAULT NULL COMMENT '价格' after duration;
 
 INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (1, 'job', '三个减压神器', '8:11', 0, '2025-01-06 22:27:57', '2025-01-06 22:27:57');
 INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, `is_del`, `create_time`, `update_time`) VALUES (2, 'job', '专注力训练', '8:26', 0, '2025-01-06 23:01:37', '2025-01-06 23:01:37');

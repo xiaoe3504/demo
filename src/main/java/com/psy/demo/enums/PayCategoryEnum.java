@@ -10,6 +10,7 @@ public enum PayCategoryEnum {
     TYPE_MEDITATION(1, "TYPE_MEDITATION", "正念冥想"),
     TYPE_MEMBER(2, "TYPE_MEMBER", "PRO会员订阅"),
     TYPE_PSYCHOLOGIST(2, "TYPE_PSYCHOLOGIST", "人工疗愈"),
+    TYPE_GROWTH_CENTER(2, "TYPE_GROWTH_CENTER", "成长中心"),
     ;
     private int code;
     private String name;

@@ -12,7 +12,7 @@ public enum GrowthCenterTypeEnum {
     JOB(1, "job","职场减压与发展",8),
     WORRY(2, "worry","焦虑抑郁缓解",6),
     MOOD(3, "mood","情绪自我调节",8),
-    RELATION(4,"relation", "亲密关系之旅",7),
+    RELATION(4,"relation", "人际关系之旅",7),
     TEENAGER(5, "teenager","青少年学习力",7),
     ;
     private int code;

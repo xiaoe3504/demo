@@ -66,7 +66,7 @@ public class UserInfoCategoryCntServiceImpl implements UserInfoCategoryCntServic
             throw new BaseException("categoryId不能为空或负数");
         }
         if (!PayCategoryEnum.isCategoryType(dto.getCategory())) {
-            throw new BaseException("Category wrong enum err");
+            throw new BaseException("CategoryType 不对");
         }
     }
 }

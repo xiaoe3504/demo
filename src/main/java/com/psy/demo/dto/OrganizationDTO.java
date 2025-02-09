@@ -1,6 +1,10 @@
 package com.psy.demo.dto;
 
 import java.time.LocalDateTime;
+
+import com.psy.demo.global.BaseException;
+import com.psy.demo.vo.res.OrganizationVO;
+import com.psy.demo.vo.res.PsychologistVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,4 +60,14 @@ public class OrganizationDTO {
     * 更新时间
     */
     private LocalDateTime updateTime;
+
+    public static OrganizationVO genVO(OrganizationDTO dto){
+        if (dto == null) {
+            throw new BaseException("genPsychologistVO error dto is null...");
+        }
+        OrganizationVO res=new OrganizationVO();
+        res.setId(String.valueOf(dto.getId()));
+        res.setName(dto.getName());
+        return res;
+    }
 }

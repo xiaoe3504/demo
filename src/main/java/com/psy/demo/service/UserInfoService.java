@@ -23,4 +23,6 @@ public interface UserInfoService {
     int saveOrUpdateUserInfoReg(UserInfoVO userInfoDTO);
 
     boolean getHasReg(String openId);
+
+    boolean getIsMember(String openId);
 }

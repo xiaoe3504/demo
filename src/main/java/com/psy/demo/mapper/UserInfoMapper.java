@@ -2,6 +2,7 @@ package com.psy.demo.mapper;
 
 import com.psy.demo.dto.UserInfoDTO;
 import com.psy.demo.vo.req.UserInfoVO;
+import com.psy.demo.vo.res.UserIsMemberVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,6 @@ public interface UserInfoMapper {
     int insertOrUpdateAvatarPhoneNickRealOrg(UserInfoVO userInfoDTO);
 
     UserInfoDTO selectDTOByOpenId(@Param("openId") String openId);
+
+    UserIsMemberVO getIsMember(@Param("openId")String openId);
 }
