@@ -343,3 +343,74 @@ INSERT INTO `springboot_demo`.`growth_center`(`id`, `type`, `name`, `duration`, 
 
 
 
+
+
+create table demo.survey
+(
+    id            bigint auto_increment comment 'id'
+        primary key,
+    survey_type   varchar(100)                                                      null comment '测评类型',
+    survey_name   varchar(50) collate utf8mb4_general_ci                            null comment '测评名称',
+    survey_desc   varchar(200) collate utf8mb4_general_ci default '0'               null comment '测评描述',
+    survey_remark varchar(800) collate utf8mb4_general_ci default '0'               null comment '测评描述',
+    src           varchar(200) collate utf8mb4_general_ci                           null comment '背景图片url',
+    create_time   timestamp                               default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time   timestamp                               default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间'
+)
+    comment '测评表' charset = utf8mb4;
+
+create table demo.survey_answer
+(
+    id          bigint auto_increment comment 'id'
+        primary key,
+    question_id bigint                                  not null comment '问题id',
+    rank_id     bigint                                  not null comment '排名位置',
+    score       bigint                                  not null comment '答案分数',
+    answer_text varchar(200) collate utf8mb4_general_ci null comment '答案内容',
+    create_time timestamp default CURRENT_TIMESTAMP     not null comment '创建时间',
+    update_time timestamp default CURRENT_TIMESTAMP     not null on update CURRENT_TIMESTAMP comment '更新时间'
+)
+    comment '答案表' charset = utf8mb4;
+
+create table demo.survey_question
+(
+    id                 bigint auto_increment comment 'id'
+        primary key,
+    survey_id          bigint                                  not null comment '测评id',
+    question_text      varchar(200) collate utf8mb4_general_ci null comment '问题内容',
+    is_multiple_choice int       default 0                     not null comment '是否多选',
+    is_required        int       default 1                     not null comment '是否必填',
+    create_time        timestamp default CURRENT_TIMESTAMP     not null comment '创建时间',
+    update_time        timestamp default CURRENT_TIMESTAMP     not null on update CURRENT_TIMESTAMP comment '更新时间'
+)
+    comment '问题表' charset = utf8mb4;
+
+create table demo.survey_record
+(
+    id          bigint auto_increment comment 'id'
+        primary key,
+    open_id     bigint                              not null comment '用户微信编码',
+    survey_id   bigint                              not null comment '测评id',
+    score       bigint                              not null comment '答案分数',
+    start_time  timestamp default CURRENT_TIMESTAMP not null comment '开始时间',
+    end_time    timestamp default CURRENT_TIMESTAMP not null comment '结束时间',
+    create_time timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间'
+)
+    comment '用户答题记录表' charset = utf8mb4;
+
+create table demo.survey_record_detail
+(
+    id          bigint auto_increment comment 'id'
+        primary key,
+    record_id   bigint                              not null comment '测评记录id',
+    question_id bigint                              not null comment '问题id',
+    answer_id   bigint                              not null comment '答案id',
+    answer_text bigint                              not null comment '答案内容',
+    start_time  timestamp default CURRENT_TIMESTAMP not null comment '开始时间',
+    end_time    timestamp default CURRENT_TIMESTAMP not null comment '结束时间',
+    create_time timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间'
+)
+    comment '用户答题记录详情表' charset = utf8mb4;
+
