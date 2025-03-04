@@ -1,7 +1,10 @@
 package com.psy.demo.utils;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class MyConstantString {
     //私钥
@@ -156,51 +159,13 @@ public class MyConstantString {
     public static final String COZE = "coze";
     public static final String TOKEN_SUFFIX = "Bearer ";
 
-
-    public static final List<String> LISTEN_STYLE_LIST = Arrays.asList(
-            "温暖",
-            "尊重",
-            "真诚",
-            "抱持",
-            "理性",
-            "和蔼",
-            "治愈",
-            "保密",
-            "温柔",
-            "涵容",
-            "坚定",
-            "思考",
-            "专业",
-            "有耐心",
-            "亲和力",
-            "友善",
-            "用心",
-            "细腻",
-            "善解人意",
-            "不评判",
-            "耐心",
-            "用心陪伴"
-    );
-
-    public static final List<String> EXPERT_AREAS_LIST = Arrays.asList(
-            "人际关系",
-            "自我成长",
-            "亲子关系",
-            "情绪困扰",
-            "个人成长",
-            "亲密关系",
-            "情绪情感",
-            "亲子教育",
-            "抑郁焦虑",
-            "婚姻情感",
-            "原生家庭",
-            "自我成长 ",
-            "婚姻爱情",
-            "职场困扰",
-            "家庭教育",
-            "创伤疗愈",
-            "职场规划",
-            "婚姻家庭"
-    );
+    public static final ImmutableMap<String, String> SURVEY_TYPE_MAP =
+            ImmutableMap.of("1","婚姻与家庭测评（亲子成长专栏）",
+                    "2","焦虑与抑郁测评（职场减压）",
+                    "3","青少年与亲子关系测评（亲子成长专栏)",
+                    "4","人格与特质测评（终身成长）",
+                    "5","人际关系测评(三力觉醒)",
+                    "6","认知与思维测评",
+                    "7","职业兴趣与职业能力测评(终身成长)");
 
 }

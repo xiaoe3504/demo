@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.SurveyMapper">
+  <resultMap id="BaseResultMap" type="com.psy.demo.dto.SurveyDTO">
+    <!--@mbg.generated-->
+    <!--@Table survey-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="survey_type" jdbcType="VARCHAR" property="surveyType" />
+    <result column="survey_type_name" jdbcType="VARCHAR" property="surveyTypeName" />
+    <result column="survey_name" jdbcType="VARCHAR" property="surveyName" />
+    <result column="survey_desc" jdbcType="VARCHAR" property="surveyDesc" />
+    <result column="survey_remark" jdbcType="VARCHAR" property="surveyRemark" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, survey_type, survey_type_name, survey_name, survey_desc, survey_remark, src, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from survey
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from survey
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.SurveyDTO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into survey (survey_type, survey_type_name, survey_name, 
+      survey_desc, survey_remark, src, 
+      create_time, update_time)
+    values (#{surveyType,jdbcType=VARCHAR}, #{surveyTypeName,jdbcType=VARCHAR}, #{surveyName,jdbcType=VARCHAR}, 
+      #{surveyDesc,jdbcType=VARCHAR}, #{surveyRemark,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.SurveyDTO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into survey
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="surveyType != null">
+        survey_type,
+      </if>
+      <if test="surveyTypeName != null">
+        survey_type_name,
+      </if>
+      <if test="surveyName != null">
+        survey_name,
+      </if>
+      <if test="surveyDesc != null">
+        survey_desc,
+      </if>
+      <if test="surveyRemark != null">
+        survey_remark,
+      </if>
+      <if test="src != null">
+        src,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="surveyType != null">
+        #{surveyType,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyTypeName != null">
+        #{surveyTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyName != null">
+        #{surveyName,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyDesc != null">
+        #{surveyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyRemark != null">
+        #{surveyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.psy.demo.dto.SurveyDTO">
+    <!--@mbg.generated-->
+    update survey
+    <set>
+      <if test="surveyType != null">
+        survey_type = #{surveyType,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyTypeName != null">
+        survey_type_name = #{surveyTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyName != null">
+        survey_name = #{surveyName,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyDesc != null">
+        survey_desc = #{surveyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyRemark != null">
+        survey_remark = #{surveyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null">
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.psy.demo.dto.SurveyDTO">
+    <!--@mbg.generated-->
+    update survey
+    set survey_type = #{surveyType,jdbcType=VARCHAR},
+      survey_type_name = #{surveyTypeName,jdbcType=VARCHAR},
+      survey_name = #{surveyName,jdbcType=VARCHAR},
+      survey_desc = #{surveyDesc,jdbcType=VARCHAR},
+      survey_remark = #{surveyRemark,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAll" resultType="com.psy.demo.vo.res.survey.SurveyTypeVO">
+    SELECT survey_type,
+            survey_type_name,
+            count( 1 ) AS count
+    FROM
+            survey
+    GROUP BY
+            survey_type,
+            survey_type_name
+  </select>
+
+  <select id="querySurveyDetail" resultType="com.psy.demo.dto.SurveyDetailDTO">
+    SELECT
+    *
+    FROM
+    (
+    SELECT
+    s.survey_id,
+    s.survey_name,
+    s.src,
+    q.question_id,
+    q.question_text,
+    q.is_multiple_choice,
+    q.is_required,
+    a.answer_id,
+    a.rank_id,
+    a.score,
+    a.answer_text
+    FROM
+    ( SELECT
+    id AS survey_id,
+    survey_name,
+    src
+    FROM
+    survey
+    WHERE
+    id = #{surveyId,jdbcType=BIGINT} ) s
+    LEFT JOIN ( SELECT
+    survey_id,
+    id AS question_id,
+    question_text,
+    is_multiple_choice,
+    is_required
+    FROM
+    survey_question
+    WHERE
+    survey_id = #{surveyId,jdbcType=BIGINT} ) q ON s.survey_id = q.survey_id
+    LEFT JOIN ( SELECT
+    question_id,
+    id AS answer_id,
+    rank_id,
+    score,
+    answer_text
+    FROM
+    survey_answer ) a ON q.question_id = a.question_id
+    ) t
+    ORDER BY
+    survey_id,
+    question_id,
+    answer_id
+  </select>
+</mapper>

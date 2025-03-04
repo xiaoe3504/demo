@@ -166,31 +166,6 @@ public class StringUtil {
         return listFinal;
     }
 
-    public static String encode(boolean isListenStyle) {
-        List<List<String>> list;
-        List<String> constString;
-        if (isListenStyle) {
-            list = getListenStyleListList();
-            constString = MyConstantString.LISTEN_STYLE_LIST;
-        } else {
-            list = getExpertAreasListList();
-            constString = MyConstantString.EXPERT_AREAS_LIST;
-        }
-        for (List<String> strings : list) {
-            dealList(strings, constString);
-        }
-        return "";
-    }
-
-    public static List<String> decode(String s) {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '1') {
-                list.add(MyConstantString.LISTEN_STYLE_LIST.get(i));
-            }
-        }
-        return list;
-    }
 
 
     private static void dealList(List<String> list1, List<String> constantString) {
@@ -219,9 +194,6 @@ public class StringUtil {
         return MyConstantString.GROWTH_CENTER_URL_PREFIX + type + "/" + result + MyConstantString.GROWTH_CENTER_URL_SUFFIX;
     }
 
-    public static void main(String[] args) {
-        encode(false);
-    }
 
 
 }

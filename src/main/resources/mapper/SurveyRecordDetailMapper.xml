@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psy.demo.mapper.SurveyRecordDetailMapper">
+  <resultMap id="BaseResultMap" type="com.psy.demo.dto.SurveyRecordDetailDTO">
+    <!--@mbg.generated-->
+    <!--@Table survey_record_detail-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="record_id" jdbcType="BIGINT" property="recordId" />
+    <result column="question_id" jdbcType="BIGINT" property="questionId" />
+    <result column="answer_id" jdbcType="BIGINT" property="answerId" />
+    <result column="answer_text" jdbcType="BIGINT" property="answerText" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, record_id, question_id, answer_id, answer_text, start_time, end_time, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from survey_record_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from survey_record_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.SurveyRecordDetailDTO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into survey_record_detail (record_id, question_id, answer_id, 
+      answer_text, start_time, end_time, 
+      create_time, update_time)
+    values (#{recordId,jdbcType=BIGINT}, #{questionId,jdbcType=BIGINT}, #{answerId,jdbcType=BIGINT}, 
+      #{answerText,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.psy.demo.dto.SurveyRecordDetailDTO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into survey_record_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="answerId != null">
+        answer_id,
+      </if>
+      <if test="answerText != null">
+        answer_text,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="answerId != null">
+        #{answerId,jdbcType=BIGINT},
+      </if>
+      <if test="answerText != null">
+        #{answerText,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.psy.demo.dto.SurveyRecordDetailDTO">
+    <!--@mbg.generated-->
+    update survey_record_detail
+    <set>
+      <if test="recordId != null">
+        record_id = #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="questionId != null">
+        question_id = #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="answerId != null">
+        answer_id = #{answerId,jdbcType=BIGINT},
+      </if>
+      <if test="answerText != null">
+        answer_text = #{answerText,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.psy.demo.dto.SurveyRecordDetailDTO">
+    <!--@mbg.generated-->
+    update survey_record_detail
+    set record_id = #{recordId,jdbcType=BIGINT},
+      question_id = #{questionId,jdbcType=BIGINT},
+      answer_id = #{answerId,jdbcType=BIGINT},
+      answer_text = #{answerText,jdbcType=BIGINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
